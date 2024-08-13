@@ -8,6 +8,8 @@ function Alojamiento() {
     const [selectedType, setSelectedType] = useState('todos');
     const [selectedAlojamiento, setSelectedAlojamiento] = useState(null);
 
+    const imagenPrueba = "https://images.pxsol.com/1142/P2109/photos/e4d9a9f45353629dbfabdb616e9a733b1dd34ed6.jpg?auto=format&browser=Google%20Bot&ixlib=php-3.3.0&w=1200&s=11dd25a890f3d3ca4f47de60f99c2d32";
+
     const alojamientos = [
         {
             nombre: 'Hotel Internacional Potrero de los Funes',
@@ -16,7 +18,7 @@ function Alojamiento() {
             precio: 200,
             calificacion: 4.5,
             servicios: ['wifi', 'parking', 'pool', 'gym', 'bar'],
-            imagen: '/hotel-internacional.jpg',
+            imagen: imagenPrueba,
             direccion: 'Ruta 18 km.16 - Potrero de los Funes - San Luis (5701)',
             telefono: '+54 (0266) 4440038 / 4495115 / 4495043',
             email: 'reservas@hotelpotrero.sanluis.gov.ar',
@@ -29,7 +31,7 @@ function Alojamiento() {
             precio: 150,
             calificacion: 4.2,
             servicios: ['wifi', 'parking', 'pool'],
-            imagen: '/hotel-puntano.jpg',
+            imagen: imagenPrueba,
             direccion: 'Los Paraísos 637 (esquina Los Almendros), Acceso A9',
             telefono: '+54 266 4748431',
             web: 'https://www.hotelpuntano.com.ar'
@@ -41,7 +43,7 @@ function Alojamiento() {
             precio: 180,
             calificacion: 4.3,
             servicios: ['wifi', 'parking', 'pool', 'bar'],
-            imagen: '/la-quebrada-apart.jpg',
+            imagen: imagenPrueba,
             direccion: 'Los Ciruelos Esq. Los Peros, ingreso por acceso A7',
             telefono: '266-4777751',
             email: 'laquebradapotrero@gmail.com',
@@ -54,7 +56,7 @@ function Alojamiento() {
             precio: 120,
             calificacion: 4.0,
             servicios: ['wifi', 'parking'],
-            imagen: '/mininco-hosteria.jpg',
+            imagen: imagenPrueba,
             direccion: 'Los Paraísos 1103, Ingreso por Acceso A9',
             telefono: '266-4495048',
             email: 'info@mininco.com.ar',
@@ -67,7 +69,7 @@ function Alojamiento() {
             precio: 130,
             calificacion: 4.1,
             servicios: ['wifi', 'parking', 'coffee'],
-            imagen: '/posada-valle-del-sol.jpg',
+            imagen: imagenPrueba,
             direccion: 'Los Membrillos S/N, ingreso por Acceso A9',
             telefono: '266-4368288',
             email: 'posadavalledelsol@gmail.com',
@@ -80,7 +82,7 @@ function Alojamiento() {
             precio: 110,
             calificacion: 3.9,
             servicios: ['wifi', 'parking'],
-            imagen: '/hosteria-los-naranjos.jpg',
+            imagen: imagenPrueba,
             direccion: 'Los guindos 2191 Esquina los Peros',
             telefono: '266-4205210',
             email: 'losnaranjosdelpotrero@gmail.com'
@@ -92,7 +94,7 @@ function Alojamiento() {
             precio: 160,
             calificacion: 4.2,
             servicios: ['wifi', 'parking', 'pool'],
-            imagen: '/el-triunfo-apart.jpg',
+            imagen: imagenPrueba,
             direccion: 'Las Margaritas y Cortaderas - Acceso A5',
             telefono: '2664266538',
             email: 'miguelsaad1250@gmail.com'
@@ -104,7 +106,7 @@ function Alojamiento() {
             precio: 170,
             calificacion: 4.4,
             servicios: ['wifi', 'parking', 'pool'],
-            imagen: '/amantea-apart.jpg',
+            imagen: imagenPrueba,
             direccion: 'Calle Lateral Circuito Potrero (por el Puente de Boxes)',
             telefono: '+54 911 40447644',
             email: 'amanteaapart@gmail.com',
@@ -117,7 +119,7 @@ function Alojamiento() {
             precio: 140,
             calificacion: 4.3,
             servicios: ['wifi', 'parking'],
-            imagen: '/altos-de-aliwen.jpg',
+            imagen: imagenPrueba,
             direccion: 'Santa Rita S/N',
             telefono: '(0266) 432-0473',
             web: 'www.altosdealiwen.com'
@@ -129,7 +131,7 @@ function Alojamiento() {
             precio: 190,
             calificacion: 4.6,
             servicios: ['wifi', 'parking', 'pool', 'gym', 'bar'],
-            imagen: '/las-terrazas-posada.jpg',
+            imagen: imagenPrueba,
             direccion: 'Av. del Circuito y Río Potrero - Acceso A10',
             telefono: '(0266) 154777751',
             web: 'www.terrazasdepotrero.com.ar'

@@ -4,7 +4,7 @@ import { Parallax } from 'react-parallax';
 import { useInView } from 'react-intersection-observer';
 import { FaMountain, FaSearchLocation, FaWater, FaTree, FaChurch, FaHiking, FaSearch, FaMapMarkerAlt, FaRoute, FaClock, FaBinoculars, FaGraduationCap, FaChevronDown } from 'react-icons/fa';
 
-const imagenPrueba = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
+const imagenPrueba = "https://www.caminosanluis.com.ar/wp-content/uploads/2014/12/Lago-y-circuito-potrero-y-pueblo.jpg";
 
 const atractivosTuristicos = [
     {
@@ -18,124 +18,124 @@ const atractivosTuristicos = [
         ubicacion: 'Entre Potrero de los Funes y La Punta',
         comoLlegar: 'Tomar la Ruta Provincial 18 desde Potrero de los Funes',
         mapaUrl: 'https://goo.gl/maps/example1',
-        imagenesAdicionales: ["/images/travesia1.jpg", "/images/travesia2.jpg", "/images/travesia3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 2,
         titulo: "Quebrada de los Cóndores",
         descripcion: "Portal de ingreso al valle con paredes graníticas perfectas para escalada y rappel. Disfruta de una tarde junto al río Potrero.",
-        imagen: "/images/quebrada-condores.jpg",
+        imagen: imagenPrueba,
         icono: FaHiking,
         tipo: 'Área Natural',
         duracion: '2-3 horas',
         ubicacion: 'Entrada de Potrero de los Funes',
         comoLlegar: 'Ubicada en el acceso principal a Potrero de los Funes',
         mapaUrl: 'https://goo.gl/maps/example2',
-        imagenesAdicionales: ["/images/quebrada1.jpg", "/images/quebrada2.jpg", "/images/quebrada3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 3,
         titulo: "Lago Potrero de los Funes",
         descripcion: "Espejo de agua de 91 hectáreas ideal para pesca, windsurf y canotaje. Rodeado por el famoso Circuito Internacional.",
-        imagen: "/images/lago-potrero.jpg",
+        imagen: imagenPrueba,
         icono: FaWater,
         tipo: 'Lago',
         duracion: 'Todo el día',
         ubicacion: 'Centro de Potrero de los Funes',
         comoLlegar: 'Accesible desde el centro de la localidad',
         mapaUrl: 'https://goo.gl/maps/example3',
-        imagenesAdicionales: ["/images/lago1.jpg", "/images/lago2.jpg", "/images/lago3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 4,
         titulo: "Circuito Internacional de Potrero",
         descripcion: "Famoso circuito de carreras que rodea el lago, escenario de competencias internacionales.",
-        imagen: "/images/circuito-potrero.jpg",
+        imagen: imagenPrueba,
         icono: FaRoute,
         tipo: 'Atracción Deportiva',
         duracion: '1-2 horas',
         ubicacion: 'Alrededor del Lago Potrero de los Funes',
         comoLlegar: 'Sigue las indicaciones al Circuito desde el centro de la localidad',
         mapaUrl: 'https://goo.gl/maps/example4',
-        imagenesAdicionales: ["/images/circuito1.jpg", "/images/circuito2.jpg", "/images/circuito3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 5,
         titulo: "Parque Nativo",
         descripcion: "7 hectáreas de naturaleza con flora nativa y exótica. Perfecto para un día de campo con todas las comodidades.",
-        imagen: "/images/parque-nativo.jpg",
+        imagen: imagenPrueba,
         icono: FaTree,
         tipo: 'Parque Natural',
         duracion: '3-4 horas',
         ubicacion: 'Sobre el Circuito Internacional',
         comoLlegar: 'Tomar el camino hacia El Volcán desde Potrero de los Funes',
         mapaUrl: 'https://goo.gl/maps/example5',
-        imagenesAdicionales: ["/images/parque1.jpg", "/images/parque2.jpg", "/images/parque3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 6,
         titulo: "Salto de la Moneda",
         descripcion: "Sendero ascendente con flora autóctona que lleva a un impresionante salto de agua de 10 metros de altura.",
-        imagen: "/images/salto-moneda.jpg",
+        imagen: imagenPrueba,
         icono: FaWater,
         tipo: 'Cascada',
         duracion: '1-2 horas',
         ubicacion: 'Al norte de Potrero de los Funes',
         comoLlegar: 'Seguir el sendero señalizado desde el centro de la localidad',
         mapaUrl: 'https://goo.gl/maps/example6',
-        imagenesAdicionales: ["/images/salto1.jpg", "/images/salto2.jpg", "/images/salto3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 7,
         titulo: "Capilla de San Antonio",
         descripcion: "Histórica capilla de 1957 con un pesebre electrónico único, ubicada en el corazón de Potrero de los Funes.",
-        imagen: "/images/capilla-san-antonio.jpg",
+        imagen: imagenPrueba,
         icono: FaChurch,
         tipo: 'Sitio Histórico',
         duracion: '30 minutos',
         ubicacion: 'Centro Cívico de Potrero de los Funes',
         comoLlegar: 'Ubicada en el centro de la localidad, fácilmente accesible a pie',
         mapaUrl: 'https://goo.gl/maps/example7',
-        imagenesAdicionales: ["/images/capilla1.jpg", "/images/capilla2.jpg", "/images/capilla3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 8,
         titulo: "Cerro Retana",
         descripcion: "Uno de los picos más altos de las Sierras de San Luis (2152m). Perfecto para trekking con vistas espectaculares.",
-        imagen: "/images/cerro-retana.jpg",
+        imagen: imagenPrueba,
         icono: FaMountain,
         tipo: 'Montaña',
         duracion: 'Todo el día',
         ubicacion: 'Al oeste de Potrero de los Funes',
         comoLlegar: 'Acceso por sendero desde Potrero de los Funes o El Suyuque',
         mapaUrl: 'https://goo.gl/maps/example8',
-        imagenesAdicionales: ["/images/retana1.jpg", "/images/retana2.jpg", "/images/retana3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 9,
         titulo: "Mirador del Lago",
         descripcion: "Punto panorámico con vistas impresionantes del lago y las montañas circundantes.",
-        imagen: "/images/mirador-lago.jpg",
+        imagen: imagenPrueba,
         icono: FaMountain,
         tipo: 'Mirador',
         duracion: '1 hora',
         ubicacion: 'Al este del Lago Potrero de los Funes',
         comoLlegar: 'Seguir las señales desde el Circuito Internacional',
         mapaUrl: 'https://goo.gl/maps/example9',
-        imagenesAdicionales: ["/images/mirador1.jpg", "/images/mirador2.jpg", "/images/mirador3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     },
     {
         id: 10,
         titulo: "Centro de Interpretación Ambiental",
         descripcion: "Espacio educativo interactivo sobre la flora, fauna y geología de la región.",
-        imagen: "/images/centro-interpretacion.jpg",
+        imagen: imagenPrueba,
         icono: FaTree,
         tipo: 'Centro Educativo',
         duracion: '1-2 horas',
         ubicacion: 'Cerca del ingreso a Potrero de los Funes',
         comoLlegar: 'Ubicado junto al Centro de Visitantes en la entrada de la localidad',
         mapaUrl: 'https://goo.gl/maps/example10',
-        imagenesAdicionales: ["/images/centro1.jpg", "/images/centro2.jpg", "/images/centro3.jpg"]
+        imagenesAdicionales: [imagenPrueba, imagenPrueba, imagenPrueba]
     }
 ];
 
