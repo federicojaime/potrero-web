@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTree, FaLeaf, FaMountain, FaSearch, FaMapMarkerAlt, FaClock, FaTimes } from 'react-icons/fa';
+import parqueImg from "../assets/imagenes/actividades/parque-nativo.jpg";
 
 const areasNaturales = [
     {
@@ -8,14 +9,14 @@ const areasNaturales = [
         nombre: "Reserva Natural del Lago",
         tipo: "Reserva",
         descripcion: "Área protegida que alberga diversa flora y fauna local.",
-        imagen: "/images/reserva-lago.jpg",
+        imagen: parqueImg,
         actividades: ["Observación de aves", "Senderismo", "Fotografía"],
         ecosistema: "Lacustre y serrano",
         horario: "08:00 - 18:00",
         ubicacion: "Orilla norte del Lago Potrero de los Funes",
         recomendaciones: ["Llevar binoculares", "Usar repelente", "No alimentar a los animales"],
     },
-    {
+    /*{
         id: 2,
         nombre: "Bosque de los Nogales",
         tipo: "Bosque",
@@ -26,7 +27,7 @@ const areasNaturales = [
         horario: "09:00 - 17:00",
         ubicacion: "3 km al oeste del centro de Potrero de los Funes",
         recomendaciones: ["Llevar calzado cómodo", "Respetar la flora", "Llevar agua"],
-    },
+    },*/
     // Añade más áreas naturales aquí
 ];
 

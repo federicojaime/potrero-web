@@ -1,143 +1,129 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Parallax } from 'react-parallax';
 import { useInView } from 'react-intersection-observer';
 import { FaMountain, FaSearchLocation, FaWater, FaTree, FaChurch, FaHiking, FaSearch, FaMapMarkerAlt, FaRoute, FaClock, FaBinoculars, FaGraduationCap, FaChevronDown } from 'react-icons/fa';
 
-const imagenPrueba = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
+import travesiaImg from "../assets/imagenes/actividades/travesia.jpg";
+import quebradaImg from "../assets/imagenes/actividades/quebrada-condores.jpg";
+import lagoImg from "../assets/imagenes/actividades/lago-potrero.jpg";
+import circuitoImg from "../assets/imagenes/actividades/circuitos.jpg";
+import parqueImg from "../assets/imagenes/actividades/parque-nativo.jpg";
+import saltoImg from "../assets/imagenes/actividades/salto-moneda.jpg";
+import capillaImg from "../assets/imagenes/actividades/capilla-san-antonio.jpg";
+import cerroImg from "../assets/imagenes/actividades/cerro-retana.jpg";
+import miradorImg from "../assets/imagenes/actividades/mirador-lago.jpg";
 
 const atractivosTuristicos = [
     {
         id: 1,
         titulo: "Travesía de las Cumbres",
-        descripcion: "Una ruta de alta montaña de 11 km con vistas panorámicas impresionantes. Ideal para longboard y admirar el paisaje desde 1270 metros de altura.",
-        imagen: imagenPrueba,
+        descripcion: "Una ruta de alta sierra de 11 km con vistas panorámicas impresionantes. Ideal para longboard y admirar el paisaje desde 1270 metros de altura.",
+        imagen: travesiaImg,
         icono: FaMountain,
         tipo: 'Ruta Escénica',
         duracion: '3-4 horas',
         ubicacion: 'Entre Potrero de los Funes y La Punta',
-        comoLlegar: 'Tomar la Ruta Provincial 18 desde Potrero de los Funes',
-        mapaUrl: 'https://goo.gl/maps/example1',
-        imagenesAdicionales: ["/images/travesia1.jpg", "/images/travesia2.jpg", "/images/travesia3.jpg"]
+        comoLlegar: 'Tomá la Ruta Provincial 18 desde Potrero de los Funes',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53418.95770388624!2d-66.2841983!3d-33.1961375!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4406c9769f4df%3A0xee2035340eca0378!2sMirador%20de%20la%20Punta!5e0!3m2!1ses!2sar!4v1727413049875!5m2!1ses!2sar',
     },
     {
         id: 2,
         titulo: "Quebrada de los Cóndores",
-        descripcion: "Portal de ingreso al valle con paredes graníticas perfectas para escalada y rappel. Disfruta de una tarde junto al río Potrero.",
-        imagen: "/images/quebrada-condores.jpg",
+        descripcion: "Portal de ingreso al valle con paredes graníticas perfectas para escalada y rappel. Disfrutá de una tarde junto al río Potrero.",
+        imagen: quebradaImg,
         icono: FaHiking,
         tipo: 'Área Natural',
         duracion: '2-3 horas',
         ubicacion: 'Entrada de Potrero de los Funes',
         comoLlegar: 'Ubicada en el acceso principal a Potrero de los Funes',
-        mapaUrl: 'https://goo.gl/maps/example2',
-        imagenesAdicionales: ["/images/quebrada1.jpg", "/images/quebrada2.jpg", "/images/quebrada3.jpg"]
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15874.258044131051!2d-66.24929045389233!3d-33.23632971698669!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d43fd45e5df31f%3A0xbcae846e2d14936a!2sQuebrada%20de%20los%20C%C3%B3ndores!5e0!3m2!1ses!2sar!4v1727414071459!5m2!1ses!2sar',
     },
     {
         id: 3,
         titulo: "Lago Potrero de los Funes",
         descripcion: "Espejo de agua de 91 hectáreas ideal para pesca, windsurf y canotaje. Rodeado por el famoso Circuito Internacional.",
-        imagen: "/images/lago-potrero.jpg",
+        imagen: lagoImg,
         icono: FaWater,
         tipo: 'Lago',
         duracion: 'Todo el día',
         ubicacion: 'Centro de Potrero de los Funes',
         comoLlegar: 'Accesible desde el centro de la localidad',
-        mapaUrl: 'https://goo.gl/maps/example3',
-        imagenesAdicionales: ["/images/lago1.jpg", "/images/lago2.jpg", "/images/lago3.jpg"]
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sEmbalse%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
     },
     {
         id: 4,
         titulo: "Circuito Internacional de Potrero",
         descripcion: "Famoso circuito de carreras que rodea el lago, escenario de competencias internacionales.",
-        imagen: "/images/circuito-potrero.jpg",
+        imagen: circuitoImg,
         icono: FaRoute,
         tipo: 'Atracción Deportiva',
         duracion: '1-2 horas',
         ubicacion: 'Alrededor del Lago Potrero de los Funes',
-        comoLlegar: 'Sigue las indicaciones al Circuito desde el centro de la localidad',
-        mapaUrl: 'https://goo.gl/maps/example4',
-        imagenesAdicionales: ["/images/circuito1.jpg", "/images/circuito2.jpg", "/images/circuito3.jpg"]
+        comoLlegar: 'Seguí las indicaciones al Circuito desde el centro de la localidad',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sEmbalse%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
     },
     {
         id: 5,
         titulo: "Parque Nativo",
         descripcion: "7 hectáreas de naturaleza con flora nativa y exótica. Perfecto para un día de campo con todas las comodidades.",
-        imagen: "/images/parque-nativo.jpg",
+        imagen: parqueImg,
         icono: FaTree,
         tipo: 'Parque Natural',
         duracion: '3-4 horas',
         ubicacion: 'Sobre el Circuito Internacional',
-        comoLlegar: 'Tomar el camino hacia El Volcán desde Potrero de los Funes',
-        mapaUrl: 'https://goo.gl/maps/example5',
-        imagenesAdicionales: ["/images/parque1.jpg", "/images/parque2.jpg", "/images/parque3.jpg"]
+        comoLlegar: 'Tomá el camino hacia El Volcán desde Potrero de los Funes',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sEmbalse%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
     },
     {
         id: 6,
         titulo: "Salto de la Moneda",
         descripcion: "Sendero ascendente con flora autóctona que lleva a un impresionante salto de agua de 10 metros de altura.",
-        imagen: "/images/salto-moneda.jpg",
+        imagen: saltoImg,
         icono: FaWater,
         tipo: 'Cascada',
         duracion: '1-2 horas',
         ubicacion: 'Al norte de Potrero de los Funes',
-        comoLlegar: 'Seguir el sendero señalizado desde el centro de la localidad',
+        comoLlegar: 'Seguí el sendero señalizado desde el centro de la localidad',
         mapaUrl: 'https://goo.gl/maps/example6',
-        imagenesAdicionales: ["/images/salto1.jpg", "/images/salto2.jpg", "/images/salto3.jpg"]
     },
     {
         id: 7,
         titulo: "Capilla de San Antonio",
         descripcion: "Histórica capilla de 1957 con un pesebre electrónico único, ubicada en el corazón de Potrero de los Funes.",
-        imagen: "/images/capilla-san-antonio.jpg",
+        imagen: capillaImg,
         icono: FaChurch,
         tipo: 'Sitio Histórico',
         duracion: '30 minutos',
         ubicacion: 'Centro Cívico de Potrero de los Funes',
         comoLlegar: 'Ubicada en el centro de la localidad, fácilmente accesible a pie',
-        mapaUrl: 'https://goo.gl/maps/example7',
-        imagenesAdicionales: ["/images/capilla1.jpg", "/images/capilla2.jpg", "/images/capilla3.jpg"]
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3338.4846424133257!2d-66.23536442480426!3d-33.201388526190904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d41544b4355663%3A0x32814d8ba1d1e5b!2sSalto%20De%20La%20Moneda!5e0!3m2!1ses!2sar!4v1727414183427!5m2!1ses!2sar',
     },
     {
         id: 8,
         titulo: "Cerro Retana",
         descripcion: "Uno de los picos más altos de las Sierras de San Luis (2152m). Perfecto para trekking con vistas espectaculares.",
-        imagen: "/images/cerro-retana.jpg",
+        imagen: cerroImg,
         icono: FaMountain,
-        tipo: 'Montaña',
+        tipo: 'Sierra',
         duracion: 'Todo el día',
         ubicacion: 'Al oeste de Potrero de los Funes',
         comoLlegar: 'Acceso por sendero desde Potrero de los Funes o El Suyuque',
-        mapaUrl: 'https://goo.gl/maps/example8',
-        imagenesAdicionales: ["/images/retana1.jpg", "/images/retana2.jpg", "/images/retana3.jpg"]
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13368.159318986905!2d-66.2186330516283!3d-33.10803670245844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4698a35c4ca11%3A0xe3fc9d9e1c66476b!2sCerro%20Retama!5e0!3m2!1ses!2sar!4v1727414213576!5m2!1ses!2sar',
     },
     {
         id: 9,
         titulo: "Mirador del Lago",
-        descripcion: "Punto panorámico con vistas impresionantes del lago y las montañas circundantes.",
-        imagen: "/images/mirador-lago.jpg",
+        descripcion: "Punto panorámico con vistas impresionantes del lago y las sierras circundantes.",
+        imagen: miradorImg,
         icono: FaMountain,
         tipo: 'Mirador',
         duracion: '1 hora',
         ubicacion: 'Al este del Lago Potrero de los Funes',
-        comoLlegar: 'Seguir las señales desde el Circuito Internacional',
-        mapaUrl: 'https://goo.gl/maps/example9',
-        imagenesAdicionales: ["/images/mirador1.jpg", "/images/mirador2.jpg", "/images/mirador3.jpg"]
-    },
-    {
-        id: 10,
-        titulo: "Centro de Interpretación Ambiental",
-        descripcion: "Espacio educativo interactivo sobre la flora, fauna y geología de la región.",
-        imagen: "/images/centro-interpretacion.jpg",
-        icono: FaTree,
-        tipo: 'Centro Educativo',
-        duracion: '1-2 horas',
-        ubicacion: 'Cerca del ingreso a Potrero de los Funes',
-        comoLlegar: 'Ubicado junto al Centro de Visitantes en la entrada de la localidad',
-        mapaUrl: 'https://goo.gl/maps/example10',
-        imagenesAdicionales: ["/images/centro1.jpg", "/images/centro2.jpg", "/images/centro3.jpg"]
+        comoLlegar: 'Seguí las señales desde el Circuito Internacional',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3337.272422918556!2d-66.23616522496036!3d-33.23316578641621!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4157cdf2383b5%3A0x1d8ae56ec70f82d6!2sLago%20Potrero%20De%20Los%20Funes!5e0!3m2!1ses!2sar!4v1727414266581!5m2!1ses!2sar',
     }
 ];
+
 
 const AtractivoCard = ({ atractivo, onClick }) => {
     const [ref, inView] = useInView({
@@ -154,12 +140,16 @@ const AtractivoCard = ({ atractivo, onClick }) => {
             className="bg-white rounded-lg shadow-xl overflow-hidden cursor-pointer"
             onClick={() => onClick(atractivo)}
         >
-            <Parallax bgImage={atractivo.imagen} strength={200} className="h-64 relative">
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="relative h-64 overflow-hidden">
+                <img
+                    src={atractivo.imagen}
+                    alt={atractivo.titulo}
+                    className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
                     <h3 className="text-2xl font-bold text-white text-center">{atractivo.titulo}</h3>
                 </div>
-            </Parallax>
+            </div>
             <div className="p-6">
                 <div className="flex items-start mb-4">
                     <atractivo.icono className="text-3xl text-[#00add5] mr-4 mt-1 flex-shrink-0" />
@@ -227,22 +217,14 @@ const AtractivoDetalle = ({ atractivo, onClose }) => {
                             </div>
                         </div>
 
-                        <div>
-                            <h4 className="font-semibold text-[#00add5] mb-4 text-xl">Galería de imágenes</h4>
-                            <div className="grid grid-cols-3 gap-4">
-                                {atractivo.imagenesAdicionales.map((img, index) => (
-                                    <img key={index} src={img} alt={`${atractivo.titulo} ${index + 1}`} className="w-full h-32 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" />
-                                ))}
-                            </div>
+                        <div className="items-center px-4 py-3">
+                            <button
+                                onClick={onClose}
+                                className="px-4 py-2 bg-[#00add5] text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-[#0098b8] focus:outline-none focus:ring-2 focus:ring-[#00add5]"
+                            >
+                                Cerrar
+                            </button>
                         </div>
-                    </div>
-                    <div className="items-center px-4 py-3">
-                        <button
-                            onClick={onClose}
-                            className="px-4 py-2 bg-[#00add5] text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-[#0098b8] focus:outline-none focus:ring-2 focus:ring-[#00add5]"
-                        >
-                            Cerrar
-                        </button>
                     </div>
                 </div>
             </div>
@@ -270,7 +252,7 @@ function QueVisitar() {
     const dropdownRef = useRef(null);
 
     const tiposUnicos = ['todos', ...new Set(atractivosTuristicos.map(atractivo => atractivo.tipo))];
-    const categoriasPrincipales = ['todos', 'Área Natural', 'Montaña', 'Lago'];
+    const categoriasPrincipales = ['todos', 'Área Natural', 'Sierra', 'Lago'];
     const categoriasSecundarias = tiposUnicos.filter(tipo => !categoriasPrincipales.includes(tipo));
 
     const filteredAtractivos = atractivosTuristicos.filter(atractivo =>
@@ -288,7 +270,7 @@ function QueVisitar() {
             case 'Parque Natural': return FaTree;
             case 'Cascada': return FaWater;
             case 'Sitio Histórico': return FaChurch;
-            case 'Montaña': return FaMountain;
+            case 'Sierra': return FaMountain;
             case 'Mirador': return FaBinoculars;
             case 'Centro Educativo': return FaGraduationCap;
             default: return FaMapMarkerAlt;
@@ -317,7 +299,7 @@ function QueVisitar() {
                     transition={{ duration: 0.8 }}
                     className="text-4xl md:text-5xl font-bold text-center pt-8 mb-4 text-[#00add5]"
                 >
-                    Descubre la Magia de Potrero de los Funes
+                    Descubrí la Magia de Potrero de los Funes
                 </motion.h1>
                 <motion.p
                     initial={{ opacity: 0 }}
@@ -325,7 +307,7 @@ function QueVisitar() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-lg text-center mb-8 text-gray-700"
                 >
-                    Explora nuestros increíbles atractivos turísticos y vive experiencias únicas en el corazón de las sierras puntanas.
+                    Explorá nuestros increíbles atractivos turísticos y viví experiencias únicas en el corazón de las sierras puntanas.
                 </motion.p>
                 <div className="mb-8">
                     <div className="flex justify-center mb-4">

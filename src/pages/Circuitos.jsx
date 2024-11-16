@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaRoute, FaClock, FaMountain, FaSearch, FaRuler, FaTimes } from 'react-icons/fa';
+import miradorImg from "../assets/imagenes/actividades/mirador-lago.jpg";
+import travesiaImg from "../assets/imagenes/actividades/travesia.jpg";
+
 
 const circuitos = [
     {
@@ -8,7 +11,7 @@ const circuitos = [
         nombre: "Circuito del Lago",
         tipo: "Senderismo",
         descripcion: "Recorre los alrededores del lago disfrutando de vistas panorámicas.",
-        imagen: "/images/circuito-lago.jpg",
+        imagen: miradorImg,
         duracion: "2 horas",
         dificultad: "Fácil",
         distancia: "5 km",
@@ -20,7 +23,7 @@ const circuitos = [
         nombre: "Ruta de las Sierras",
         tipo: "Mountain Bike",
         descripcion: "Desafiante circuito para ciclistas a través de las sierras puntanas.",
-        imagen: "/images/ruta-sierras.jpg",
+        imagen: travesiaImg,
         duracion: "4 horas",
         dificultad: "Difícil",
         distancia: "25 km",
@@ -31,7 +34,7 @@ const circuitos = [
 ];
 
 const CircuitoCard = ({ circuito, onClick }) => (
-    <motion.div 
+    <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -52,13 +55,13 @@ const CircuitoCard = ({ circuito, onClick }) => (
 );
 
 const CircuitoModal = ({ circuito, onClose }) => (
-    <motion.div 
+    <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
     >
-        <motion.div 
+        <motion.div
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
@@ -141,9 +144,9 @@ function Circuitos() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {filteredCircuitos.length > 0 ? (
                         filteredCircuitos.map(circuito => (
-                            <CircuitoCard 
-                                key={circuito.id} 
-                                circuito={circuito} 
+                            <CircuitoCard
+                                key={circuito.id}
+                                circuito={circuito}
                                 onClick={() => setSelectedCircuito(circuito)}
                             />
                         ))
@@ -154,8 +157,8 @@ function Circuitos() {
             </div>
             <AnimatePresence>
                 {selectedCircuito && (
-                    <CircuitoModal 
-                        circuito={selectedCircuito} 
+                    <CircuitoModal
+                        circuito={selectedCircuito}
                         onClose={() => setSelectedCircuito(null)}
                     />
                 )}

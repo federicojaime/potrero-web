@@ -1,232 +1,358 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { FaMountain, FaSwimmingPool, FaRoute, FaBed, FaUtensils, FaCalendarAlt, FaChevronDown, FaMapMarkedAlt, FaCamera, FaSun } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import banner from "../assets/images/images.jpg";
-import galeria1 from "../assets/images/images.jpg";
-import galeria2 from "../assets/images/images.jpg";
-import galeria3 from "../assets/images/images.jpg";
+import { FaMountain, FaSwimmingPool, FaRoute, FaBed, FaUtensils, FaCalendarAlt, FaMapMarkedAlt, FaCamera, FaSun } from 'react-icons/fa';
+import OptimizedVideoBanner from './OptimizedVideoBanner';
+// Importamos las imágenes para cada sección
+import imagenNaturaleza from '/src/assets/imagenes/naturaleza.jpg';
+import imagenActividades from '/src/assets/imagenes/actividades.jpg';
+import imagenCircuitos from '/src/assets/imagenes/circuitos.jpg';
+import imagenAlojamiento from '/src/assets/imagenes/alojamiento.jpg';
+import imagenGastronomia from '/src/assets/imagenes/gastronomia.jpg';
+import imagenEventos from '/src/assets/imagenes/eventos.jpg';
+import backgroundImage from '../assets/images/images.jpg';
+
+import { Card } from 'flowbite-react';
+
+// Definimos los colores de la marca según el manual
+const colors = {
+    primary: '#00A8E8', // Azul más suave
+    secondary: '#007EA7', // Azul más oscuro
+    green: '#32CD32', // Verde vibrante
+    yellow: '#FFD700', // Amarillo dorado
+    orange: '#FFA500', // Naranja brillante
+    beige: '#F5F5DC', // Beige suave
+    black: '#1C1C1C', // Negro suave
+};
+
+// Definimos el array de secciones con todas las propiedades
+const secciones = [
+    {
+        titulo: 'Naturaleza',
+        icono: FaMountain,
+        imagen: imagenNaturaleza,
+        color: colors.green,
+        textColor: 'text-white',
+        link: '/naturaleza',
+    },
+    {
+        titulo: 'Actividades',
+        icono: FaSwimmingPool,
+        imagen: imagenActividades,
+        color: colors.primary,
+        textColor: 'text-white',
+        link: '/actividades',
+    },
+    {
+        titulo: 'Circuitos',
+        icono: FaRoute,
+        imagen: imagenCircuitos,
+        color: colors.yellow,
+        textColor: 'text-black',
+        link: '/circuitos',
+    },
+    {
+        titulo: 'Alojamiento',
+        icono: FaBed,
+        imagen: imagenAlojamiento,
+        color: colors.secondary,
+        textColor: 'text-white',
+        link: '/alojamiento',
+    },
+    {
+        titulo: 'Gastronomía',
+        icono: FaUtensils,
+        imagen: imagenGastronomia,
+        color: colors.orange,
+        textColor: 'text-white',
+        link: '/gastronomia',
+        disabled: true, // Deshabilitar la sección
+    },
+    {
+        titulo: 'Eventos',
+        icono: FaCalendarAlt,
+        imagen: imagenEventos,
+        color: colors.beige,
+        textColor: 'text-black',
+        link: '/eventos',
+        disabled: true, // Deshabilitar la sección
+    },
+];
+
+const AtractiveCard = ({ icon: Icon, title, description }) => (
+    <motion.div
+        whileHover={{ scale: 1.05 }}
+        className="bg-white rounded-lg overflow-hidden shadow-lg p-6 text-center"
+        style={{ borderColor: colors.primary, borderWidth: 2 }}
+    >
+        <Icon className="text-5xl mb-4" style={{ color: colors.primary }} />
+        <h3 className="text-2xl font-semibold mb-2 text-gray-800">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+    </motion.div>
+);
+
+const SeccionCard = ({ seccion, index }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        viewport={{ once: true }}
+        className="relative group"
+    >
+        <Link
+            to={seccion.disabled ? '#' : seccion.link}
+            className={`block rounded-xl overflow-hidden shadow-lg transform transition-transform duration-500 group-hover:scale-105 ${seccion.disabled ? 'cursor-not-allowed' : ''}`}
+            onClick={e => seccion.disabled && e.preventDefault()}
+        >
+            <div className="relative">
+                {/* Fondo con imagen y degradado */}
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: `
+                linear-gradient(to bottom right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+                url(${seccion.imagen})
+              `,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}
+                ></div>
+
+                {/* Contenido de la tarjeta */}
+                <div className="relative z-10 p-8 text-center text-white">
+                    <motion.div
+                        whileHover={!seccion.disabled ? { rotate: [0, 15, -15, 0], scale: 1.1 } : {}}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <seccion.icono className="mx-auto text-6xl mb-4" />
+                    </motion.div>
+                    <h3 className="text-2xl font-semibold">
+                        {seccion.disabled ? 'Próximamente' : seccion.titulo}
+                    </h3>
+                </div>
+            </div>
+        </Link>
+    </motion.div>
+);
+
+const GaleriaImage = ({ src, alt }) => (
+    <motion.div
+        whileHover={{ scale: 1.05 }}
+        className="overflow-hidden rounded-lg shadow-md"
+    >
+        <img
+            src={src}
+            alt={alt}
+            className="w-full h-64 object-cover"
+        />
+    </motion.div>
+);
+
+const InfoCard = ({ icon: Icon, title, content }) => (
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-6">
+        <div className="flex items-center mb-4">
+            <Icon className="text-3xl text-primary mr-3" />
+            <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+        </div>
+        <div className="text-gray-600">{content}</div>
+    </div>
+);
 
 function Home() {
-    const [isVisible, setIsVisible] = useState(false);
-    const bannerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: bannerRef,
-        offset: ["start start", "end start"]
-    });
-
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
-
-    const secciones = [
-        { titulo: 'Naturaleza', icono: FaMountain, color: 'bg-emerald-100', textColor: 'text-emerald-800', link: '/naturaleza' },
-        { titulo: 'Actividades', icono: FaSwimmingPool, color: 'bg-sky-100', textColor: 'text-sky-800', link: '/actividades' },
-        { titulo: 'Circuitos', icono: FaRoute, color: 'bg-amber-100', textColor: 'text-amber-800', link: '/circuitos' },
-        { titulo: 'Alojamiento', icono: FaBed, color: 'bg-emerald-100', textColor: 'text-emerald-800', link: '/alojamiento' },
-        { titulo: 'Gastronomía', icono: FaUtensils, color: 'bg-sky-100', textColor: 'text-sky-800', link: '/gastronomia' },
-        { titulo: 'Eventos', icono: FaCalendarAlt, color: 'bg-amber-100', textColor: 'text-amber-800', link: '/eventos' },
-    ];
-
     return (
-        <AnimatePresence>
-            {isVisible && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="bg-gray-50"
-                >
-                    <motion.section
-                        ref={bannerRef}
-                        className="relative h-screen overflow-hidden"
-                        style={{ y }}
-                    >
-                        <img
-                            src={banner}
-                            alt="Potrero de los Funes"
-                            className="absolute inset-0 w-full h-full object-cover"
+        <div className="bg-gray-50">
+            <OptimizedVideoBanner />
+
+            <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Atractivos Principales</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <AtractiveCard
+                            icon={FaMapMarkedAlt}
+                            title="Circuito Internacional"
+                            description="Experimentá la emoción en nuestro famoso circuito de carreras."
                         />
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 1 }}
-                                className="text-center text-white px-4"
-                            >
-                                <h1 className="text-5xl md:text-7xl font-bold mb-4 shadow-text">Potrero de los Funes</h1>
-                                <p className="text-xl md:text-2xl mb-8 shadow-text">Descubre el paraíso en las sierras de San Luis</p>
-                                <Link
-                                    to="/actividades"
-                                    className="bg-white text-gray-800 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-md"
-                                >
-                                    Explorar Ahora
-                                </Link>
-                            </motion.div>
-                        </div>
-                        <motion.div
-                            animate={{ y: [0, 10, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity }}
-                            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-                        >
-                            <FaChevronDown className="text-white text-4xl" />
-                        </motion.div>
-                    </motion.section>
+                        <AtractiveCard
+                            icon={FaMountain}
+                            title="Sierras Puntanas"
+                            description="Explorá la belleza natural de nuestras majestuosas sierras."
+                        />
+                        <AtractiveCard
+                            icon={FaSwimmingPool}
+                            title="Lago Potrero"
+                            description="Disfrutá de actividades acuáticas en nuestro hermoso lago."
+                        />
+                    </div>
+                </div>
+            </section>
 
-                    <section className="py-20 bg-white relative z-10">
-                        <div className="container mx-auto px-4">
-                            <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Atractivos Principales</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg overflow-hidden shadow-lg text-white p-6"
-                                >
-                                    <FaMapMarkedAlt className="text-5xl mb-4" />
-                                    <h3 className="text-2xl font-semibold mb-2">Circuito Internacional</h3>
-                                    <p>Experimenta la emoción en nuestro famoso circuito de carreras.</p>
-                                </motion.div>
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg overflow-hidden shadow-lg text-white p-6"
-                                >
-                                    <FaMountain className="text-5xl mb-4" />
-                                    <h3 className="text-2xl font-semibold mb-2">Sierras Puntanas</h3>
-                                    <p>Explora la belleza natural de nuestras majestuosas sierras.</p>
-                                </motion.div>
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg overflow-hidden shadow-lg text-white p-6"
-                                >
-                                    <FaSwimmingPool className="text-5xl mb-4" />
-                                    <h3 className="text-2xl font-semibold mb-2">Lago Potrero</h3>
-                                    <p>Disfruta de actividades acuáticas en nuestro hermoso lago.</p>
-                                </motion.div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <motion.section
-                        className="py-20 bg-gradient-to-r from-sky-400 to-emerald-400 text-white overflow-hidden relative z-10"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 1 }}
+            <motion.section
+                className="py-20 text-white bg-fixed bg-center bg-cover"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+                style={{
+                    backgroundImage: `
+                      linear-gradient(
+                        to right,
+                        ${colors.primary}40,
+                        ${colors.secondary}70
+                      ),
+    url(${backgroundImage})
+                    `,
+                }}
+            >
+                <div className="container mx-auto px-4">
+                    <motion.h2
+                        className="text-4xl md:text-5xl font-bold text-center"
+                        initial={{ y: 50, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.8 }}
                     >
-                        <div className="container mx-auto px-4">
-                            <motion.h2
-                                className="text-4xl md:text-5xl font-bold text-center"
-                                initial={{ y: 50, opacity: 0 }}
-                                whileInView={{ y: 0, opacity: 1 }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                <p>Naturaleza, adrenalina y relax en un solo lugar</p>
-                            </motion.h2>
-                            <motion.p
-                                className="text-xl text-center mt-4"
-                                initial={{ y: 50, opacity: 0 }}
-                                whileInView={{ y: 0, opacity: 1 }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                            >
-                                Descubre todo lo que Potrero de los Funes tiene para ofrecerte
-                            </motion.p>
-                        </div>
-                    </motion.section>
+                        Naturaleza, adrenalina y relax en un solo lugar
+                    </motion.h2>
+                    <motion.p
+                        className="text-xl text-center mt-4"
+                        initial={{ y: 50, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        Descubrí todo lo que Potrero de los Funes tiene para ofrecerte
+                    </motion.p>
+                </div>
+            </motion.section>
 
-                    <section className="py-20 bg-gray-100 relative z-10">
-                        <div className="container mx-auto px-4">
-                            <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Descubre Potrero de los Funes</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {secciones.map((seccion, index) => (
-                                    <motion.div
-                                        key={index}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    >
-                                        <Link to={seccion.link} className={`block ${seccion.color} rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300`}>
-                                            <div className="p-8 text-center">
-                                                <seccion.icono className={`mx-auto ${seccion.textColor} text-5xl mb-4`} />
-                                                <h3 className={`text-2xl font-semibold ${seccion.textColor}`}>{seccion.titulo}</h3>
-                                            </div>
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+            <section className="py-20 bg-gray-50">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Visitá Potrero de los Funes</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {secciones.map((seccion, index) => (
+                            <SeccionCard key={index} seccion={seccion} index={index} />
+                        ))}
+                    </div>
+                </div>
+            </section>
 
-                    <section className="py-20 bg-white relative z-10">
-                        <div className="container mx-auto px-4">
-                            <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Galería de Imágenes</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <motion.img
-                                    src={galeria1}
-                                    alt="Paisaje de Potrero de los Funes"
-                                    className="w-full h-64 object-cover rounded-lg shadow-md"
-                                    whileHover={{ scale: 1.05 }}
-                                />
-                                <motion.img
-                                    src={galeria2}
-                                    alt="Actividades en Potrero de los Funes"
-                                    className="w-full h-64 object-cover rounded-lg shadow-md"
-                                    whileHover={{ scale: 1.05 }}
-                                />
-                                <motion.img
-                                    src={galeria3}
-                                    alt="Atardecer en Potrero de los Funes"
-                                    className="w-full h-64 object-cover rounded-lg shadow-md"
-                                    whileHover={{ scale: 1.05 }}
-                                />
-                            </div>
-                        </div>
-                    </section>
+            {/**  <section className="py-20 bg-white">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Galería de Imágenes</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <GaleriaImage src={galeria1} alt="Paisaje de Potrero de los Funes" />
+                        <GaleriaImage src={galeria2} alt="Actividades en Potrero de los Funes" />
+                        <GaleriaImage src={galeria3} alt="Atardecer en Potrero de los Funes" />
+                    </div>
+                </div>
+            </section>*/}
+            (
+            <div className="bg-gray-100 py-20">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Información Turística</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
-                    <section className="py-20 bg-gray-100 relative z-10">
-                        <div className="container mx-auto px-4">
-                            <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Información Turística</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <div className="bg-white p-6 rounded-lg shadow-md">
-                                    <FaMapMarkedAlt className="text-4xl text-sky-700 mb-4" />
-                                    <h3 className="text-2xl font-semibold mb-4 text-sky-700">Cómo llegar</h3>
-                                    <p className="text-gray-700">Potrero de los Funes se encuentra a solo 20 km de la ciudad de San Luis. Acceso por Autopista de las Serranías Puntanas.</p>
+                        {/* Tarjeta 1: Cómo llegar (Google Maps directo a Potrero de los Funes) */}
+                        <InfoCard
+                            icon={FaMapMarkedAlt}
+                            title="Cómo llegar"
+                            content={
+                                <>
+                                    <div className="aspect-video mb-4">
+                                        <iframe
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3328.8252917127594!2d-66.24163838484965!3d-33.24331398083207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d41573b7a25fb9%3A0x20846ae174b18de5!2sPotrero%20de%20los%20Funes%2C%20San%20Luis!5e0!3m2!1ses!2sar!4v1727409872087!5m2!1ses!2sar"
+                                            width="100%"
+                                            height="100%"
+                                            style={{ border: 0 }}
+                                            allowFullScreen=""
+                                            loading="lazy"
+                                            referrerPolicy="no-referrer-when-downgrade"
+                                        ></iframe>
+                                    </div>
+                                    <p>
+                                        A solo 20 km de la ciudad de San Luis. Acceso por Autopista de las Serranías Puntanas.
+                                    </p>
+                                </>
+                            }
+                        />
+
+                        {/* Tarjeta 2: Clima típico */}
+                        <InfoCard
+                            icon={FaSun}
+                            title="Clima típico"
+                            content={
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-center">
+                                        <span className="flex items-center">
+                                            <FaMountain className="text-green-500 mr-2" />
+                                            Temperatura
+                                        </span>
+                                        <span>15°C - 25°C</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="flex items-center">
+                                            <FaSwimmingPool className="text-blue-500 mr-2" />
+                                            Humedad
+                                        </span>
+                                        <span>40% - 60%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="flex items-center">
+                                            <FaRoute className="text-gray-500 mr-2" />
+                                            Viento
+                                        </span>
+                                        <span>10 - 20 km/h</span>
+                                    </div>
+                                    <p className="text-gray-600 mt-4">
+                                        Clima templado y seco la mayor parte del año. Ideal para actividades al aire libre.
+                                    </p>
                                 </div>
-                                <div className="bg-white p-6 rounded-lg shadow-md">
-                                    <FaSun className="text-4xl text-sky-700 mb-4" />
-                                    <h3 className="text-2xl font-semibold mb-4 text-sky-700">Clima</h3>
-                                    <p className="text-gray-700">Temperatura promedio anual de 17°C. Veranos cálidos e inviernos frescos y secos.</p>
-                                </div>
-                                <div className="bg-white p-6 rounded-lg shadow-md">
-                                    <FaCamera className="text-4xl text-sky-700 mb-4" />
-                                    <h3 className="text-2xl font-semibold mb-4 text-sky-700">Actividades populares</h3>
-                                    <ul className="list-disc list-inside text-gray-700">
-                                        <li>Deportes acuáticos en el lago</li>
-                                        <li>Trekking y mountain bike</li>
-                                        <li>Visitas al Circuito Internacional</li>
-                                        <li>Pesca deportiva</li>
-                                        <li>Turismo aventura</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                            }
+                        />
 
-                    <section className="py-20 bg-gradient-to-r from-amber-400 to-orange-400 text-white relative z-10">
-                        <div className="container mx-auto px-4 text-center">
-                            <h2 className="text-4xl font-bold mb-4">¿Listo para tu aventura?</h2>
-                            <p className="text-xl mb-8">Planifica tu visita a Potrero de los Funes y vive una experiencia inolvidable.</p>
-                            <Link
-                                to="/contacto"
-                                className="bg-white text-orange-500 font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-md inline-block"
-                            >
-                                Contáctanos
-                            </Link>
-                        </div>
-                    </section>
-                </motion.div>
-            )}
-        </AnimatePresence>
+                        {/* Tarjeta 3: Actividades populares */}
+                        <InfoCard
+                            icon={FaCamera}
+                            title="Actividades populares"
+                            content={
+                                <ul className="space-y-2">
+                                    <li className="flex items-center">
+                                        <FaSwimmingPool className="text-blue-500 mr-2" />
+                                        Deportes acuáticos en el lago
+                                    </li>
+                                    <li className="flex items-center">
+                                        <FaMountain className="text-green-500 mr-2" />
+                                        Trekking y mountain bike
+                                    </li>
+                                    <li className="flex items-center">
+                                        <FaRoute className="text-red-500 mr-2" />
+                                        Visitas al Circuito Internacional
+                                    </li>
+                                    <li className="flex items-center">
+                                        <FaUtensils className="text-orange-500 mr-2" />
+                                        Gastronomía local
+                                    </li>
+                                    <li className="flex items-center">
+                                        <FaCalendarAlt className="text-purple-500 mr-2" />
+                                        Eventos culturales
+                                    </li>
+                                </ul>
+                            }
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <section className="py-20 text-white" style={{ background: `linear-gradient(to right, ${colors.yellow}, ${colors.orange})` }}>
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-4xl font-bold mb-4 text-black">¿Listo para tu aventura?</h2>
+                    <p className="text-xl mb-8 text-black">Planificá tu visita a Potrero de los Funes y viví una experiencia inolvidable.</p>
+                    <Link
+                        to="/contacto"
+                        className="bg-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-md inline-block"
+                        style={{ color: colors.primary }}
+                    >
+                        Contactanos
+                    </Link>
+                </div>
+            </section>
+        </div>
     );
 }
 
