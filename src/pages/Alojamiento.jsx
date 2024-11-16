@@ -24,37 +24,11 @@ import {
     FaGlobe,
     FaSearchLocation,
     FaChevronLeft,
-    FaChevronRight
+    FaChevronRight,
+
+
 } from 'react-icons/fa';
 import { Card, Button } from 'flowbite-react';
-
-const iconMap = {
-    wifi: FaWifi,
-    estacionamiento: FaParking,
-    piscina: FaSwimmingPool,
-    desayuno: FaCoffee,
-    gimnasio: FaDumbbell,
-    bar: FaGlassMartini,
-    'aire acondicionado': FaSnowflake,
-    parrilla: FaFireAlt,
-    tv: FaTv,
-    cocina: FaUtensils,
-    jardín: FaTree,
-    spa: FaSpa
-};
-
-// Mapa de iconos por tipo de alojamiento
-const tipoAlojamientoIcon = {
-    hotel: FaHotel,
-    'apart hotel': FaBuilding,
-    hostería: FaHouseUser,
-    posada: FaHouseUser,
-    cabaña: FaHome,
-    casa: FaHome,
-    dormis: FaBed,
-    departamento: FaBuilding,
-    indeterminado: FaHome
-};
 
 const AlojamientoModal = ({ onClose, alojamiento }) => {
     if (!alojamiento) return null;
@@ -133,14 +107,42 @@ const AlojamientoModal = ({ onClose, alojamiento }) => {
         </div>
     );
 };
+// Mapa de iconos por tipo de alojamiento
+const tipoAlojamientoIcon = {
+    hotel: FaHotel,
+    'apart hotel': FaBuilding,
+    hostería: FaHouseUser,
+    posada: FaHouseUser,
+    cabaña: FaHome,
+    casa: FaHome,
+    dormis: FaBed,
+    departamento: FaBuilding,
+    indeterminado: FaHome
+};
 
-
+const iconMap = {
+    wifi: FaWifi,
+    estacionamiento: FaParking,
+    piscina: FaSwimmingPool,
+    desayuno: FaCoffee,
+    gimnasio: FaDumbbell,
+    bar: FaGlassMartini,
+    'aire acondicionado': FaSnowflake,
+    parrilla: FaFireAlt,
+    tv: FaTv,
+    cocina: FaUtensils,
+    jardín: FaTree,
+    spa: FaSpa
+};
 function Alojamiento() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedType, setSelectedType] = useState('todos');
     const [selectedAlojamiento, setSelectedAlojamiento] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
+
+
+
 
     const alojamientos = [
         {
@@ -2739,8 +2741,6 @@ function Alojamiento() {
             "instagram": "caldenviejo"
         }
     ]
-
-
 
 
 
