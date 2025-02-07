@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaInstagram, FaTwitter, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaTiktok, FaEnvelope, FaPhone } from 'react-icons/fa';
 import logo from "../assets/logos/logo_blanco.png";
 import damianGomezLogo from "../assets/logos/damian_gomez.png";
 import codeoLogo from "../assets/logos/codeo_logo.png";
@@ -13,6 +13,12 @@ const Footer = () => {
         secondary: '#2D708F',
         cream: '#F5E6D3',
     };
+
+    const socialLinks = [
+        { Icon: FaFacebookF, url: 'https://www.facebook.com/potrero.encanta', label: 'Facebook' },
+        { Icon: FaInstagram, url: 'https://www.instagram.com/potrero.encanta/', label: 'Instagram' },
+        { Icon: FaTiktok, url: 'https://www.tiktok.com/@potrero.encanta', label: 'TikTok' },
+    ];
 
     return (
         <footer style={{ backgroundColor: colors.primary }} className="text-white py-12">
@@ -41,32 +47,46 @@ const Footer = () => {
                             ))}
                         </ul>
                     </div>
-                    <div>
+                    <div >
                         <h4 className="text-lg font-semibold mb-4 pb-2 border-b border-cream/30">Contáctanos</h4>
-                        <ul className="space-y-2">
-                            <li className="flex items-center">
-                                <FaEnvelope className="mr-2" />
-                                <a href="mailto:info@potrerodelosfunes.com" className="hover:text-cream transition duration-300">
-                                    info@potrerodelosfunes.com
-                                </a>
+                        <ul className="space-y-3">
+                            <li>
+                                <div className="flex items-start ">
+                                    <FaEnvelope className="mr-2 mt-1 flex-shrink-0" />
+                                    <a 
+                                        href="mailto:info@turismoenpotrerodelosfunes.com" 
+                                        className="hover:text-cream transition duration-300"
+                                    >
+                                        info@turismoenpotrerodelosfunes.com
+                                    </a>
+                                </div>
                             </li>
-                            <li className="flex items-center">
-                                <FaPhone className="mr-2" />
-                                <a href="https://wa.me/542664123456" target="_blank" rel="noopener noreferrer" className="hover:text-cream transition duration-300">
-                                    +54 9 2664 77-0432
-                                </a>
+                            <li>
+                                <div className="flex items-center">
+                                    <FaPhone className="mr-2 flex-shrink-0" />
+                                    <a 
+                                        href="https://wa.me/542664123456" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="hover:text-cream transition duration-300"
+                                    >
+                                        +54 9 2664 77-0432
+                                    </a>
+                                </div>
                             </li>
                         </ul>
                     </div>
-                    <div>
+                    <div className='pl-4'>
                         <h4 className="text-lg font-semibold mb-4 pb-2 border-b border-cream/30">Síguenos</h4>
                         <div className="flex space-x-4">
-                            {[FaFacebookF, FaInstagram, FaTwitter].map((Icon, index) => (
+                            {socialLinks.map(({ Icon, url, label }) => (
                                 <a
-                                    key={index}
-                                    href="#"
+                                    key={label}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="text-white hover:text-cream transition duration-300 bg-secondary p-2 rounded-full"
-                                    aria-label={`Síguenos en ${Icon.name.replace('Fa', '')}`}
+                                    aria-label={`Síguenos en ${label}`}
                                 >
                                     <Icon size={20} />
                                 </a>

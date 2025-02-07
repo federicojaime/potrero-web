@@ -165,12 +165,12 @@ function Home() {
             <section className="py-20 bg-white">
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Atractivos Principales</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <AtractiveCard
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/*<AtractiveCard
                             icon={FaMapMarkedAlt}
                             title="Circuito Internacional"
                             description="Experimentá la emoción en nuestro famoso circuito de carreras."
-                        />
+                        />*/}
                         <AtractiveCard
                             icon={FaMountain}
                             title="Sierras Puntanas"

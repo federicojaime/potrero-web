@@ -12,6 +12,9 @@ import saltoImg from "../assets/imagenes/actividades/salto-moneda.jpg";
 import capillaImg from "../assets/imagenes/actividades/capilla-san-antonio.jpg";
 import cerroImg from "../assets/imagenes/actividades/cerro-retana.jpg";
 import miradorImg from "../assets/imagenes/actividades/mirador-lago.jpg";
+import vallePiedra from "../assets/imagenes/actividades/vallePiedra.jpeg";
+import lagunaUvas from "../assets/imagenes/actividades/lagunaUvas.jpeg";
+
 
 const atractivosTuristicos = [
     {
@@ -21,19 +24,19 @@ const atractivosTuristicos = [
         imagen: travesiaImg,
         icono: FaMountain,
         tipo: 'Ruta Escénica',
-        duracion: '3-4 horas',
+        duracion: '1:30 horas',
         ubicacion: 'Entre Potrero de los Funes y La Punta',
-        comoLlegar: 'Tomá la Ruta Provincial 18 desde Potrero de los Funes',
+        comoLlegar: 'Tomá la Calle Los Paraísos desde Potrero de los Funes',
         mapaUrl: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53418.95770388624!2d-66.2841983!3d-33.1961375!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4406c9769f4df%3A0xee2035340eca0378!2sMirador%20de%20la%20Punta!5e0!3m2!1ses!2sar!4v1727413049875!5m2!1ses!2sar',
     },
     {
         id: 2,
         titulo: "Quebrada de los Cóndores",
-        descripcion: "Portal de ingreso al valle con paredes graníticas perfectas para escalada y rappel. Disfrutá de una tarde junto al río Potrero.",
+        descripcion: "Portal de ingreso al valle con paredes graníticas perfectas. Disfrutá de una tarde junto al río Potrero.",
         imagen: quebradaImg,
         icono: FaHiking,
         tipo: 'Área Natural',
-        duracion: '2-3 horas',
+        duracion: '1 hora',
         ubicacion: 'Entrada de Potrero de los Funes',
         comoLlegar: 'Ubicada en el acceso principal a Potrero de los Funes',
         mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15874.258044131051!2d-66.24929045389233!3d-33.23632971698669!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d43fd45e5df31f%3A0xbcae846e2d14936a!2sQuebrada%20de%20los%20C%C3%B3ndores!5e0!3m2!1ses!2sar!4v1727414071459!5m2!1ses!2sar',
@@ -51,21 +54,9 @@ const atractivosTuristicos = [
         mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sEmbalse%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
     },
     {
-        id: 4,
-        titulo: "Circuito Internacional de Potrero",
-        descripcion: "Famoso circuito de carreras que rodea el lago, escenario de competencias internacionales.",
-        imagen: circuitoImg,
-        icono: FaRoute,
-        tipo: 'Atracción Deportiva',
-        duracion: '1-2 horas',
-        ubicacion: 'Alrededor del Lago Potrero de los Funes',
-        comoLlegar: 'Seguí las indicaciones al Circuito desde el centro de la localidad',
-        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sEmbalse%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
-    },
-    {
         id: 5,
         titulo: "Parque Nativo",
-        descripcion: "7 hectáreas de naturaleza con flora nativa y exótica. Perfecto para un día de campo con todas las comodidades.",
+        descripcion: "Parque Nativo es un espacio de 7 hectáreas de naturaleza que combina flora nativa y exótica, ideal para disfrutar de un día al aire libre. Perfecto para un día de campo con todas las comodidades. Cuenta con senderos señalizados, zonas de picnic con parrillas, y áreas recreativas para niños. Ofrece actividades como avistamiento de aves, paseos en bicicleta, y talleres de fotografía natural. La entrada es totalmente gratuita y está abierto todos los días de 08:00 a 19:00, incluyendo feriados.",
         imagen: parqueImg,
         icono: FaTree,
         tipo: 'Parque Natural',
@@ -112,7 +103,7 @@ const atractivosTuristicos = [
     },
     {
         id: 9,
-        titulo: "Mirador del Lago",
+        titulo: "Paseo del Lago",
         descripcion: "Punto panorámico con vistas impresionantes del lago y las sierras circundantes.",
         imagen: miradorImg,
         icono: FaMountain,
@@ -121,7 +112,32 @@ const atractivosTuristicos = [
         ubicacion: 'Al este del Lago Potrero de los Funes',
         comoLlegar: 'Seguí las señales desde el Circuito Internacional',
         mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3337.272422918556!2d-66.23616522496036!3d-33.23316578641621!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4157cdf2383b5%3A0x1d8ae56ec70f82d6!2sLago%20Potrero%20De%20Los%20Funes!5e0!3m2!1ses!2sar!4v1727414266581!5m2!1ses!2sar',
-    }
+    },
+    {
+        id: 10,
+        titulo: "Valle de Piedra",
+        descripcion: "Un impresionante valle con formaciones rocosas milenarias que crean un paisaje único. Ideal para trekking, fotografía y actividades al aire libre.",
+        imagen: vallePiedra,
+        icono: FaMountain,
+        tipo: 'Área Natural',
+        duracion: '2-3 horas',
+        ubicacion: 'Al sureste de Potrero de los Funes',
+        comoLlegar: 'Tomá la Ruta Provincial 9 en dirección al Valle de Piedra desde el centro de la localidad.',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sValle%20de%20Piedra!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
+    },
+    {
+        id: 11,
+        titulo: "Laguna de las Uvas",
+        descripcion: "Una laguna rodeada de viñedos y paisajes pintorescos. Perfecta para un día de relajación, caminatas suaves y degustaciones de productos regionales.",
+        imagen: lagunaUvas,
+        icono: FaWater,
+        tipo: 'Laguna',
+        duracion: '2 horas',
+        ubicacion: 'A 5 km al norte de Potrero de los Funes',
+        comoLlegar: 'Accedé por la Ruta Provincial 9 en dirección a La Punta.',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sLaguna%20de%20las%20Uvas!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
+    },
+
 ];
 
 

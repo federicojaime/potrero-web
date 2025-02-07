@@ -82,7 +82,7 @@ const TouristInfoSection = () => {
                             <ul className="space-y-2 text-gray-600">
                                 <li>• Deportes acuáticos en el lago</li>
                                 <li>• Trekking y mountain bike</li>
-                                <li>• Visitas al Circuito Internacional</li>
+                                {/*<li>• Visitas al Circuito Internacional</li>*/}
                                 <li>• Pesca deportiva</li>
                                 <li>• Turismo aventura</li>
                             </ul>
