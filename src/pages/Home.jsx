@@ -10,20 +10,19 @@ import imagenAlojamiento from '/src/assets/imagenes/alojamiento.jpg';
 import imagenGastronomia from '/src/assets/imagenes/gastronomia.jpg';
 import imagenEventos from '/src/assets/imagenes/eventos.jpg';
 import backgroundImage from '../assets/images/images.jpg';
-
+import SeccionCard from './SeccionCard';
 import { Card } from 'flowbite-react';
 
 // Definimos los colores de la marca según el manual
 const colors = {
-    primary: '#00A8E8', // Azul más suave
-    secondary: '#007EA7', // Azul más oscuro
-    green: '#32CD32', // Verde vibrante
+    primary: '#0096FF', // Azul más brillante
+    secondary: '#0047AB', // Azul real profundo
+    green: '#00B140', // Verde esmeralda vibrante
     yellow: '#FFD700', // Amarillo dorado
-    orange: '#FFA500', // Naranja brillante
-    beige: '#F5F5DC', // Beige suave
-    black: '#1C1C1C', // Negro suave
+    orange: '#FF6B35', // Naranja coral vibrante
+    beige: '#FFF8DC', // Beige más luminoso
+    black: '#1C1C1C', // Negro suave para contraste
 };
-
 // Definimos el array de secciones con todas las propiedades
 const secciones = [
     {
@@ -90,7 +89,7 @@ const AtractiveCard = ({ icon: Icon, title, description }) => (
     </motion.div>
 );
 
-const SeccionCard = ({ seccion, index }) => (
+const SeccionCarda = ({ seccion, index }) => (
     <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -162,15 +161,15 @@ function Home() {
         <div className="bg-gray-50">
             <OptimizedVideoBanner />
 
-            <section className="py-20 bg-white">
+            {/* <section className="py-20 bg-white">
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Atractivos Principales</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/*<AtractiveCard
+                        <AtractiveCard
                             icon={FaMapMarkedAlt}
                             title="Circuito Internacional"
                             description="Experimentá la emoción en nuestro famoso circuito de carreras."
-                        />*/}
+                        />
                         <AtractiveCard
                             icon={FaMountain}
                             title="Sierras Puntanas"
@@ -183,8 +182,20 @@ function Home() {
                         />
                     </div>
                 </div>
-            </section>
+            </section>*/}
 
+
+
+            <section className="py-20 bg-gray-50">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-4xl font-bold text-center mb-16">Visitá Potrero de los Funes</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {secciones.map((seccion, index) => (
+                            <SeccionCard key={index} seccion={seccion} index={index} />
+                        ))}
+                    </div>
+                </div>
+            </section>
             <motion.section
                 className="py-20 text-white bg-fixed bg-center bg-cover"
                 initial={{ opacity: 0 }}
@@ -220,17 +231,6 @@ function Home() {
                     </motion.p>
                 </div>
             </motion.section>
-
-            <section className="py-20 bg-gray-50">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Visitá Potrero de los Funes</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {secciones.map((seccion, index) => (
-                            <SeccionCard key={index} seccion={seccion} index={index} />
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             {/**  <section className="py-20 bg-white">
                 <div className="container mx-auto px-4">

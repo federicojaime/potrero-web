@@ -63,7 +63,7 @@ const atractivosTuristicos = [
         duracion: '3-4 horas',
         ubicacion: 'Sobre el Circuito Internacional',
         comoLlegar: 'Tomá el camino hacia El Volcán desde Potrero de los Funes',
-        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sEmbalse%20Potrero%20de%20los%20Funes!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d26699.364463850987!2d-66.233904!3d-33.229284!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4157a8b283eb5%3A0x7156cf6fb364fbea!2sParque%20Nativo!5e0!3m2!1ses!2sar!4v1738951966356!5m2!1ses!2sar',
     },
     {
         id: 6,
@@ -75,7 +75,7 @@ const atractivosTuristicos = [
         duracion: '1-2 horas',
         ubicacion: 'Al norte de Potrero de los Funes',
         comoLlegar: 'Seguí el sendero señalizado desde el centro de la localidad',
-        mapaUrl: 'https://goo.gl/maps/example6',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13353.943771547963!2d-66.24101165154718!3d-33.20135442096605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4155361f0e58d%3A0xbdffc9171e831650!2sSalto%20de%20la%20Moneda!5e0!3m2!1ses!2sar!4v1738952023914!5m2!1ses!2sar',
     },
     {
         id: 7,
@@ -87,20 +87,9 @@ const atractivosTuristicos = [
         duracion: '30 minutos',
         ubicacion: 'Centro Cívico de Potrero de los Funes',
         comoLlegar: 'Ubicada en el centro de la localidad, fácilmente accesible a pie',
-        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3338.4846424133257!2d-66.23536442480426!3d-33.201388526190904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d41544b4355663%3A0x32814d8ba1d1e5b!2sSalto%20De%20La%20Moneda!5e0!3m2!1ses!2sar!4v1727414183427!5m2!1ses!2sar',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13353.943771547963!2d-66.24101165154718!3d-33.20135442096605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d43e84f2bedf27%3A0xddfce233bbd733f0!2sCapilla%20San%20Antonio!5e0!3m2!1ses!2sar!4v1738952065194!5m2!1ses!2sar',
     },
-    {
-        id: 8,
-        titulo: "Cerro Retana",
-        descripcion: "Uno de los picos más altos de las Sierras de San Luis (2152m). Perfecto para trekking con vistas espectaculares.",
-        imagen: cerroImg,
-        icono: FaMountain,
-        tipo: 'Sierra',
-        duracion: 'Todo el día',
-        ubicacion: 'Al oeste de Potrero de los Funes',
-        comoLlegar: 'Acceso por sendero desde Potrero de los Funes o El Suyuque',
-        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13368.159318986905!2d-66.2186330516283!3d-33.10803670245844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4698a35c4ca11%3A0xe3fc9d9e1c66476b!2sCerro%20Retama!5e0!3m2!1ses!2sar!4v1727414213576!5m2!1ses!2sar',
-    },
+
     {
         id: 9,
         titulo: "Paseo del Lago",
@@ -123,7 +112,7 @@ const atractivosTuristicos = [
         duracion: '2-3 horas',
         ubicacion: 'Al sureste de Potrero de los Funes',
         comoLlegar: 'Tomá la Ruta Provincial 9 en dirección al Valle de Piedra desde el centro de la localidad.',
-        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sValle%20de%20Piedra!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11233.371665180171!2d-66.23675503122277!3d-33.16946579069872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d46a9c9b80ced7%3A0x6f1782d567d7daea!2sValle%20De%20Piedra!5e0!3m2!1ses!2sar!4v1738952159702!5m2!1ses!2sar'
     },
     {
         id: 11,
@@ -134,8 +123,8 @@ const atractivosTuristicos = [
         tipo: 'Laguna',
         duracion: '2 horas',
         ubicacion: 'A 5 km al norte de Potrero de los Funes',
-        comoLlegar: 'Accedé por la Ruta Provincial 9 en dirección a La Punta.',
-        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13349.685066952065!2d-66.24420395152288!3d-33.229265426511745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d4156304a2f087%3A0x932b6ed40a2b221!2sLaguna%20de%20las%20Uvas!5e0!3m2!1ses!2sar!4v1727414105925!5m2!1ses!2sar',
+        comoLlegar: 'Accedé por los senderos ubicados atrás de la Capilla de la localidad.',
+        mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3339.248200975208!2d-66.21264692496324!3d-33.18135868378072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d46b56fdc3a4a5%3A0xec2ee72efc14d5e9!2sLagunas%20de%20las%20Uvas!5e0!3m2!1ses!2sar!4v1738952201790!5m2!1ses!2sar'
     },
 
 ];

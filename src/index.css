@@ -32,3 +32,13 @@
 .h-56 {
     height: 14rem;
 }
+
+@layer utilities {
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .drop-shadow-glow {
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+    }
+}

@@ -49,7 +49,7 @@ const OptimizedVideoBanner = () => {
                     videoLoaded ? 'opacity-100' : 'opacity-0'
                 }`}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-400 opacity-40" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-yellow-100 opacity-40" />
             
             <div className="relative z-10 flex flex-col items-center justify-center h-full pb-1">
                 <motion.div
