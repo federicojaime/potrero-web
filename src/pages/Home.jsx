@@ -64,7 +64,6 @@ const secciones = [
         color: colors.orange,
         textColor: 'text-white',
         link: '/gastronomia',
-        disabled: true, // Deshabilitar la sección
     },
     {
         titulo: 'Eventos',
