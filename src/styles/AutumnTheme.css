@@ -1,0 +1,177 @@
+/* Estilos globales para el tema de otoño */
+
+/* Clase base para activar el tema */
+.autumn-theme {
+  --autumn-primary: #E67E22;
+  --autumn-secondary: #F1C40F;
+  --autumn-accent: #ffffff;
+  --autumn-cream: #F5E6D3;
+  --autumn-amber: #ffffff;
+  --autumn-burgundy: #F1C40F;
+  --autumn-gold: #F1C40F;
+  --autumn-copper: #F1C40F;
+  --autumn-forest: #27AE60;
+  --autumn-light-bg: #FFF8E1; 
+  --autumn-dark-bg: #5D4037;
+}
+
+/* Fondos y colores base */
+.autumn-theme body {
+  background-color: var(--autumn-light-bg);
+  color: #333;
+}
+
+/* Botones con estilo otoñal */
+.autumn-theme .btn-primary {
+  background: linear-gradient(to right, var(--autumn-amber), var(--autumn-copper));
+  border: none;
+  color: white;
+}
+
+.autumn-theme .btn-primary:hover {
+  background: linear-gradient(to right, var(--autumn-copper), var(--autumn-amber));
+  box-shadow: 0 4px 8px rgba(226, 102, 0, 0.3);
+}
+
+/* Cards con estilo otoñal */
+.autumn-theme .card {
+  border-color: var(--autumn-cream);
+  box-shadow: 0 4px 12px rgba(210, 105, 30, 0.1);
+}
+
+.autumn-theme .card:hover {
+  box-shadow: 0 8px 24px rgba(210, 105, 30, 0.2);
+}
+
+/* Headings */
+.autumn-theme h1, 
+.autumn-theme h2, 
+.autumn-theme h3 {
+  color: var(--autumn-secondary);
+}
+
+/* Links */
+.autumn-theme a:not(.no-autumn) {
+  color: var(--autumn-accent);
+  transition: color 0.3s;
+}
+
+.autumn-theme a:not(.no-autumn):hover {
+  color: var(--autumn-burgundy);
+}
+
+/* Decoración de secciones */
+.autumn-theme .section-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--autumn-amber), transparent);
+  margin: 2rem 0;
+}
+
+/* Fondos de secciones alternantes */
+.autumn-theme .section-odd {
+  background-color: white;
+}
+
+.autumn-theme .section-even {
+  background-color: var(--autumn-light-bg);
+}
+
+/* Destacados */
+.autumn-theme .highlight {
+  background-color: rgba(230, 126, 34, 0.1);
+  border-left: 3px solid var(--autumn-primary);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+/* Etiquetas y badges */
+.autumn-theme .badge {
+  background-color: var(--autumn-amber);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* Personalización para imágenes */
+.autumn-theme .img-border {
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(210, 105, 30, 0.2);
+}
+
+/* Efecto hover para cards y elementos interactivos */
+.autumn-theme .hover-lift {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.autumn-theme .hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(210, 105, 30, 0.25);
+}
+
+/* Listas con iconos de hojas */
+.autumn-theme .autumn-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.autumn-theme .autumn-list li::before {
+  content: '🍂';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Botones de acción */
+.autumn-theme .btn-autumn {
+  background: var(--autumn-copper);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(211, 84, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.autumn-theme .btn-autumn:hover {
+  background: var(--autumn-burgundy);
+  box-shadow: 0 6px 12px rgba(211, 84, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Scroll personalizado */
+.autumn-theme::-webkit-scrollbar {
+  width: 10px;
+}
+
+.autumn-theme::-webkit-scrollbar-track {
+  background: var(--autumn-light-bg);
+}
+
+.autumn-theme::-webkit-scrollbar-thumb {
+  background: var(--autumn-amber);
+  border-radius: 5px;
+}
+
+.autumn-theme::-webkit-scrollbar-thumb:hover {
+  background: var(--autumn-copper);
+}
+
+/* Modificaciones específicas para componentes */
+.autumn-theme .section-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.autumn-theme .section-title::after {
+  content: '';
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--autumn-copper), transparent);
+}

@@ -1,19 +1,11 @@
+// src/components/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaLeaf } from "react-icons/fa";
+import { motion } from "framer-motion";
 import logo from "../assets/logos/logo_blanco.png";
-
-// Colores de la marca según el manual, con ajuste del amarillo a crema
-const colors = {
-  primary: "#00ACD1",
-  secondary: "#2D708F",
-  green: "#1BB200",
-  darkGreen: "#2B9100",
-  cream: "#F5E6D3", // Color crema ajustado
-  orange: "#EDA000",
-  beige: "#CCB99B",
-  black: "#1D1D1B",
-};
+import { autumnColors, autumnGradients } from "../theme/AutumnTheme";
+import FallingLeaves from "./FallingLeaves";
 
 function CustomNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,28 +32,38 @@ function CustomNavbar() {
   }, []);
 
   const navItems = [
-    "Inicio",
-    "Actividades",
-    "Alojamiento",
-    "Gastronomia",
-    "Contacto",
+    { name: "Inicio", path: "/" },
+    { name: "Actividades", path: "/actividades" },
+    { name: "Alojamiento", path: "/alojamiento" },
+    { name: "Gastronomía", path: "/gastronomia" },
+    { name: "Contacto", path: "/contacto" },
   ];
+
+  // Efecto de gradiente otoñal con opacidad agregada cuando se desplaza
+  const navbarBackground = isScrolled
+    ? `bg-gradient-to-r from-amber-700/90 via-orange-600/90 to-amber-800/90 shadow-md backdrop-blur-sm`
+    : `bg-gradient-to-r from-amber-700 via-orange-600 to-amber-800`;
 
   return (
     <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-opacity-90 shadow-md" : ""
-      }`}
-      style={{ backgroundColor: colors.primary }}
+      className={`sticky top-0 z-50 transition-all duration-300 ${navbarBackground} relative overflow-hidden`}
     >
-      <div className="container mx-auto px-4 py-3">
+      {/* Efecto de hojas cayendo */}
+      <FallingLeaves quantity={5} containerClassName="h-full" />
+      
+      <div className="container mx-auto px-4 py-3 relative z-20">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center">
             <img
               src={logo}
-              className="h-12 mr-3"
+              className="h-12 mr-3 drop-shadow-md"
               alt="Potrero de los Funes Logo"
             />
+            {/* Indicador de temporada otoño */}
+            <div className="bg-amber-200 text-amber-800 px-2 py-1 rounded-full text-xs font-medium hidden md:flex items-center">
+              <FaLeaf className="mr-1" /> 
+              Temporada de Otoño
+            </div>
           </Link>
 
           {/* Botón de menú para móviles */}
@@ -79,14 +81,12 @@ function CustomNavbar() {
               {navItems.map((item, index) => (
                 <li key={index}>
                   <Link
-                    to={item === "Inicio" ? "/" : `/${item.toLowerCase()}`}
-                    className="text-white hover:text-cream-300 transition duration-300 relative group"
-                    style={{ "--cream-300": colors.cream }}
+                    to={item.path}
+                    className="text-white hover:text-amber-200 transition duration-300 relative group"
                   >
-                    {item}
+                    {item.name}
                     <span
-                      className="absolute left-0 right-0 bottom-0 h-0.5 bg-cream-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
-                      style={{ backgroundColor: colors.cream }}
+                      className="absolute left-0 right-0 bottom-0 h-0.5 bg-amber-200 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
                     ></span>
                   </Link>
                 </li>
@@ -102,19 +102,23 @@ function CustomNavbar() {
               {navItems.map((item, index) => (
                 <li key={index}>
                   <Link
-                    to={item === "Inicio" ? "/" : `/${item.toLowerCase()}`}
-                    className="block text-white hover:text-cream-300 transition duration-300 relative group"
+                    to={item.path}
+                    className="block text-white hover:text-amber-200 transition duration-300 relative group"
                     onClick={() => setIsOpen(false)}
-                    style={{ "--cream-300": colors.cream }}
                   >
-                    {item}
+                    {item.name}
                     <span
-                      className="absolute left-0 right-0 bottom-0 h-0.5 bg-cream-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
-                      style={{ backgroundColor: colors.cream }}
+                      className="absolute left-0 right-0 bottom-0 h-0.5 bg-amber-200 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
                     ></span>
                   </Link>
                 </li>
               ))}
+              <li>
+                <div className="flex items-center py-2 text-white text-xs">
+                  <FaLeaf className="mr-1 text-amber-200" /> 
+                  Temporada de Otoño
+                </div>
+              </li>
             </ul>
           </div>
         )}
