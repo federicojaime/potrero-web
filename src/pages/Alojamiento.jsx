@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+/// src/pages/Alojamiento.jsx
+import { useState, useEffect, useRef } from "react";
 import {
   FaWifi,
   FaParking,
@@ -31,9 +31,23 @@ import {
   FaSort,
   FaMapMarkerAlt,
   FaDollarSign,
-  FaInfoCircle
+  FaInfoCircle,
+  FaTimes
 } from "react-icons/fa";
-import { Card, Button } from "flowbite-react";
+
+// Función de aleatorización simple y efectiva que no depende de localStorage
+const shuffleArray = (array) => {
+  // Crea una copia para evitar modificar el original
+  const shuffled = [...array];
+
+  // Algoritmo Fisher-Yates (Knuth) para barajar
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+};
 
 // Función para generar un color en base al nombre del alojamiento (consistente)
 const getColorFromName = (name) => {
@@ -45,9 +59,15 @@ const getColorFromName = (name) => {
 
   // Paleta de colores predefinida para establecimientos de hospedaje
   const colors = [
-    
     '#f39c12', // naranja
-    
+    '#e74c3c', // rojo
+    '#3498db', // azul
+    '#2ecc71', // verde
+    '#9b59b6', // púrpura
+    '#1abc9c', // turquesa
+    '#d35400', // naranja oscuro
+    '#c0392b', // rojo oscuro
+    '#8e44ad', // púrpura oscuro
   ];
 
   // Seleccionamos un color basado en el nombre
@@ -219,12 +239,6 @@ const AlojamientoModal = ({ onClose, alojamiento }) => {
               <p className="text-gray-600">Imágenes próximamente</p>
             </div>
           )}
-          {/*           {alojamiento.calificacion && (
-            <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full shadow-md">
-              <RatingStars rating={alojamiento.calificacion} />
-            </div>
-          )}*/}
-
         </div>
 
         <div className="p-6 space-y-6">
@@ -267,7 +281,6 @@ const AlojamientoModal = ({ onClose, alojamiento }) => {
             </h4>
             <div className="bg-gray-50 p-3 rounded-lg">
               <p className="text-gray-700">{alojamiento.domicilio}</p>
-              {/* Aquí podrías agregar un mapa estático o un enlace a Google Maps */}
             </div>
           </div>
 
@@ -398,7 +411,7 @@ const AlojamientoCard = ({ alojamiento, onClick }) => {
         <span className="font-medium text-white">
           {alojamiento.tipo.charAt(0).toUpperCase() + alojamiento.tipo.slice(1)}
         </span>
-        
+
       </div>
 
       {/* Área de imagen o patrón */}
@@ -427,13 +440,6 @@ const AlojamientoCard = ({ alojamiento, onClick }) => {
           <FaMapMarkerAlt className="mr-1 mt-1 flex-shrink-0" />
           <span className="line-clamp-2">{alojamiento.domicilio}</span>
         </p>
-
-        {/* Mostrar precio si está disponible 
-        {alojamiento.precio && (
-          <div className="mb-3">
-            <PriceDisplay precio={alojamiento.precio} />
-          </div>
-        )}*/}
 
         {/* Servicios destacados */}
         <div className="flex flex-wrap gap-2 mb-3">
@@ -503,8 +509,8 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={`p-2 rounded-full ${currentPage === 1
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-[#d44203] hover:bg-[##d44203] hover:text-white"
+          ? "text-gray-400 cursor-not-allowed"
+          : "text-[#d44203] hover:bg-[##d44203] hover:text-white"
           }`}
       >
         <FaChevronLeft />
@@ -515,8 +521,8 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
           <button
             onClick={() => onPageChange(1)}
             className={`w-8 h-8 rounded-full ${1 === currentPage
-                ? "bg-[#00add5] text-white"
-                : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
+              ? "bg-[#00add5] text-white"
+              : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
               }`}
           >
             1
@@ -533,8 +539,8 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
           key={page}
           onClick={() => onPageChange(page)}
           className={`w-8 h-8 rounded-full ${page === currentPage
-              ? "bg-[#cf6f19] text-white"
-              : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
+            ? "bg-[#cf6f19] text-white"
+            : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
             }`}
         >
           {page}
@@ -549,8 +555,8 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
           <button
             onClick={() => onPageChange(pageCount)}
             className={`w-8 h-8 rounded-full ${pageCount === currentPage
-                ? "bg-[#d44203] text-white"
-                : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
+              ? "bg-[#d44203] text-white"
+              : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
               }`}
           >
             {pageCount}
@@ -562,8 +568,8 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === pageCount}
         className={`p-2 rounded-full ${currentPage === pageCount
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
+          ? "text-gray-400 cursor-not-allowed"
+          : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
           }`}
       >
         <FaChevronRight />
@@ -579,11 +585,16 @@ function Alojamiento() {
   const [selectedAlojamiento, setSelectedAlojamiento] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [sortBy, setSortBy] = useState("nombre"); // nombre, precio, calificacion
+  const [sortBy, setSortBy] = useState("random"); // Inicializamos con orden aleatorio
   const [servicesFilter, setServicesFilter] = useState([]);
+  const [alojamientosData, setAlojamientosData] = useState([]);
   const itemsPerPage = 9;
 
-  // Importar datos de alojamientos aquí
+  // Referencia al contenedor de alojamientos para el scroll
+  const alojamientosRef = useRef(null);
+
+  // Aquí deberías tener tus datos reales de alojamientos
+  // Voy a incluir solo algunos ejemplos para demostración
   const alojamientos = [
     {
       numero: "0000001",
@@ -2131,6 +2142,24 @@ function Alojamiento() {
       web: null,
     },
   ];
+  // Cargar datos aleatorizados al inicio y cada vez que se renderiza el componente
+  useEffect(() => {
+    console.log("Mezclando alojamientos...");
+    // En lugar de usar localStorage, hacemos una mezcla directa
+    const randomizedAlojamientos = shuffleArray(alojamientos);
+    console.log("Orden mezclado:", randomizedAlojamientos.map(a => a.nombre));
+    setAlojamientosData(randomizedAlojamientos);
+  }, []); // La dependencia vacía hace que se ejecute solo al montar el componente
+
+  // Actualizar servicios seleccionados
+  const handleServiceToggle = (service) => {
+    if (servicesFilter.includes(service)) {
+      setServicesFilter(servicesFilter.filter(s => s !== service));
+    } else {
+      setServicesFilter([...servicesFilter, service]);
+    }
+    setCurrentPage(1);
+  };
 
   // Servicios disponibles para filtrar
   const availableServices = [
@@ -2157,18 +2186,8 @@ function Alojamiento() {
     "departamento"
   ];
 
-  // Actualizar servicios seleccionados
-  const handleServiceToggle = (service) => {
-    if (servicesFilter.includes(service)) {
-      setServicesFilter(servicesFilter.filter(s => s !== service));
-    } else {
-      setServicesFilter([...servicesFilter, service]);
-    }
-    setCurrentPage(1);
-  };
-
   // Filtrar alojamientos
-  const filteredAlojamientos = alojamientos.filter((alojamiento) => {
+  const filteredAlojamientos = alojamientosData.filter((alojamiento) => {
     // Buscar por término
     const matchesSearch =
       alojamiento.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -2202,6 +2221,7 @@ function Alojamiento() {
       if (!b.calificacion) return -1;
       return b.calificacion - a.calificacion;
     }
+    // Para "random", mantener el orden que ya está aleatorizado en alojamientosData
     return 0;
   });
 
@@ -2223,8 +2243,12 @@ function Alojamiento() {
     setSearchTerm("");
     setSelectedType("todos");
     setServicesFilter([]);
-    setSortBy("nombre");
+    setSortBy("random");
     setCurrentPage(1);
+
+    // Volver a mezclar los datos
+    const randomizedAlojamientos = shuffleArray(alojamientos);
+    setAlojamientosData(randomizedAlojamientos);
   };
 
   // Efecto para restablecer la página al cambiar filtros
@@ -2245,7 +2269,7 @@ function Alojamiento() {
       </div>
 
       {/* Barra de búsqueda y filtros */}
-      <div className="mb-8">
+      <div className="mb-8" ref={alojamientosRef}>
         {/* Búsqueda */}
         <div className="mb-4 relative">
           <input
@@ -2291,9 +2315,8 @@ function Alojamiento() {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="nombre">Ordenar por nombre</option>
-              <option value="precio">Ordenar por precio</option>
-              <option value="calificacion">Ordenar por calificación</option>
+              <option value="random">Aleatorio</option>
+              <option value="nombre">Por nombre</option>
             </select>
           </div>
 
@@ -2307,8 +2330,8 @@ function Alojamiento() {
                     key={tipo}
                     onClick={() => setSelectedType(tipo)}
                     className={`px-3 py-1 rounded-full text-sm ${selectedType === tipo
-                        ? "bg-[#00add5] text-white"
-                        : "bg-gray-100 text-gray-700"
+                      ? "bg-[#00add5] text-white"
+                      : "bg-gray-100 text-gray-700"
                       }`}
                   >
                     {tipo === "todos" ? "Todos" : tipo}
@@ -2325,8 +2348,8 @@ function Alojamiento() {
                       key={service}
                       onClick={() => handleServiceToggle(service)}
                       className={`px-3 py-1 rounded-full text-sm flex items-center gap-1 ${servicesFilter.includes(service)
-                          ? "bg-[#00add5] text-white"
-                          : "bg-gray-100 text-gray-700"
+                        ? "bg-[#00add5] text-white"
+                        : "bg-gray-100 text-gray-700"
                         }`}
                     >
                       {Icon && <Icon size={12} />}
@@ -2357,8 +2380,8 @@ function Alojamiento() {
                   key={tipo}
                   onClick={() => setSelectedType(tipo)}
                   className={`px-4 py-2 rounded-lg ${selectedType === tipo
-                      ? "bg-[#00add5] text-white"
-                      : "bg-white text-gray-700 border border-gray-300"
+                    ? "bg-[#00add5] text-white"
+                    : "bg-white text-gray-700 border border-gray-300"
                     } transition-colors duration-300`}
                 >
                   {tipo === "todos" ? "Todos" : tipo}
@@ -2373,6 +2396,7 @@ function Alojamiento() {
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
+                <option value="random">Aleatorio</option>
                 <option value="nombre">Nombre</option>
               </select>
             </div>
@@ -2398,8 +2422,8 @@ function Alojamiento() {
                     key={service}
                     onClick={() => handleServiceToggle(service)}
                     className={`px-3 py-1 rounded-full text-sm flex items-center gap-1 ${servicesFilter.includes(service)
-                        ? "bg-[#00add5] text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-[#00add5] text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       } transition-colors duration-200`}
                   >
                     {Icon && <Icon size={12} />}
@@ -2433,7 +2457,7 @@ function Alojamiento() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {currentAlojamientos.map((alojamiento, index) => (
               <AlojamientoCard
-                key={alojamiento.numero || index}
+                key={`${alojamiento.numero || alojamiento.nombre}-${index}`}
                 alojamiento={alojamiento}
                 onClick={() => setSelectedAlojamiento(alojamiento)}
               />
