@@ -79,7 +79,7 @@ const atractivosTuristicos = [
     },
     {
         id: 7,
-        titulo: "Capilla de San Antonio",
+        titulo: "Parroquia San Antonio de Padua",
         descripcion: "Histórica capilla de 1957 con un pesebre electrónico único, ubicada en el corazón de Potrero de los Funes.",
         imagen: capillaImg,
         icono: FaChurch,

@@ -8,7 +8,7 @@ import travesiaImg from "../assets/imagenes/actividades/travesia.jpg";
 const circuitos = [
     {
         id: 1,
-        nombre: "Circuito del Lago",
+        nombre: "Paseo del Lago",
         tipo: "Senderismo",
         descripcion: "Recorre los alrededores del lago disfrutando de vistas panorámicas.",
         imagen: miradorImg,

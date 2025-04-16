@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   FaWifi,
   FaParking,
@@ -25,164 +25,25 @@ import {
   FaSearchLocation,
   FaChevronLeft,
   FaChevronRight,
-  FaStar,
-  FaStarHalfAlt,
-  FaFilter,
-  FaSort,
-  FaMapMarkerAlt,
-  FaDollarSign,
-  FaInfoCircle
 } from "react-icons/fa";
 import { Card, Button } from "flowbite-react";
 
-// Función para generar un color en base al nombre del alojamiento (consistente)
-const getColorFromName = (name) => {
-  // Creamos un número basado en la suma de códigos ASCII de las letras
-  let sum = 0;
-  for (let i = 0; i < name.length; i++) {
-    sum += name.charCodeAt(i);
-  }
-
-  // Paleta de colores predefinida para establecimientos de hospedaje
-  const colors = [
-    
-    '#f39c12', // naranja
-    
-  ];
-
-  // Seleccionamos un color basado en el nombre
-  return colors[sum % colors.length];
-};
-
-// Función para generar un patrón de fondo para cada tipo de alojamiento
-const getPatternStyle = (tipo, color) => {
-  // Diferentes patrones según el tipo
-  switch (tipo) {
-    case 'hotel':
-      return {
-        backgroundImage: `linear-gradient(135deg, ${color}22 25%, transparent 25%), 
-                         linear-gradient(225deg, ${color}22 25%, transparent 25%), 
-                         linear-gradient(45deg, ${color}22 25%, transparent 25%), 
-                         linear-gradient(315deg, ${color}22 25%, transparent 25%)`,
-        backgroundPosition: '10px 0, 10px 0, 0 0, 0 0',
-        backgroundSize: '20px 20px',
-        backgroundRepeat: 'repeat'
-      };
-    case 'apart hotel':
-      return {
-        backgroundImage: `linear-gradient(${color}22 1px, transparent 1px), 
-                         linear-gradient(to right, ${color}22 1px, transparent 1px)`,
-        backgroundSize: '20px 20px'
-      };
-    case 'cabaña':
-    case 'cabañas':
-      return {
-        backgroundImage: `radial-gradient(${color}33 15%, transparent 16%), 
-                         radial-gradient(${color}33 15%, transparent 16%)`,
-        backgroundSize: '30px 30px',
-        backgroundPosition: '0 0, 15px 15px'
-      };
-    case 'casa':
-      return {
-        backgroundImage: `repeating-linear-gradient(45deg, ${color}11, ${color}11 10px, ${color}22 10px, ${color}22 20px)`
-      };
-    case 'hostería':
-    case 'posada':
-      return {
-        backgroundImage: `linear-gradient(45deg, ${color}22 25%, transparent 25%, transparent 75%, ${color}22 75%, ${color}22)`,
-        backgroundSize: '30px 30px'
-      };
-    case 'dormis':
-      return {
-        backgroundImage: `repeating-linear-gradient(0deg, ${color}22, ${color}22 5px, transparent 5px, transparent 20px)`
-      };
-    case 'departamento':
-      return {
-        backgroundImage: `linear-gradient(${color}22 2px, transparent 2px), 
-                         linear-gradient(90deg, ${color}22 2px, transparent 2px)`,
-        backgroundSize: '30px 30px'
-      };
-    default:
-      return {
-        backgroundImage: `linear-gradient(${color}22 1px, transparent 1px)`,
-        backgroundSize: '20px 20px'
-      };
-  }
-};
-
-// Componente para generar estrellas de calificación
-const RatingStars = ({ rating }) => {
-  if (!rating) return null;
-
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 >= 0.5;
-  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
-  return (
-    <div className="flex items-center text-yellow-400">
-      {[...Array(fullStars)].map((_, i) => (
-        <FaStar key={`full-${i}`} />
-      ))}
-      {hasHalfStar && <FaStarHalfAlt />}
-      {[...Array(emptyStars)].map((_, i) => (
-        <FaStar key={`empty-${i}`} className="text-gray-300" />
-      ))}
-      <span className="ml-1 text-sm text-gray-600">{rating.toFixed(1)}</span>
-    </div>
-  );
-};
-
-// Componente para mostrar precios con formato
-const PriceDisplay = ({ precio }) => {
-  if (!precio) return null;
-
-  // Si es un número, lo formateamos
-  if (typeof precio === 'number') {
-    return (
-      <div className="flex items-center text-green-600 font-semibold">
-        <FaDollarSign className="mr-1" />
-        {precio.toLocaleString('es-AR')}
-      </div>
-    );
-  }
-
-  // Si es una cadena, la mostramos tal cual
-  return (
-    <div className="flex items-center text-green-600 font-semibold">
-      {precio}
-    </div>
-  );
-};
-
-// Componente modal de detalle de alojamiento
 const AlojamientoModal = ({ onClose, alojamiento }) => {
   if (!alojamiento) return null;
 
   const TipoIcon = tipoAlojamientoIcon[alojamiento.tipo] || FaHome;
-  const color = getColorFromName(alojamiento.nombre);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div
-          className="sticky top-0 p-6 rounded-t-lg flex items-center justify-between"
-          style={{ backgroundColor: color }}
-        >
-          <div className="flex items-center">
-            <div className="bg-white p-3 rounded-full mr-4">
-              <TipoIcon className="text-2xl" style={{ color: color }} />
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold text-white">{alojamiento.nombre}</h3>
-              <p className="text-white text-opacity-80">{alojamiento.tipo.charAt(0).toUpperCase() + alojamiento.tipo.slice(1)}</p>
-            </div>
-          </div>
+        <div className="sticky top-0 bg-[#00add5] text-white p-4 rounded-t-lg">
+          <h3 className="text-2xl font-semibold">{alojamiento.nombre}</h3>
           <button
             onClick={onClose}
-            className="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2 transition-colors duration-200"
+            className="absolute top-4 right-4 text-white hover:text-gray-200"
           >
             <svg
-              className="w-6 h-6 text-white"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -197,150 +58,88 @@ const AlojamientoModal = ({ onClose, alojamiento }) => {
             </svg>
           </button>
         </div>
-
-        {/* Vista previa de imagen */}
-        <div
-          className="h-48 flex items-center justify-center overflow-hidden relative"
-          style={getPatternStyle(alojamiento.tipo, color)}
-        >
-          {alojamiento.imagen ? (
-            <img
-              src={alojamiento.imagen}
-              alt={alojamiento.nombre}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.style.display = 'none';
-              }}
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center text-center p-6">
-              <TipoIcon className="text-6xl mb-4" style={{ color: color }} />
-              <p className="text-gray-600">Imágenes próximamente</p>
-            </div>
-          )}
-          {/*           {alojamiento.calificacion && (
-            <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full shadow-md">
-              <RatingStars rating={alojamiento.calificacion} />
-            </div>
-          )}*/}
-
-        </div>
-
         <div className="p-6 space-y-6">
-          {alojamiento.descripcion && (
-            <div>
-              <h4 className="text-lg font-semibold mb-2 text-gray-800 flex items-center">
-                <FaInfoCircle className="mr-2" style={{ color }} />
-                Acerca de:  {alojamiento.nombre}
-              </h4>
-              <p className="text-base leading-relaxed text-gray-700">
-                {alojamiento.descripcion}
-              </p>
-            </div>
-          )}
-
-          {alojamiento.servicios && alojamiento.servicios.length > 0 && (
-            <div>
-              <h4 className="text-lg font-semibold mb-3 text-gray-800 flex items-center">
-                <TipoIcon className="mr-2" style={{ color }} />
-                Servicios
-              </h4>
-              <div className="grid grid-cols-2 gap-3">
-                {alojamiento.servicios.map((servicio, i) => {
-                  const Icon = iconMap[servicio] || FaHome;
-                  return (
-                    <div key={i} className="flex items-center text-gray-600 bg-gray-50 p-2 rounded-lg">
-                      <Icon className="mr-2 text-gray-500" />
-                      <span className="capitalize">{servicio}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
+          <div className="flex justify-center">
+            <TipoIcon className="text-7xl text-[#00add5]" />
+          </div>
+          <p className="text-base leading-relaxed text-gray-700">
+            {alojamiento.descripcion}
+          </p>
           <div>
-            <h4 className="text-lg font-semibold mb-2 text-gray-800 flex items-center">
-              <FaMapMarkerAlt className="mr-2" style={{ color }} />
-              Ubicación
-            </h4>
-            <div className="bg-gray-50 p-3 rounded-lg">
-              <p className="text-gray-700">{alojamiento.domicilio}</p>
-              {/* Aquí podrías agregar un mapa estático o un enlace a Google Maps */}
+            <h3 className="text-lg font-semibold mb-2 text-[#00add5]">
+              Servicios:
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {alojamiento.servicios.map((servicio, i) => {
+                const Icon = iconMap[servicio];
+                return Icon ? (
+                  <span key={i} className="flex items-center text-gray-600">
+                    <Icon className="mr-1" />
+                    {servicio}
+                  </span>
+                ) : null;
+              })}
             </div>
           </div>
-
           <div>
-            <h4 className="text-lg font-semibold mb-3 text-gray-800 flex items-center">
-              <FaPhoneAlt className="mr-2" style={{ color }} />
-              Contacto
-            </h4>
-            <div className="space-y-2">
-              {alojamiento.telefono && (
-                <div className="flex items-center bg-gray-50 p-3 rounded-lg">
-                  <FaPhoneAlt className="mr-3 text-gray-500" />
-                  <a
-                    href={`tel:${alojamiento.telefono}`}
-                    className="hover:underline !text-gray-700"
-                  >
-                    {alojamiento.telefono}
-                  </a>
-                </div>
-              )}
-
-              {alojamiento.email && (
-                <div className="flex items-center bg-gray-50 p-3 rounded-lg">
-                  <FaEnvelope className="mr-3 text-gray-500" />
-                  <a
-                    href={`mailto:${alojamiento.email}`}
-                    className="hover:underline !text-gray-700"
-                  >
-                    {alojamiento.email}
-                  </a>
-                </div>
-              )}
-
-              {alojamiento.web && (
-                <div className="flex items-center bg-gray-50 p-3 rounded-lg">
-                  <FaGlobe className="mr-3 text-gray-500" />
-                  <a
-                    href={alojamiento.web}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline !text-gray-700 truncate"
-                  >
-                    {alojamiento.web.replace(/^https?:\/\//, '')}
-                  </a>
-                </div>
-              )}
-            </div>
+            <h3 className="text-lg font-semibold mb-2 text-[#00add5]">
+              Dirección:
+            </h3>
+            <p className="text-gray-700">{alojamiento.domicilio}</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2 text-[#00add5]">
+              Contacto:
+            </h3>
+            {alojamiento.telefono && (
+              <p className="flex items-center mb-2 text-gray-700">
+                <FaPhoneAlt className="mr-2 text-[#00add5]" />
+                <a
+                  href={`tel:${alojamiento.telefono}`}
+                  className="hover:underline  !text-gray-900"
+                >
+                  {alojamiento.telefono}
+                </a>
+              </p>
+            )}
+            {alojamiento.email && (
+              <p className="flex items-center mb-2 text-gray-700">
+                <FaEnvelope className="mr-2 text-[#00add5] " />
+                <a
+                  href={`mailto:${alojamiento.email}`}
+                  className="hover:underline !text-gray-900"
+                >
+                  {alojamiento.email}
+                </a>
+              </p>
+            )}
+            {alojamiento.web && (
+              <p className="flex items-center text-gray-700">
+                <FaGlobe className="mr-2 text-[#00add5]" />
+                <a
+                  href={alojamiento.web}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline !text-gray-900"
+                >
+                  {alojamiento.web}
+                </a>
+              </p>
+            )}
           </div>
         </div>
-
-        <div className="bg-gray-50 px-6 py-4 rounded-b-lg flex justify-end">
+        <div className="bg-gray-50 px-6 py-4 rounded-b-lg">
           <button
             onClick={onClose}
-            className="mr-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-300"
+            className="w-full bg-[#00add5] text-white py-2 px-4 rounded-lg hover:bg-[#0098b8] transition duration-300"
           >
             Cerrar
           </button>
-          {alojamiento.telefono && (
-            <a
-              href={`tel:${alojamiento.telefono}`}
-              className="px-4 py-2 rounded-lg text-white transition duration-300 flex items-center"
-              style={{ backgroundColor: color }}
-            >
-              <FaPhoneAlt className="mr-2" />
-              Contactar
-            </a>
-          )}
         </div>
       </div>
     </div>
   );
 };
-
 // Mapa de iconos por tipo de alojamiento
 const tipoAlojamientoIcon = {
   hotel: FaHotel,
@@ -348,18 +147,12 @@ const tipoAlojamientoIcon = {
   hostería: FaHouseUser,
   posada: FaHouseUser,
   cabaña: FaHome,
-  cabañas: FaHome,
   casa: FaHome,
   dormis: FaBed,
   departamento: FaBuilding,
   indeterminado: FaHome,
-  complejo: FaBuilding,
-  "complejo turístico": FaBuilding,
-  hostal: FaHouseUser,
-  "Posadas Spa": FaSpa
 };
 
-// Mapa de iconos para servicios
 const iconMap = {
   wifi: FaWifi,
   estacionamiento: FaParking,
@@ -373,217 +166,14 @@ const iconMap = {
   cocina: FaUtensils,
   jardín: FaTree,
   spa: FaSpa,
-  "tv por cable": FaTv,
-  cafetería: FaCoffee
 };
-
-// Componente para las tarjetas de alojamiento
-const AlojamientoCard = ({ alojamiento, onClick }) => {
-  const TipoIcon = tipoAlojamientoIcon[alojamiento.tipo] || FaHome;
-  const color = getColorFromName(alojamiento.nombre);
-
-  // Obtener el estilo de patrón según el tipo
-  const patternStyle = getPatternStyle(alojamiento.tipo, color);
-
-  return (
-    <div
-      className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all transform hover:-translate-y-1"
-      onClick={() => onClick(alojamiento)}
-    >
-      {/* Header con icono y tipo */}
-      <div className="flex items-center p-4" style={{ backgroundColor: color }}>
-        <div className="bg-white p-2 rounded-full mr-3">
-          <TipoIcon className="text-xl" style={{ color: color }} />
-        </div>
-        <span className="font-medium text-white">
-          {alojamiento.tipo.charAt(0).toUpperCase() + alojamiento.tipo.slice(1)}
-        </span>
-        
-      </div>
-
-      {/* Área de imagen o patrón */}
-      <div className="h-32 overflow-hidden" style={patternStyle}>
-        {alojamiento.imagen ? (
-          <img
-            src={alojamiento.imagen}
-            alt={alojamiento.nombre}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.style.display = 'none';
-            }}
-          />
-        ) : (
-          <div className="flex items-center justify-center h-full text-center">
-            <TipoIcon className="text-5xl opacity-30" style={{ color }} />
-          </div>
-        )}
-      </div>
-
-      {/* Contenido */}
-      <div className="p-5">
-        <h3 className="text-xl font-semibold mb-2 text-gray-800">{alojamiento.nombre}</h3>
-        <p className="text-gray-600 text-sm mb-3 flex items-start">
-          <FaMapMarkerAlt className="mr-1 mt-1 flex-shrink-0" />
-          <span className="line-clamp-2">{alojamiento.domicilio}</span>
-        </p>
-
-        {/* Mostrar precio si está disponible 
-        {alojamiento.precio && (
-          <div className="mb-3">
-            <PriceDisplay precio={alojamiento.precio} />
-          </div>
-        )}*/}
-
-        {/* Servicios destacados */}
-        <div className="flex flex-wrap gap-2 mb-3">
-          {(alojamiento.servicios || []).slice(0, 4).map((servicio, i) => {
-            const Icon = iconMap[servicio];
-            return Icon ? (
-              <div key={i} className="bg-gray-100 p-1 rounded-md text-gray-600" title={servicio}>
-                <Icon />
-              </div>
-            ) : null;
-          })}
-          {(alojamiento.servicios || []).length > 4 && (
-            <div className="bg-gray-100 p-1 rounded-md text-gray-600">
-              +{alojamiento.servicios.length - 4}
-            </div>
-          )}
-        </div>
-
-        {/* Botón de detalle */}
-        <button
-          className="w-full mt-2 py-2 rounded-lg text-white flex items-center justify-center transition-opacity hover:opacity-90"
-          style={{ backgroundColor: color }}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick(alojamiento);
-          }}
-        >
-          Ver detalles
-        </button>
-      </div>
-    </div>
-  );
-};
-
-// Componente para cuando no hay resultados
-const NoResultsMessage = ({ onReset }) => (
-  <div className="col-span-full flex flex-col items-center justify-center py-16">
-    <FaSearchLocation className="text-6xl text-gray-400 mb-4" />
-    <h3 className="text-2xl font-semibold text-gray-700 mb-2">No se encontraron alojamientos</h3>
-    <p className="text-gray-500 text-center max-w-md mb-6">
-      Lo sentimos, no pudimos encontrar alojamientos que coincidan con tu búsqueda.
-      <br />
-      Intentá con otros términos o explorá todas nuestras opciones.
-    </p>
-    <button
-      onClick={onReset}
-      className="px-6 py-2 bg-[#00add5] text-white rounded-full hover:bg-[#0098b8] transition-colors duration-300"
-    >
-      Ver todos los alojamientos
-    </button>
-  </div>
-);
-
-// Componente de paginación
-const Pagination = ({ currentPage, pageCount, onPageChange }) => {
-  const maxVisiblePages = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-  let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
-
-  if (endPage - startPage + 1 < maxVisiblePages) {
-    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-  }
-
-  return (
-    <div className="flex justify-center items-center space-x-2 mt-8">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={`p-2 rounded-full ${currentPage === 1
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-[#d44203] hover:bg-[##d44203] hover:text-white"
-          }`}
-      >
-        <FaChevronLeft />
-      </button>
-
-      {startPage > 1 && (
-        <>
-          <button
-            onClick={() => onPageChange(1)}
-            className={`w-8 h-8 rounded-full ${1 === currentPage
-                ? "bg-[#00add5] text-white"
-                : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
-              }`}
-          >
-            1
-          </button>
-          {startPage > 2 && <span className="text-gray-500">...</span>}
-        </>
-      )}
-
-      {Array.from(
-        { length: endPage - startPage + 1 },
-        (_, i) => startPage + i
-      ).map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          className={`w-8 h-8 rounded-full ${page === currentPage
-              ? "bg-[#cf6f19] text-white"
-              : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
-            }`}
-        >
-          {page}
-        </button>
-      ))}
-
-      {endPage < pageCount && (
-        <>
-          {endPage < pageCount - 1 && (
-            <span className="text-gray-500">...</span>
-          )}
-          <button
-            onClick={() => onPageChange(pageCount)}
-            className={`w-8 h-8 rounded-full ${pageCount === currentPage
-                ? "bg-[#d44203] text-white"
-                : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
-              }`}
-          >
-            {pageCount}
-          </button>
-        </>
-      )}
-
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === pageCount}
-        className={`p-2 rounded-full ${currentPage === pageCount
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-[#d44203] hover:bg-[#d44203] hover:text-white"
-          }`}
-      >
-        <FaChevronRight />
-      </button>
-    </div>
-  );
-};
-
-// Componente principal de alojamientos
 function Alojamiento() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("todos");
   const [selectedAlojamiento, setSelectedAlojamiento] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [sortBy, setSortBy] = useState("nombre"); // nombre, precio, calificacion
-  const [servicesFilter, setServicesFilter] = useState([]);
   const itemsPerPage = 9;
 
-  // Importar datos de alojamientos aquí
   const alojamientos = [
     {
       numero: "0000001",
@@ -1930,29 +1520,29 @@ function Alojamiento() {
       web: null,
     },
     {
-      "numero": "0000113",
-      "nombre": "Posada Spa Terrazas",
-      "titular": "Meiriño Favio",
-      "domicilio": "Av. Circuito del Lago y Río, Potrero de los Funes, San Luis, Argentina",
-      "tipo": "Posadas Spa",
-      "descripcion": "La Posada Spa Terrazas es un encantador hotel de 3 estrellas ubicado en Potrero de los Funes, San Luis, Argentina. Ofrece modernas instalaciones que incluyen piscina climatizada (interior y exterior), centro de fitness, spa, restaurante y Wi-Fi gratuito. Su ambiente acogedor y estratégica ubicación, cerca del Circuito Internacional y de atracciones naturales, aseguran una experiencia inolvidable.",
-      "precio": "",
-      "calificacion": 9.6,
-      "servicios": [
-        "wifi",
-        "estacionamiento",
-        "piscina",
-        "gimnasio",
-        "aire acondicionado",
-        "tv",
-        "spa"
-      ],
-      "imagen": "https://www.terrazasdepotrero.com.ar/imagenes/hotel_exterior.jpg",
-      "telefono": "0266 154777751",
-      "email": "posadaspaterrazas@gmail.com",
-      "web": "https://www.terrazasdepotrero.com.ar/"
-    }
-    ,
+        "numero": "0000113",
+        "nombre": "Posada Spa Terrazas",
+        "titular": "Meiriño Favio",
+        "domicilio": "Av. Circuito del Lago y Río, Potrero de los Funes, San Luis, Argentina",
+        "tipo": "Posadas Spa",
+        "descripcion": "La Posada Spa Terrazas es un encantador hotel de 3 estrellas ubicado en Potrero de los Funes, San Luis, Argentina. Ofrece modernas instalaciones que incluyen piscina climatizada (interior y exterior), centro de fitness, spa, restaurante y Wi-Fi gratuito. Su ambiente acogedor y estratégica ubicación, cerca del Circuito Internacional y de atracciones naturales, aseguran una experiencia inolvidable.",
+        "precio": "",
+        "calificacion": 9.6,
+        "servicios": [
+          "wifi",
+          "estacionamiento",
+          "piscina",
+          "gimnasio",
+          "aire acondicionado",
+          "tv",
+          "spa"
+        ],
+        "imagen": "https://www.terrazasdepotrero.com.ar/imagenes/hotel_exterior.jpg",
+        "telefono": "0266 154777751",
+        "email": "posadaspaterrazas@gmail.com",
+        "web": "https://www.terrazasdepotrero.com.ar/"
+      }
+,      
     {
       numero: "0000114",
       nombre: "Lo de Esther",
@@ -2132,109 +1722,124 @@ function Alojamiento() {
     },
   ];
 
-  // Servicios disponibles para filtrar
-  const availableServices = [
-    "wifi",
-    "estacionamiento",
-    "piscina",
-    "desayuno",
-    "gimnasio",
-    "aire acondicionado",
-    "parrilla",
-    "jardín",
-    "spa"
-  ];
-
-  // Tipos de alojamiento para el filtro
-  const tiposAlojamiento = [
-    "todos",
-    "hotel",
-    "apart hotel",
-    "hostería",
-    "posada",
-    "cabaña",
-    "casa",
-    "departamento"
-  ];
-
-  // Actualizar servicios seleccionados
-  const handleServiceToggle = (service) => {
-    if (servicesFilter.includes(service)) {
-      setServicesFilter(servicesFilter.filter(s => s !== service));
-    } else {
-      setServicesFilter([...servicesFilter, service]);
-    }
-    setCurrentPage(1);
-  };
-
-  // Filtrar alojamientos
   const filteredAlojamientos = alojamientos.filter((alojamiento) => {
-    // Buscar por término
-    const matchesSearch =
-      alojamiento.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (alojamiento.descripcion && alojamiento.descripcion.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      alojamiento.domicilio.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchInName = alojamiento.nombre
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const searchInDescription = alojamiento.descripcion
+      ? alojamiento.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
+      : false;
 
-    // Filtrar por tipo
-    const matchesType = selectedType === "todos" || alojamiento.tipo === selectedType;
-
-    // Filtrar por servicios
-    const matchesServices = servicesFilter.length === 0 ||
-      servicesFilter.every(service =>
-        alojamiento.servicios && alojamiento.servicios.includes(service)
-      );
-
-    return matchesSearch && matchesType && matchesServices;
+    return (
+      (searchInName || searchInDescription) &&
+      (selectedType === "todos" || alojamiento.tipo === selectedType)
+    );
   });
 
-  // Ordenar alojamientos
-  const sortedAlojamientos = [...filteredAlojamientos].sort((a, b) => {
-    if (sortBy === "nombre") {
-      return a.nombre.localeCompare(b.nombre);
-    } else if (sortBy === "precio") {
-      // Si no hay precio, colocarlo al final
-      if (!a.precio) return 1;
-      if (!b.precio) return -1;
-      return a.precio - b.precio;
-    } else if (sortBy === "calificacion") {
-      // Si no hay calificación, colocarlo al final
-      if (!a.calificacion) return 1;
-      if (!b.calificacion) return -1;
-      return b.calificacion - a.calificacion;
-    }
-    return 0;
-  });
-
-  // Calcular paginación
-  const pageCount = Math.ceil(sortedAlojamientos.length / itemsPerPage);
-  const currentAlojamientos = sortedAlojamientos.slice(
+  const pageCount = Math.ceil(filteredAlojamientos.length / itemsPerPage);
+  const currentAlojamientos = filteredAlojamientos.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Cambiar página
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Resetear filtros
-  const resetFilters = () => {
-    setSearchTerm("");
-    setSelectedType("todos");
-    setServicesFilter([]);
-    setSortBy("nombre");
-    setCurrentPage(1);
+  const Pagination = () => {
+    let pages = [];
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(pageCount, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    return (
+      <div className="flex justify-center items-center space-x-2 mt-8">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`p-2 rounded-full ${
+            currentPage === 1
+              ? "text-gray-400 cursor-not-allowed"
+              : "text-[#00add5] hover:bg-[#00add5] hover:text-white"
+          }`}
+        >
+          <FaChevronLeft />
+        </button>
+
+        {startPage > 1 && (
+          <>
+            <button
+              onClick={() => handlePageChange(1)}
+              className={`w-8 h-8 rounded-full ${
+                1 === currentPage
+                  ? "bg-[#00add5] text-white"
+                  : "text-[#00add5] hover:bg-[#00add5] hover:text-white"
+              }`}
+            >
+              1
+            </button>
+            {startPage > 2 && <span className="text-gray-500">...</span>}
+          </>
+        )}
+
+        {Array.from(
+          { length: endPage - startPage + 1 },
+          (_, i) => startPage + i
+        ).map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={`w-8 h-8 rounded-full ${
+              page === currentPage
+                ? "bg-[#00add5] text-white"
+                : "text-[#00add5] hover:bg-[#00add5] hover:text-white"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+
+        {endPage < pageCount && (
+          <>
+            {endPage < pageCount - 1 && (
+              <span className="text-gray-500">...</span>
+            )}
+            <button
+              onClick={() => handlePageChange(pageCount)}
+              className={`w-8 h-8 rounded-full ${
+                pageCount === currentPage
+                  ? "bg-[#00add5] text-white"
+                  : "text-[#00add5] hover:bg-[#00add5] hover:text-white"
+              }`}
+            >
+              {pageCount}
+            </button>
+          </>
+        )}
+
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === pageCount}
+          className={`p-2 rounded-full ${
+            currentPage === pageCount
+              ? "text-gray-400 cursor-not-allowed"
+              : "text-[#00add5] hover:bg-[#00add5] hover:text-white"
+          }`}
+        >
+          <FaChevronRight />
+        </button>
+      </div>
+    );
   };
 
-  // Efecto para restablecer la página al cambiar filtros
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedType, sortBy]);
-
   return (
-    <div className="py-12 px-4 mx-auto max-w-screen-xl lg:px-6 bg-gray-50">
-      {/* Header section */}
+    <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 bg-gray-50">
+      {/* Header section - sin cambios */}
       <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
         <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[#00add5]">
           Alojamiento en Potrero de los Funes
@@ -2244,14 +1849,13 @@ function Alojamiento() {
         </p>
       </div>
 
-      {/* Barra de búsqueda y filtros */}
-      <div className="mb-8">
-        {/* Búsqueda */}
-        <div className="mb-4 relative">
+      {/* Search and filter section - sin cambios */}
+      <div className="mb-8 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="relative w-full sm:w-64">
           <input
             type="text"
-            placeholder="Buscar por nombre, descripción o ubicación..."
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00add5] shadow-sm"
+            placeholder="Buscar alojamiento..."
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#00add5]"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -2259,200 +1863,105 @@ function Alojamiento() {
             }}
           />
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm("")}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
-              <FaTimes />
-            </button>
-          )}
         </div>
-
-        {/* Filtros para móvil */}
-        <div className="md:hidden mb-4">
-          <div className="flex gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
+          {[
+            "todos",
+            "hotel",
+            "apart hotel",
+            "hostería",
+            "posada",
+            "cabaña",
+          ].map((tipo) => (
             <button
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm"
+              key={tipo}
+              onClick={() => {
+                setSelectedType(tipo);
+                setCurrentPage(1);
+              }}
+              className={`px-4 py-2 rounded-full ${
+                selectedType === tipo
+                  ? "bg-[#00add5] text-white"
+                  : "bg-white text-[#00add5] border border-[#00add5]"
+              } hover:bg-[#00add5] hover:text-white transition-colors duration-300`}
             >
-              <FaFilter className="text-[#00add5]" />
-              <span>Filtros</span>
-              {(selectedType !== "todos" || servicesFilter.length > 0) && (
-                <span className="flex items-center justify-center w-5 h-5 bg-[#00add5] text-white text-xs rounded-full">
-                  {(selectedType !== "todos" ? 1 : 0) + servicesFilter.length}
-                </span>
-              )}
+              {tipo === "todos"
+                ? "Todos"
+                : tipo.charAt(0).toUpperCase() + tipo.slice(1)}
             </button>
-
-            <select
-              className="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-lg shadow-sm appearance-none"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <option value="nombre">Ordenar por nombre</option>
-              <option value="precio">Ordenar por precio</option>
-              <option value="calificacion">Ordenar por calificación</option>
-            </select>
-          </div>
-
-          {/* Panel de filtros móvil */}
-          {isFilterOpen && (
-            <div className="mt-3 p-4 bg-white border border-gray-300 rounded-lg shadow-lg">
-              <h4 className="font-medium mb-2">Tipo de alojamiento</h4>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {tiposAlojamiento.map((tipo) => (
-                  <button
-                    key={tipo}
-                    onClick={() => setSelectedType(tipo)}
-                    className={`px-3 py-1 rounded-full text-sm ${selectedType === tipo
-                        ? "bg-[#00add5] text-white"
-                        : "bg-gray-100 text-gray-700"
-                      }`}
-                  >
-                    {tipo === "todos" ? "Todos" : tipo}
-                  </button>
-                ))}
-              </div>
-
-              <h4 className="font-medium mb-2">Servicios</h4>
-              <div className="flex flex-wrap gap-2 mb-3">
-                {availableServices.map((service) => {
-                  const Icon = iconMap[service];
-                  return (
-                    <button
-                      key={service}
-                      onClick={() => handleServiceToggle(service)}
-                      className={`px-3 py-1 rounded-full text-sm flex items-center gap-1 ${servicesFilter.includes(service)
-                          ? "bg-[#00add5] text-white"
-                          : "bg-gray-100 text-gray-700"
-                        }`}
-                    >
-                      {Icon && <Icon size={12} />}
-                      <span className="capitalize">{service}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  onClick={resetFilters}
-                  className="text-[#00add5] hover:underline text-sm"
-                >
-                  Limpiar filtros
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Filtros para desktop */}
-        <div className="hidden md:block mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex space-x-2">
-              {tiposAlojamiento.map((tipo) => (
-                <button
-                  key={tipo}
-                  onClick={() => setSelectedType(tipo)}
-                  className={`px-4 py-2 rounded-lg ${selectedType === tipo
-                      ? "bg-[#00add5] text-white"
-                      : "bg-white text-gray-700 border border-gray-300"
-                    } transition-colors duration-300`}
-                >
-                  {tipo === "todos" ? "Todos" : tipo}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center">
-              <span className="mr-2 text-gray-600">Ordenar por:</span>
-              <select
-                className="px-3 py-2 bg-white border border-gray-300 rounded-lg"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-              >
-                <option value="nombre">Nombre</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-            <div className="flex justify-between items-center mb-3">
-              <h4 className="font-medium">Filtrar por servicios</h4>
-              {servicesFilter.length > 0 && (
-                <button
-                  onClick={() => setServicesFilter([])}
-                  className="text-[#00add5] hover:underline text-sm"
-                >
-                  Limpiar
-                </button>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {availableServices.map((service) => {
-                const Icon = iconMap[service];
-                return (
-                  <button
-                    key={service}
-                    onClick={() => handleServiceToggle(service)}
-                    className={`px-3 py-1 rounded-full text-sm flex items-center gap-1 ${servicesFilter.includes(service)
-                        ? "bg-[#00add5] text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      } transition-colors duration-200`}
-                  >
-                    {Icon && <Icon size={12} />}
-                    <span className="capitalize">{service}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Contador de resultados */}
-      <div className="mb-6">
-        <p className="text-gray-600">
-          Mostrando {filteredAlojamientos.length} {filteredAlojamientos.length === 1 ? 'alojamiento' : 'alojamientos'}
-          {(selectedType !== "todos" || servicesFilter.length > 0 || searchTerm) && (
-            <button
-              onClick={resetFilters}
-              className="ml-2 text-[#00add5] hover:underline"
-            >
-              Limpiar filtros
-            </button>
-          )}
-        </p>
-      </div>
-
-      {/* Resultados */}
+      {/* Results section */}
       {currentAlojamientos.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentAlojamientos.map((alojamiento, index) => (
-              <AlojamientoCard
-                key={alojamiento.numero || index}
-                alojamiento={alojamiento}
-                onClick={() => setSelectedAlojamiento(alojamiento)}
-              />
-            ))}
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {currentAlojamientos.map((alojamiento, index) => {
+              const TipoIcon = tipoAlojamientoIcon[alojamiento.tipo] || FaHome;
+              return (
+                <Card
+                  key={index}
+                  className="hover:shadow-lg transition-shadow duration-300"
+                >
+                  <div className="flex justify-center mb-4">
+                    <TipoIcon className="text-7xl text-[#00add5]" />
+                  </div>
+                  <h5 className="text-xl font-bold tracking-tight text-gray-900 mb-2">
+                    {alojamiento.nombre}
+                  </h5>
+                  <p className="font-normal text-gray-700 mb-3 h-20 overflow-hidden">
+                    {alojamiento.descripcion || "Sin descripción disponible"}
+                  </p>
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex space-x-2">
+                      {(alojamiento.servicios || [])
+                        .slice(0, 4)
+                        .map((servicio, i) => {
+                          const Icon = iconMap[servicio];
+                          return Icon ? (
+                            <Icon key={i} className="text-[#00add5]" />
+                          ) : null;
+                        })}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setSelectedAlojamiento(alojamiento)}
+                    className="w-full bg-[#00add5] text-white py-2 px-4 rounded-lg hover:bg-[#0098b8] transition duration-300"
+                  >
+                    Ver detalles
+                  </button>
+                </Card>
+              );
+            })}
           </div>
-
-          {pageCount > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              pageCount={pageCount}
-              onPageChange={handlePageChange}
-            />
-          )}
+          <Pagination />
         </>
       ) : (
-        <NoResultsMessage onReset={resetFilters} />
+        <div className="text-center py-12">
+          <FaSearchLocation className="mx-auto text-6xl text-gray-400 mb-4" />
+          <h3 className="text-2xl font-semibold text-gray-700 mb-2">
+            No se encontraron alojamientos
+          </h3>
+          <p className="text-gray-500">
+            Lo sentimos, no pudimos encontrar alojamientos que coincidan con tu
+            búsqueda.
+            <br />
+            Intentá con otros términos o explorá todas nuestras opciones.
+          </p>
+          <button
+            onClick={() => {
+              setSearchTerm("");
+              setSelectedType("todos");
+              setCurrentPage(1);
+            }}
+            className="mt-6 px-6 py-2 bg-[#00add5] text-white rounded-full hover:bg-[#0098b8] transition-colors duration-300"
+          >
+            Ver todos los alojamientos
+          </button>
+        </div>
       )}
 
-      {/* Modal de detalles */}
       {selectedAlojamiento && (
         <AlojamientoModal
           alojamiento={selectedAlojamiento}
