@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUtensils, FaClock, FaPhone, FaTimes, FaSearch, FaMapMarkerAlt, 
          FaInstagram, FaFacebook, FaCoffee, FaHamburger, FaPizzaSlice, 
          FaWineGlass, FaFire } from 'react-icons/fa';
 import restaurantes from '../data/restaurantes';
+import { shuffleArray } from '../utils/randomUtils';
 
 // Función para obtener el ícono según el tipo de establecimiento
 const getTipoIcon = (tipo) => {
@@ -152,7 +153,7 @@ const RestauranteModal = ({ restaurante, onClose }) => (
                         className="px-4 py-2 bg-[#00add5] text-white rounded-lg hover:bg-[#008dad] transition-colors flex items-center gap-2"
                     >
                         <FaPhone />
-                        Llamar
+                        Contactar
                     </a>
                 )}
             </div>
@@ -175,8 +176,17 @@ const NoResultsMessage = () => (
 function Gastronomia() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedRestaurante, setSelectedRestaurante] = useState(null);
+    const [restaurantesAleatorios, setRestaurantesAleatorios] = useState([]);
 
-    const filteredRestaurantes = restaurantes.filter(restaurante =>
+    // Cargar los restaurantes en orden aleatorio al iniciar la página
+    useEffect(() => {
+        // Usamos shuffleArray para obtener un orden aleatorio cada vez que se carga la página
+        // sin guardar el orden en localStorage
+        const randomizados = shuffleArray(restaurantes);
+        setRestaurantesAleatorios(randomizados);
+    }, []);
+
+    const filteredRestaurantes = restaurantesAleatorios.filter(restaurante =>
         restaurante.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
         restaurante.direccion.toLowerCase().includes(searchTerm.toLowerCase())
     );

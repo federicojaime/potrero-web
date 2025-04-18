@@ -23,6 +23,7 @@ import anconaImg from '../assets/images/gastronomia/ancona.jpg';
 import lodevitoImg from '../assets/images/gastronomia/lodevito.jpg';
 import ifiakiImg from '../assets/images/gastronomia/ifiaki.jpg';
 import aguamansaImg from '../assets/images/gastronomia/aguamansa.jpg';
+import ginEternalImg from '../assets/images/gastronomia/gin-eternal.jpg';
 
 export const categorias = [
     "Todos",
@@ -144,15 +145,6 @@ export const restaurantes = [
         imagen: parrilladonjuanImg
     },
     {
-        id: 13,
-        nombre: "TRAMA CAFETERIA",
-        direccion: "Los paraisos 162 A9",
-        telefono: "Tramacafedeespecialidad@gmail.com",
-        horario: "Mier a domingo 16 a 21 hs",
-        redesSociales: "Cafetrama (Instagram)",
-        imagen: tramaImg
-    },
-    {
         id: 14,
         nombre: "EL BODEGON",
         direccion: "Los paraisos y esa plátanos A9",
@@ -171,24 +163,6 @@ export const restaurantes = [
         imagen: complejolagoImg
     },
     {
-        id: 16,
-        nombre: "PAPANATO",
-        direccion: "Los paraisos y plátano A9",
-        telefono: "2664302348",
-        horario: "",
-        redesSociales: "Papanatobar( Instagram)",
-        imagen: papanatoImg
-    },
-    {
-        id: 17,
-        nombre: "Toro Negro",
-        direccion: "Av. Del circuito del lago frente A11",
-        telefono: "1163737160",
-        horario: "Todos los días excep. Mier. 21 a 01hs",
-        redesSociales: "Toronegro_ok ( Instagram)",
-        imagen: toronegroImg
-    },
-    {
         id: 18,
         nombre: "Las cañitas",
         direccion: "Los Paraísos esq los membrillos",
@@ -198,15 +172,6 @@ export const restaurantes = [
         imagen: cafitasImg
     },
     {
-        id: 19,
-        nombre: "Sabor artesanal",
-        direccion: "Los Paraísos 127 esq los Álamos A9",
-        telefono: "Sin números",
-        horario: "Juev. Dom 9 a 20hs",
-        redesSociales: "Saborartesanalsanluis (Instagram)",
-        imagen: saborartesanalImg
-    },
-    {
         id: 20,
         nombre: "Típico",
         direccion: "Av. Del circuito del lago frente A10",
@@ -214,15 +179,6 @@ export const restaurantes = [
         horario: "Delivery",
         redesSociales: "Pizzería_tipico (Instagram)",
         imagen: tipicoImg
-    },
-    {
-        id: 21,
-        nombre: "Ancona",
-        direccion: "Av. Del Circuito del lago A5",
-        telefono: "2664541423",
-        horario: "Todos los días 19.30 a 23:30",
-        redesSociales: "Ancona.pizzería (Instagram)",
-        imagen: anconaImg
     },
     {
         id: 22,
@@ -250,6 +206,15 @@ export const restaurantes = [
         horario: "Todos los días 8.30 a 12:30 j a d 16 a 21",
         redesSociales: "aguamansa.aparte ( Instagram)",
         imagen: aguamansaImg
+    },
+    {
+        id: 25,
+        nombre: "Gin Eternal",
+        direccion: "Av. Los Paraísos 832, Potrero de los Funes, San Luis",
+        telefono: "+54 2665 030552",
+        horario: "Catas todos los días (con reserva previa)",
+        redesSociales: "gineternal (Instagram y Facebook)",
+        imagen: ginEternalImg
     }
 ];
 
