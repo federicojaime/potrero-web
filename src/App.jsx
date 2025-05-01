@@ -15,6 +15,8 @@ import ScrollToTop from './components/ScrollToTop';
 import MaintenancePage from './components/MaintenancePage';
 import MaintenanceConfig from './MaintenanceConfig';
 import AutumnBanner from './components/AutumnBanner';
+import EasterModal from './components/EasterModal';
+import EasterEventsPage from './pages/EasterEventsPage';
 
 // Importamos los estilos del tema de otoño
 import './styles/AutumnTheme.css';
@@ -23,11 +25,11 @@ import './styles/AutumnTheme.css';
 const MaintenanceWrapper = () => {
   const location = useLocation();
   const inMaintenance = MaintenanceConfig.isRouteInMaintenance(location.pathname);
-  
+
   useEffect(() => {
     // Aplicar tema de otoño a todo el sitio
     document.documentElement.classList.add('autumn-theme');
-    
+
     // Cambiar el color del tema de la barra de navegación para dispositivos móviles
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
@@ -38,7 +40,7 @@ const MaintenanceWrapper = () => {
       newMeta.content = '#D35400';
       document.head.appendChild(newMeta);
     }
-    
+
     // Agregar favicon otoñal
     const favicon = document.querySelector('link[rel="icon"]');
     if (favicon) {
@@ -51,7 +53,7 @@ const MaintenanceWrapper = () => {
         favicon.href = '/autumn-favicon.png';
       }
     }
-    
+
     return () => {
       // Limpiar al desmontar
       document.documentElement.classList.remove('autumn-theme');
@@ -61,24 +63,26 @@ const MaintenanceWrapper = () => {
       }
     };
   }, []);
-  
+
   if (inMaintenance) {
     return <MaintenancePage />;
   }
-  
+
   return (
     <>
       <Navbar />
       {/* Banner de temporada de otoño */}
       <AutumnBanner />
       <main className="flex-grow">
+        {/*<EasterModal /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/actividades" element={<Actividades />} />
           <Route path="/gastronomia" element={<Gastronomia />} />
           <Route path="/circuitos" element={<Circuitos />} />
           <Route path="/alojamiento" element={<Alojamiento />} />
-          <Route path="/eventos" element={<Eventos />} />
+          <Route path="/eventos" element={<EasterEventsPage />} />
+          <Route path="/eventos/semana-santa" element={<EasterEventsPage />} />
           <Route path="/naturaleza" element={<Naturaleza />} />
           <Route path="/contacto" element={<Contacto />} />
         </Routes>
