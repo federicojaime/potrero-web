@@ -15,8 +15,8 @@ import ScrollToTop from './components/ScrollToTop';
 import MaintenancePage from './components/MaintenancePage';
 import MaintenanceConfig from './MaintenanceConfig';
 import AutumnBanner from './components/AutumnBanner';
-import EasterModal from './components/EasterModal';
-import EasterEventsPage from './pages/EasterEventsPage';
+import FindeXXLBanner from './components/FindeXXLBanner';
+import FindeXXLEventsPage from './pages/FindeXXLEventsPage';
 
 // Importamos los estilos del tema de otoño
 import './styles/AutumnTheme.css';
@@ -71,18 +71,19 @@ const MaintenanceWrapper = () => {
   return (
     <>
       <Navbar />
-      {/* Banner de temporada de otoño */}
-      <AutumnBanner />
+      {/* Banner de temporada de otoño 
+      <AutumnBanner />*/}
+      {/* Banner del evento Finde XXL 
+      <FindeXXLBanner />*/}
       <main className="flex-grow">
-        {/*<EasterModal /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/actividades" element={<Actividades />} />
           <Route path="/gastronomia" element={<Gastronomia />} />
           <Route path="/circuitos" element={<Circuitos />} />
           <Route path="/alojamiento" element={<Alojamiento />} />
-          <Route path="/eventos" element={<EasterEventsPage />} />
-          <Route path="/eventos/semana-santa" element={<EasterEventsPage />} />
+          <Route path="/eventos" element={<FindeXXLEventsPage />} />
+          <Route path="/eventos/finde-xxl" element={<FindeXXLEventsPage />} />
           <Route path="/naturaleza" element={<Naturaleza />} />
           <Route path="/contacto" element={<Contacto />} />
         </Routes>
