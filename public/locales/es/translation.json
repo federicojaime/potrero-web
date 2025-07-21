@@ -1,0 +1,14 @@
+{
+  "hero": {
+    "title": "Potrero de los Funes",
+    "subtitle": "Explorá el paraíso invernal en las sierras de San Luis",
+    "winter_text": "Viví la serenidad del invierno en Potrero de los Funes"
+  },
+  "nav": {
+    "home": "Inicio",
+    "activities": "Actividades",
+    "accommodation": "Alojamiento", 
+    "gastronomy": "Gastronomía",
+    "contact": "Contacto"
+  }
+}

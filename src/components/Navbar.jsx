@@ -1,13 +1,15 @@
-// src/components/Navbar.jsx
+// src/components/Navbar.jsx - VERSIÓN QUE NO ROMPE NADA
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaSnowflake } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 import logo from "../assets/logos/logo_blanco.png";
 import { winterColors, winterGradients } from "../theme/WinterTheme";
 import FallingSnow from "./FallingSnow";
+import LanguageSelector from "./LanguageSelector";
 
 function CustomNavbar() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -25,30 +27,26 @@ function CustomNavbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  // NAVEGACIÓN CON TRADUCCIONES
   const navItems = [
-    { name: "Inicio", path: "/" },
-    { name: "Actividades", path: "/actividades" },
-    { name: "Alojamiento", path: "/alojamiento" },
-    { name: "Gastronomía", path: "/gastronomia" },
-    { name: "Contacto", path: "/contacto" },
+    { name: t('nav.home'), path: "/" },
+    { name: t('nav.activities'), path: "/actividades" },
+    { name: t('nav.accommodation'), path: "/alojamiento" },
+    { name: t('nav.gastronomy'), path: "/gastronomia" },
+    { name: t('nav.contact'), path: "/contacto" },
   ];
 
-  // Efecto de gradiente invernal con mejor contraste
   const navbarBackground = isScrolled
     ? `bg-gradient-to-r from-blue-900/95 via-blue-800/95 to-blue-900/95 shadow-md backdrop-blur-sm`
     : `bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900`;
 
   return (
-    <nav
-      className={`sticky top-0 z-50 transition-all duration-300 ${navbarBackground} relative overflow-hidden`}
-    >
-      {/* Efecto de nieve cayendo */}
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${navbarBackground} relative overflow-hidden`}>
       <FallingSnow quantity={8} containerClassName="h-full" intensity="light" />
       
       <div className="container mx-auto px-4 py-3 relative z-20">
@@ -59,7 +57,6 @@ function CustomNavbar() {
               className="h-12 mr-3 drop-shadow-md"
               alt="Potrero de los Funes Logo"
             />
-            {/* Indicador de temporada invierno - MEJORADO CONTRASTE */}
             <div className="bg-white text-blue-900 px-3 py-1 rounded-full text-xs font-bold hidden md:flex items-center shadow-md">
               <FaSnowflake className="mr-1" /> 
               Temporada de Invierno
@@ -76,7 +73,8 @@ function CustomNavbar() {
           </button>
 
           {/* Enlaces de navegación para pantallas medianas y grandes */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center space-x-6">
+            {/* Links de navegación */}
             <ul className="flex space-x-8">
               {navItems.map((item, index) => (
                 <li key={index}>
@@ -85,13 +83,14 @@ function CustomNavbar() {
                     className="text-white font-medium hover:text-blue-200 transition duration-300 relative group drop-shadow-md"
                   >
                     {item.name}
-                    <span
-                      className="absolute left-0 right-0 bottom-0 h-0.5 bg-blue-200 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
-                    ></span>
+                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-blue-200 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                   </Link>
                 </li>
               ))}
             </ul>
+            
+            {/* SELECTOR DE IDIOMA SIMPLE */}
+            <LanguageSelector />
           </div>
         </div>
 
@@ -107,12 +106,16 @@ function CustomNavbar() {
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
-                    <span
-                      className="absolute left-0 right-0 bottom-0 h-0.5 bg-blue-200 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
-                    ></span>
+                    <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-blue-200 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                   </Link>
                 </li>
               ))}
+              
+              {/* SELECTOR DE IDIOMA EN MÓVIL */}
+              <li className="pt-4">
+                <LanguageSelector />
+              </li>
+              
               <li>
                 <div className="flex items-center py-2 text-white font-medium text-xs bg-white/20 px-3 rounded-lg">
                   <FaSnowflake className="mr-1 text-blue-200" /> 

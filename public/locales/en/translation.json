@@ -1,0 +1,14 @@
+{
+  "hero": {
+    "title": "Potrero de los Funes",
+    "subtitle": "Explore the winter paradise in the mountains of San Luis",
+    "winter_text": "Experience the serenity of winter in Potrero de los Funes"
+  },
+  "nav": {
+    "home": "Home",
+    "activities": "Activities",
+    "accommodation": "Accommodation",
+    "gastronomy": "Gastronomy", 
+    "contact": "Contact"
+  }
+}
