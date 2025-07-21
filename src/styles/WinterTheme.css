@@ -1,0 +1,243 @@
+/* Estilos globales para el tema de invierno */
+
+/* Clase base para activar el tema */
+.winter-theme {
+  --winter-primary: #ECEFF1;
+  --winter-secondary: #3498DB;
+  --winter-accent: #3498DB;
+  --winter-cream: #F8F9FA;
+  --winter-ice: #E3F2FD;
+  --winter-frost: #ECEFF1;
+  --winter-snow: #FFFFFF;
+  --winter-glacier: rgb(137, 159, 185);
+  --winter-forest: #2E7D32;
+  --winter-light-bg: #F1F8FF;
+  --winter-dark-bg: #263238;
+}
+
+/* Fondos y colores base */
+.winter-theme body {
+  background-color: var(--winter-light-bg);
+  color: #333;
+}
+
+/* Botones con estilo invernal */
+.winter-theme .btn-primary {
+  background: linear-gradient(to right, var(--winter-ice), var(--winter-primary));
+  border: none;
+  color: white;
+}
+
+.winter-theme .btn-primary:hover {
+  background: linear-gradient(to right, var(--winter-primary), var(--winter-glacier));
+  box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
+}
+
+/* Cards con estilo invernal */
+.winter-theme .card {
+  border-color: var(--winter-frost);
+  box-shadow: 0 4px 12px rgba(52, 73, 94, 0.1);
+  background: linear-gradient(145deg, var(--winter-snow), var(--winter-ice));
+}
+
+.winter-theme .card:hover {
+  box-shadow: 0 8px 24px rgba(52, 73, 94, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Headings */
+.winter-theme h1, 
+.winter-theme h2, 
+.winter-theme h3 {
+  color: var(--winter-secondary);
+}
+
+/* Links */
+.winter-theme a:not(.no-winter) {
+  color: var(--winter-primary);
+  transition: color 0.3s;
+}
+
+.winter-theme a:not(.no-winter):hover {
+  color: var(--winter-glacier);
+}
+
+/* Decoración de secciones */
+.winter-theme .section-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--winter-ice), transparent);
+  margin: 2rem 0;
+}
+
+/* Fondos de secciones alternantes */
+.winter-theme .section-odd {
+  background-color: white;
+}
+
+.winter-theme .section-even {
+  background-color: var(--winter-light-bg);
+}
+
+/* Destacados */
+.winter-theme .highlight {
+  background-color: rgba(41, 128, 185, 0.1);
+  border-left: 3px solid var(--winter-primary);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+/* Etiquetas y badges */
+.winter-theme .badge {
+  background-color: var(--winter-ice);
+  color: var(--winter-secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* Personalización para imágenes */
+.winter-theme .img-border {
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(52, 73, 94, 0.2);
+}
+
+/* Efecto hover para cards y elementos interactivos */
+.winter-theme .hover-lift {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.winter-theme .hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(52, 73, 94, 0.25);
+}
+
+/* Listas con iconos invernales */
+.winter-theme .winter-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.winter-theme .winter-list li::before {
+  content: '❄️';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* Botones de acción invernales */
+.winter-theme .btn-winter {
+  background: var(--winter-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(41, 128, 185, 0.2);
+  transition: all 0.3s;
+}
+
+.winter-theme .btn-winter:hover {
+  background: var(--winter-glacier);
+  box-shadow: 0 6px 12px rgba(41, 128, 185, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Scroll personalizado */
+.winter-theme::-webkit-scrollbar {
+  width: 10px;
+}
+
+.winter-theme::-webkit-scrollbar-track {
+  background: var(--winter-light-bg);
+}
+
+.winter-theme::-webkit-scrollbar-thumb {
+  background: var(--winter-ice);
+  border-radius: 5px;
+}
+
+.winter-theme::-webkit-scrollbar-thumb:hover {
+  background: var(--winter-primary);
+}
+
+/* Modificaciones específicas para componentes */
+.winter-theme .section-title {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.winter-theme .section-title::after {
+  content: '';
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--winter-primary), transparent);
+}
+
+/* Efectos de escarcha */
+.winter-theme .frost-effect {
+  background: radial-gradient(circle at 30% 70%, rgba(227, 242, 253, 0.3) 0%, transparent 50%),
+              radial-gradient(circle at 70% 30%, rgba(176, 190, 197, 0.2) 0%, transparent 50%);
+}
+
+/* Animaciones de copos de nieve */
+@keyframes snowfall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.winter-theme .snowflake {
+  position: fixed;
+  top: -10px;
+  color: var(--winter-snow);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1000;
+  animation: snowfall linear infinite;
+}
+
+/* Efecto de cristales de hielo */
+.winter-theme .ice-crystal {
+  background: linear-gradient(45deg, transparent 30%, rgba(227, 242, 253, 0.3) 50%, transparent 70%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Mejoras específicas para mejor contraste y legibilidad */
+.winter-theme .text-shadow-strong {
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.6);
+}
+
+.winter-theme .bg-overlay-dark {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+}
+
+.winter-theme .navbar-winter {
+  background: linear-gradient(to right, #1565C0, #2980B9, #1565C0);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Texto con efecto de vaho en el frío */
+.winter-theme .breath-text {
+  text-shadow: 0 0 10px rgba(179, 229, 252, 0.5);
+}

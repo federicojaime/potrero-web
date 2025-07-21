@@ -14,12 +14,11 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import MaintenancePage from './components/MaintenancePage';
 import MaintenanceConfig from './MaintenanceConfig';
-import AutumnBanner from './components/AutumnBanner';
-import FindeXXLBanner from './components/FindeXXLBanner';
+import WinterBanner from './components/WinterBanner';
 import FindeXXLEventsPage from './pages/FindeXXLEventsPage';
 
-// Importamos los estilos del tema de otoño
-import './styles/AutumnTheme.css';
+// Importamos los estilos del tema de invierno
+import './styles/WinterTheme.css';
 
 // Componente que verifica el modo mantenimiento basado en la ruta actual
 const MaintenanceWrapper = () => {
@@ -27,21 +26,22 @@ const MaintenanceWrapper = () => {
   const inMaintenance = MaintenanceConfig.isRouteInMaintenance(location.pathname);
 
   useEffect(() => {
-    // Aplicar tema de otoño a todo el sitio
-    document.documentElement.classList.add('autumn-theme');
+    // Aplicar tema de invierno a todo el sitio
+    document.documentElement.classList.remove('autumn-theme');
+    document.documentElement.classList.add('winter-theme');
 
     // Cambiar el color del tema de la barra de navegación para dispositivos móviles
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', '#D35400'); // Color naranja otoñal
+      metaThemeColor.setAttribute('content', '#2980B9'); // Color azul invernal
     } else {
       const newMeta = document.createElement('meta');
       newMeta.name = 'theme-color';
-      newMeta.content = '#D35400';
+      newMeta.content = '#2980B9';
       document.head.appendChild(newMeta);
     }
 
-    // Agregar favicon otoñal
+    // Agregar favicon invernal
     const favicon = document.querySelector('link[rel="icon"]');
     if (favicon) {
       // Guardamos el favicon original para poder restaurarlo si es necesario
@@ -49,14 +49,14 @@ const MaintenanceWrapper = () => {
         favicon.dataset.originalHref = favicon.href;
       }
       // Actualizar solo si es necesario
-      if (favicon.href !== '/autumn-favicon.png') {
-        favicon.href = '/autumn-favicon.png';
+      if (favicon.href !== '/winter-favicon.png') {
+        favicon.href = '/winter-favicon.png';
       }
     }
 
     return () => {
       // Limpiar al desmontar
-      document.documentElement.classList.remove('autumn-theme');
+      document.documentElement.classList.remove('winter-theme');
       // Restaurar favicon original
       if (favicon && favicon.dataset.originalHref) {
         favicon.href = favicon.dataset.originalHref;
@@ -71,10 +71,7 @@ const MaintenanceWrapper = () => {
   return (
     <>
       <Navbar />
-      {/* Banner de temporada de otoño 
-      <AutumnBanner />*/}
-      {/* Banner del evento Finde XXL 
-      <FindeXXLBanner />*/}
+      {/* Banner de temporada de invierno - REMOVIDO */}
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />

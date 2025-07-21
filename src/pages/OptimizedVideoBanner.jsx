@@ -1,19 +1,19 @@
 // src/pages/OptimizedVideoBanner.jsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaChevronDown, FaLeaf } from 'react-icons/fa';
+import { FaChevronDown, FaSnowflake } from 'react-icons/fa';
 import bannerVideo from "../assets/videos/banner.mp4";
-import placeholderImage from "/src/assets/imagenes/otoño.jpg"; // Cambiado a una imagen de otoño
-import { autumnColors } from '../theme/AutumnTheme';
+import placeholderImage from "/src/assets/imagenes/otoño.jpg"; // Cambiado a una imagen de invierno
+import { winterColors } from '../theme/WinterTheme';
 
-// Componente de hoja cayendo
-const FallingLeaf = ({ size, left, delay, duration, color }) => {
+// Componente de copo de nieve cayendo
+const FallingSnowflake = ({ size, left, delay, duration, color }) => {
     return (
         <motion.div
-            className="absolute text-amber-500 z-20"
+            className="absolute text-blue-300 z-20"
             style={{ 
                 left: `${left}%`,
-                color: color || autumnColors.leaf1
+                color: color || winterColors.ice1
             }}
             initial={{ 
                 top: "-10%", 
@@ -23,24 +23,24 @@ const FallingLeaf = ({ size, left, delay, duration, color }) => {
             }}
             animate={{ 
                 top: "110%",
-                x: ["0%", "5%", "-5%", "2%", "-2%", "0%"],
-                rotate: 360,
-                opacity: [0.7, 0.8, 0.7, 0.6, 0.5, 0]
+                x: ["0%", "3%", "-3%", "1%", "-1%", "0%"],
+                rotate: 180,
+                opacity: [0.7, 0.9, 0.8, 0.6, 0.4, 0]
             }}
             transition={{ 
-                duration: duration || (10 + Math.random() * 5), 
+                duration: duration || (12 + Math.random() * 8), 
                 repeat: Infinity,
                 delay: delay || 0,
                 ease: "linear",
                 x: {
-                    duration: 3,
+                    duration: 4,
                     repeat: Infinity,
                     repeatType: "mirror",
                     ease: "easeInOut",
                 }
             }}
         >
-            <FaLeaf size={Math.random() * 10 + 15} />
+            <FaSnowflake size={Math.random() * 8 + 10} />
         </motion.div>
     );
 };
@@ -49,11 +49,11 @@ const OptimizedVideoBanner = () => {
     const [videoLoaded, setVideoLoaded] = useState(false);
     const [currentText, setCurrentText] = useState(0);
     
-    // Textos de otoño
+    // Textos de invierno
     const texts = [
-        "Explorá el paraíso otoñal en las sierras de San Luis",
-        "Viví la magia del otoño en Potrero de los Funes",
-        "Sentí la naturaleza entre los colores del otoño"
+        "Explorá el paraíso invernal en las sierras de San Luis",
+        "Viví la serenidad del invierno en Potrero de los Funes",
+        "Sentí la paz de la naturaleza en el frío serrano"
     ];
 
     useEffect(() => {
@@ -74,24 +74,24 @@ const OptimizedVideoBanner = () => {
         });
     };
 
-    // Crear un conjunto de hojas cayendo
-    const autumnLeaves = Array.from({ length: 15 }, (_, i) => {
-        const leafColors = [
-            autumnColors.leaf1,
-            autumnColors.leaf2,
-            autumnColors.leaf3,
-            autumnColors.leaf4,
-            autumnColors.leaf5
+    // Crear un conjunto de copos de nieve cayendo
+    const winterSnowflakes = Array.from({ length: 25 }, (_, i) => {
+        const snowColors = [
+            winterColors.ice1,
+            winterColors.ice2,
+            winterColors.snow1,
+            winterColors.snow2,
+            winterColors.crystal
         ];
         
         return (
-            <FallingLeaf 
+            <FallingSnowflake 
                 key={i} 
-                size={Math.random() * 0.5 + 0.8} 
+                size={Math.random() * 0.4 + 0.6} 
                 left={Math.random() * 100} 
-                delay={i * 0.5} 
-                duration={15 + Math.random() * 10}
-                color={leafColors[i % leafColors.length]}
+                delay={i * 0.4} 
+                duration={12 + Math.random() * 8}
+                color={snowColors[i % snowColors.length]}
             />
         );
     });
@@ -101,7 +101,7 @@ const OptimizedVideoBanner = () => {
             {/* Imagen de fondo */}
             <img
                 src={placeholderImage}
-                alt="Potrero de los Funes landscape"
+                alt="Potrero de los Funes winter landscape"
                 className="absolute inset-0 w-full h-full object-cover"
             />
             
@@ -118,16 +118,16 @@ const OptimizedVideoBanner = () => {
                 }`}
             />
             
-            {/* Capa de superposición con tono otoñal */}
+            {/* Capa de superposición con tono invernal mejorado para mejor contraste */}
             <div 
                 className="absolute inset-0" 
                 style={{ 
-                    background: `linear-gradient(to bottom, rgba(211, 84, 0, 0.1), rgba(230, 126, 34, 0.3), rgba(243, 156, 18, 0.4))` 
+                    background: `linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7))` 
                 }}
             />
             
-            {/* Hojas cayendo */}
-            {autumnLeaves}
+            {/* Copos de nieve cayendo */}
+            {winterSnowflakes}
             
             {/* Contenido */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full pb-1">
@@ -142,7 +142,7 @@ const OptimizedVideoBanner = () => {
                         initial={{ opacity: 0, scale: 0.5 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
-                        style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.6)' }}
+                        style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.6)' }}
                     >
                         Potrero de los Funes
                     </motion.h1>
@@ -156,26 +156,26 @@ const OptimizedVideoBanner = () => {
                             transition={{ duration: 0.5 }}
                             className="mb-6"
                         >
-                            {/* Etiqueta de temporada */}
+                            {/* Etiqueta de temporada con mejor contraste */}
                             <motion.span
-                                className="inline-block bg-amber-600/40 backdrop-blur-sm px-4 py-1 rounded-full text-white text-sm font-medium mb-4"
+                                className="inline-block bg-black/60 backdrop-blur-sm px-4 py-1 rounded-full text-white text-sm font-medium mb-4 border border-white/20"
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.3, duration: 0.5 }}
                             >
-                                <FaLeaf className="inline-block mr-2" />
-                                Temporada de Otoño 2025
+                                <FaSnowflake className="inline-block mr-2" />
+                                Temporada de Invierno 2025
                             </motion.span>
                             
-                            <p className="text-xl sm:text-2xl md:text-3xl text-shadow-md"
-                                style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.6)' }}
+                            <p className="text-xl sm:text-2xl md:text-3xl"
+                                style={{ 
+                                    textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5)' 
+                                }}
                             >
                                 {texts[currentText]}
                             </p>
                         </motion.div>
                     </AnimatePresence>
-                    
-                  
                 </motion.div>
                 
                 <motion.div
@@ -186,7 +186,7 @@ const OptimizedVideoBanner = () => {
                 >
                     <button
                         onClick={scrollToContent}
-                        className="text-white hover:text-amber-200 transition duration-300 focus:outline-none"
+                        className="text-white hover:text-blue-200 transition duration-300 focus:outline-none"
                         aria-label="Scroll to content"
                     >
                         <FaChevronDown size={40} className="animate-bounce" />
@@ -195,8 +195,8 @@ const OptimizedVideoBanner = () => {
             </div>
 
             {!videoLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-amber-900 bg-opacity-50">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-amber-200"></div>
+                <div className="absolute inset-0 flex items-center justify-center bg-blue-900 bg-opacity-50">
+                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-200"></div>
                 </div>
             )}
         </section>
