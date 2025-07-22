@@ -67,9 +67,9 @@ function CustomNavbar() {
     : `bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900`;
 
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 ${navbarBackground} relative overflow-hidden`}>
+    <nav className={`sticky top-0 z-[100] transition-all duration-300 ${navbarBackground} relative overflow-hidden`}>
       <FallingSnow quantity={8} containerClassName="h-full" intensity="light" />
-      
+
       <div className="container mx-auto px-4 py-3 relative z-20">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center">
@@ -79,7 +79,7 @@ function CustomNavbar() {
               alt="Potrero de los Funes Logo"
             />
             <div className="bg-white text-blue-900 px-3 py-1 rounded-full text-xs font-bold hidden md:flex items-center shadow-md">
-              <FaSnowflake className="mr-1" /> 
+              <FaSnowflake className="mr-1" />
               Temporada de Invierno
             </div>
           </Link>
@@ -109,7 +109,7 @@ function CustomNavbar() {
                 </li>
               ))}
             </ul>
-            
+
             {/* SELECTOR DE IDIOMA */}
             <LanguageSelector />
           </div>
@@ -131,15 +131,15 @@ function CustomNavbar() {
                   </Link>
                 </li>
               ))}
-              
+
               {/* SELECTOR DE IDIOMA EN MÓVIL */}
               <li className="pt-4">
                 <LanguageSelector />
               </li>
-              
+
               <li>
                 <div className="flex items-center py-2 text-white font-medium text-xs bg-white/20 px-3 rounded-lg">
-                  <FaSnowflake className="mr-1 text-blue-200" /> 
+                  <FaSnowflake className="mr-1 text-blue-200" />
                   Temporada de Invierno
                 </div>
               </li>

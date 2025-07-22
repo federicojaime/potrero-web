@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useTranslation } from 'react-i18next';
 import { FaMountain, FaSearchLocation, FaWater, FaTree, FaChurch, FaHiking, FaSearch, FaMapMarkerAlt, FaRoute, FaClock, FaBinoculars, FaGraduationCap, FaChevronDown } from 'react-icons/fa';
 
 import travesiaImg from "../assets/imagenes/actividades/travesia.jpg";
@@ -14,7 +15,6 @@ import cerroImg from "../assets/imagenes/actividades/cerro-retana.jpg";
 import miradorImg from "../assets/imagenes/actividades/mirador-lago.jpg";
 import vallePiedra from "../assets/imagenes/actividades/vallePiedra.jpeg";
 import lagunaUvas from "../assets/imagenes/actividades/lagunaUvas.jpeg";
-
 
 const atractivosTuristicos = [
     {
@@ -89,7 +89,6 @@ const atractivosTuristicos = [
         comoLlegar: 'Ubicada en el centro de la localidad, fácilmente accesible a pie',
         mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13353.943771547963!2d-66.24101165154718!3d-33.20135442096605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d43e84f2bedf27%3A0xddfce233bbd733f0!2sCapilla%20San%20Antonio!5e0!3m2!1ses!2sar!4v1738952065194!5m2!1ses!2sar',
     },
-
     {
         id: 9,
         titulo: "Paseo del Lago",
@@ -126,11 +125,9 @@ const atractivosTuristicos = [
         comoLlegar: 'Accedé por los senderos ubicados atrás de la Capilla de la localidad.',
         mapaUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3339.248200975208!2d-66.21264692496324!3d-33.18135868378072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d46b56fdc3a4a5%3A0xec2ee72efc14d5e9!2sLagunas%20de%20las%20Uvas!5e0!3m2!1ses!2sar!4v1738952201790!5m2!1ses!2sar'
     },
-
 ];
 
-
-const AtractivoCard = ({ atractivo, onClick }) => {
+const AtractivoCard = ({ atractivo, onClick, t }) => {
     const [ref, inView] = useInView({
         triggerOnce: true,
         threshold: 0.1,
@@ -170,6 +167,8 @@ const AtractivoCard = ({ atractivo, onClick }) => {
 };
 
 const AtractivoDetalle = ({ atractivo, onClose }) => {
+    const { t } = useTranslation();
+    
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
             <div className="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-lg bg-white">
@@ -188,13 +187,13 @@ const AtractivoDetalle = ({ atractivo, onClose }) => {
                         <div className="grid grid-cols-2 gap-6 mb-6">
                             <div className="bg-gray-100 p-4 rounded-lg">
                                 <h4 className="font-semibold text-[#00add5] mb-2 flex items-center">
-                                    <FaClock className="mr-2" /> Duración
+                                    <FaClock className="mr-2" /> {t('activities_page.duration') || 'Duración'}
                                 </h4>
                                 <p>{atractivo.duracion}</p>
                             </div>
                             <div className="bg-gray-100 p-4 rounded-lg">
                                 <h4 className="font-semibold text-[#00add5] mb-2 flex items-center">
-                                    <FaMapMarkerAlt className="mr-2" /> Ubicación
+                                    <FaMapMarkerAlt className="mr-2" /> {t('common.location') || 'Ubicación'}
                                 </h4>
                                 <p>{atractivo.ubicacion}</p>
                             </div>
@@ -202,13 +201,13 @@ const AtractivoDetalle = ({ atractivo, onClose }) => {
 
                         <div className="bg-gray-100 p-4 rounded-lg mb-6">
                             <h4 className="font-semibold text-[#00add5] mb-2 flex items-center">
-                                <FaRoute className="mr-2" /> Cómo llegar
+                                <FaRoute className="mr-2" /> {t('activities_page.how_to_get') || 'Cómo llegar'}
                             </h4>
                             <p>{atractivo.comoLlegar}</p>
                         </div>
 
                         <div className="mb-6">
-                            <h4 className="font-semibold text-[#00add5] mb-4 text-xl">Mapa</h4>
+                            <h4 className="font-semibold text-[#00add5] mb-4 text-xl">{t('activities_page.map') || 'Mapa'}</h4>
                             <div className="rounded-lg overflow-hidden shadow-lg">
                                 <iframe
                                     src={atractivo.mapaUrl}
@@ -227,7 +226,7 @@ const AtractivoDetalle = ({ atractivo, onClose }) => {
                                 onClick={onClose}
                                 className="px-4 py-2 bg-[#00add5] text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-[#0098b8] focus:outline-none focus:ring-2 focus:ring-[#00add5]"
                             >
-                                Cerrar
+                                {t('common.close') || 'Cerrar'}
                             </button>
                         </div>
                     </div>
@@ -237,19 +236,21 @@ const AtractivoDetalle = ({ atractivo, onClose }) => {
     );
 };
 
-const NoResultsMessage = () => (
+const NoResultsMessage = ({ t }) => (
     <div className="col-span-full flex flex-col items-center justify-center py-16">
         <FaSearchLocation className="text-6xl text-gray-400 mb-4" />
-        <h3 className="text-2xl font-semibold text-gray-700 mb-2">No se encontraron atractivos</h3>
+        <h3 className="text-2xl font-semibold text-gray-700 mb-2">
+            {t('activities_page.no_results') || 'No se encontraron atractivos'}
+        </h3>
         <p className="text-gray-500 text-center max-w-md">
-            Lo sentimos, no pudimos encontrar atractivos que coincidan con tu búsqueda.
-            <br />
-            Intenta con otros términos o explora todas nuestras opciones.
+            {t('activities_page.no_results_desc') || 'Lo sentimos, no pudimos encontrar atractivos que coincidan con tu búsqueda.'}
         </p>
     </div>
 );
 
 function QueVisitar() {
+    // ⚠️ TODOS LOS HOOKS SIEMPRE SE EJECUTAN - NO HAY CONDICIONALES
+    const { t, ready } = useTranslation();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedAtractivo, setSelectedAtractivo] = useState(null);
     const [selectedType, setSelectedType] = useState('todos');
@@ -295,6 +296,18 @@ function QueVisitar() {
         };
     }, [dropdownRef]);
 
+    // ✅ SOLO AQUÍ VERIFICAMOS SI MOSTRAR LOADING - DESPUÉS DE TODOS LOS HOOKS
+    if (!ready) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                    <p>Cargando...</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="bg-gradient-to-b from-gray-100 to-white min-h-screen">
             <div className="container mx-auto px-4">
@@ -304,7 +317,7 @@ function QueVisitar() {
                     transition={{ duration: 0.8 }}
                     className="text-4xl md:text-5xl font-bold text-center pt-8 mb-4 text-[#00add5]"
                 >
-                    Descubrí la Magia de Potrero de los Funes
+                    {t('activities_page.title') || 'Descubrí la Magia de Potrero de los Funes'}
                 </motion.h1>
                 <motion.p
                     initial={{ opacity: 0 }}
@@ -312,14 +325,14 @@ function QueVisitar() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="text-lg text-center mb-8 text-gray-700"
                 >
-                    Explorá nuestros increíbles atractivos turísticos y viví experiencias únicas en el corazón de las sierras puntanas.
+                    {t('activities_page.subtitle') || 'Explorá nuestros increíbles atractivos turísticos y viví experiencias únicas en el corazón de las sierras puntanas.'}
                 </motion.p>
                 <div className="mb-8">
                     <div className="flex justify-center mb-4">
                         <div className="relative w-full max-w-xl">
                             <input
                                 type="text"
-                                placeholder="Buscar atractivos..."
+                                placeholder={t('activities_page.search_placeholder') || 'Buscar atractivos...'}
                                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#00add5]"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -337,7 +350,7 @@ function QueVisitar() {
                                     className={`px-4 py-2 rounded-full ${selectedType === tipo ? 'bg-[#00add5] text-white' : 'bg-white text-[#00add5] border border-[#00add5]'} hover:bg-[#00add5] hover:text-white transition-colors duration-300`}
                                 >
                                     <Icon className="inline-block mr-2" />
-                                    {tipo === 'todos' ? 'Todos' : tipo}
+                                    {tipo === 'todos' ? (t('activities_page.all_categories') || 'Todos') : tipo}
                                 </button>
                             );
                         })}
@@ -346,7 +359,7 @@ function QueVisitar() {
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                 className="px-4 py-2 rounded-full bg-white text-[#00add5] border border-[#00add5] hover:bg-[#00add5] hover:text-white transition-colors duration-300"
                             >
-                                Más categorías <FaChevronDown className="inline-block ml-2" />
+                                {t('activities_page.more_categories') || 'Más categorías'} <FaChevronDown className="inline-block ml-2" />
                             </button>
                             <AnimatePresence>
                                 {isDropdownOpen && (
@@ -382,6 +395,16 @@ function QueVisitar() {
                         </div>
                     </div>
                 </div>
+                
+                <div className="mb-6 text-center">
+                    <p className="text-gray-600">
+                        {filteredAtractivos.length === 0 
+                            ? (t('activities_page.no_results') || 'No se encontraron atractivos')
+                            : `Mostrando ${filteredAtractivos.length} ${filteredAtractivos.length === 1 ? 'atractivo' : 'atractivos'}`
+                        }
+                    </p>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-16">
                     {filteredAtractivos.length > 0 ? (
                         filteredAtractivos.map((atractivo) => (
@@ -389,10 +412,11 @@ function QueVisitar() {
                                 key={atractivo.id}
                                 atractivo={atractivo}
                                 onClick={() => setSelectedAtractivo(atractivo)}
+                                t={t}
                             />
                         ))
                     ) : (
-                        <NoResultsMessage />
+                        <NoResultsMessage t={t} />
                     )}
                 </div>
             </div>
