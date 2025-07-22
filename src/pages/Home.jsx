@@ -20,12 +20,12 @@ import backgroundImage from '/src/assets/imagenes/otoño.jpg';
 const InfoCard = ({ icon: Icon, title, content }) => (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-6 hover-lift">
         <div className="flex items-center mb-4">
-            <div 
+            <div
                 className="flex items-center justify-center w-12 h-12 rounded-full mr-4"
                 style={{ background: `${winterColors.ice}50` }}
             >
-                <Icon 
-                    className="text-2xl" 
+                <Icon
+                    className="text-2xl"
                     style={{ color: winterColors.primary }}
                 />
             </div>
@@ -38,9 +38,9 @@ const InfoCard = ({ icon: Icon, title, content }) => (
 const FloatingSnowflake = ({ size, color, top, left, right, delay = 0 }) => (
     <motion.div
         className="absolute z-10"
-        style={{ 
-            top, 
-            left, 
+        style={{
+            top,
+            left,
             right,
             color: color || winterColors.primary
         }}
@@ -136,7 +136,7 @@ function Home() {
                 <FloatingSnowflake size={18} color={winterColors.ice2} top="30%" right="10%" delay={2} />
                 <FloatingSnowflake size={22} color={winterColors.ice3} top="70%" left="15%" delay={3} />
                 <FloatingSnowflake size={26} color={winterColors.crystal} top="50%" right="15%" delay={1.5} />
-                
+
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold text-center mb-16 section-title" style={{ color: winterColors.secondary }}>
                         {t('sections.visit_potrero')} {/* ← USAR TRADUCCIÓN */}
@@ -148,9 +148,9 @@ function Home() {
                     </div>
                 </div>
             </section>
-            
+            {/** 
             <WinterActivitiesSection />
-            
+            */}
             <motion.section
                 className="py-20 text-white bg-fixed bg-center bg-cover relative"
                 initial={{ opacity: 0 }}
@@ -168,12 +168,12 @@ function Home() {
                 }}
             >
                 <div className="absolute top-0 left-0 right-0 h-8 overflow-hidden">
-                    <div className="w-full h-8" style={{ 
+                    <div className="w-full h-8" style={{
                         background: `linear-gradient(to right, ${winterColors.ice1}, ${winterColors.ice3}, ${winterColors.crystal}, ${winterColors.ice2})`,
                         opacity: 0.3
                     }}></div>
                 </div>
-                
+
                 <div className="container mx-auto px-4">
                     <motion.h2
                         className="text-4xl md:text-5xl font-bold text-center"
@@ -192,9 +192,9 @@ function Home() {
                         {t('sections.discover_winter')} {/* ← USAR TRADUCCIÓN */}
                     </motion.p>
                 </div>
-                
+
                 <div className="absolute bottom-0 left-0 right-0 h-8 overflow-hidden">
-                    <div className="w-full h-8" style={{ 
+                    <div className="w-full h-8" style={{
                         background: `linear-gradient(to right, ${winterColors.ice2}, ${winterColors.crystal}, ${winterColors.ice1})`,
                         opacity: 0.3
                     }}></div>
@@ -204,7 +204,7 @@ function Home() {
             <div className="bg-gray-100 py-20 relative">
                 <FloatingSnowflake size={20} color={winterColors.ice3} top="10%" right="20%" delay={2.5} />
                 <FloatingSnowflake size={16} color={winterColors.crystal} top="60%" left="10%" delay={3.5} />
-                
+
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold text-center mb-12 section-title" style={{ color: winterColors.secondary }}>
                         {t('sections.tourist_info')} {/* ← USAR TRADUCCIÓN */}
@@ -294,12 +294,12 @@ function Home() {
                 </div>
             </div>
 
-            <section className="py-20 text-white relative overflow-hidden" style={{ 
-                background: `linear-gradient(135deg, ${winterColors.ice}, ${winterColors.glacier}, ${winterColors.primary})` 
+            <section className="py-20 text-white relative overflow-hidden" style={{
+                background: `linear-gradient(135deg, ${winterColors.ice}, ${winterColors.glacier}, ${winterColors.primary})`
             }}>
                 <FloatingSnowflake size={30} color="rgba(255,255,255,0.1)" top="20%" left="5%" delay={1} />
                 <FloatingSnowflake size={24} color="rgba(255,255,255,0.1)" top="60%" right="8%" delay={2} />
-                
+
                 <div className="container mx-auto px-4 text-center relative z-10">
                     <h2 className="text-4xl font-bold mb-4">
                         {t('sections.ready_adventure')} {/* ← USAR TRADUCCIÓN */}
@@ -312,10 +312,10 @@ function Home() {
                         className="bg-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-md inline-block btn-winter"
                         style={{ color: winterColors.glacier }}
                     >
-                        {t('common.contact_us')} {/* ← USAR TRADUCCIÓN */}
+                        {t('footer.contact_us')} {/* ← USAR TRADUCCIÓN */}
                     </Link>
                 </div>
-                
+
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute bottom-10 right-10 text-white opacity-10">
                         <FaSnowflake size={80} />

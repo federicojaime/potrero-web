@@ -23,7 +23,7 @@ const atractivosTuristicos = [
         descripcion: "Una ruta de alta sierra de 11 km con vistas panorámicas impresionantes. Ideal para longboard y admirar el paisaje desde 1270 metros de altura.",
         imagen: travesiaImg,
         icono: FaMountain,
-        tipo: 'Ruta Escénica',
+        tipo: 'scenic_route', // Cambiar a clave de traducción
         duracion: '1:30 horas',
         ubicacion: 'Entre Potrero de los Funes y La Punta',
         comoLlegar: 'Tomá la Calle Los Paraísos desde Potrero de los Funes',
@@ -35,7 +35,7 @@ const atractivosTuristicos = [
         descripcion: "Portal de ingreso al valle con paredes graníticas perfectas. Disfrutá de una tarde junto al río Potrero.",
         imagen: quebradaImg,
         icono: FaHiking,
-        tipo: 'Área Natural',
+        tipo: 'natural_area', // Cambiar a clave de traducción
         duracion: '1 hora',
         ubicacion: 'Entrada de Potrero de los Funes',
         comoLlegar: 'Ubicada en el acceso principal a Potrero de los Funes',
@@ -47,7 +47,7 @@ const atractivosTuristicos = [
         descripcion: "Espejo de agua de 91 hectáreas ideal para pesca, windsurf y canotaje. Rodeado por el famoso Circuito Internacional.",
         imagen: lagoImg,
         icono: FaWater,
-        tipo: 'Lago',
+        tipo: 'lake', // Cambiar a clave de traducción
         duracion: 'Todo el día',
         ubicacion: 'Centro de Potrero de los Funes',
         comoLlegar: 'Accesible desde el centro de la localidad',
@@ -59,7 +59,7 @@ const atractivosTuristicos = [
         descripcion: "Parque Nativo es un espacio de 7 hectáreas de naturaleza que combina flora nativa y exótica, ideal para disfrutar de un día al aire libre. Perfecto para un día de campo con todas las comodidades. Cuenta con senderos señalizados, zonas de picnic con parrillas, y áreas recreativas para niños. Ofrece actividades como avistamiento de aves, paseos en bicicleta, y talleres de fotografía natural. La entrada es totalmente gratuita y está abierto todos los días de 08:00 a 19:00, incluyendo feriados.",
         imagen: parqueImg,
         icono: FaTree,
-        tipo: 'Parque Natural',
+        tipo: 'nature_park', // Cambiar a clave de traducción
         duracion: '3-4 horas',
         ubicacion: 'Sobre el Circuito Internacional',
         comoLlegar: 'Tomá el camino hacia El Volcán desde Potrero de los Funes',
@@ -71,7 +71,7 @@ const atractivosTuristicos = [
         descripcion: "Sendero ascendente con flora autóctona que lleva a un impresionante salto de agua de 10 metros de altura.",
         imagen: saltoImg,
         icono: FaWater,
-        tipo: 'Cascada',
+        tipo: 'waterfall', // Cambiar a clave de traducción
         duracion: '1-2 horas',
         ubicacion: 'Al norte de Potrero de los Funes',
         comoLlegar: 'Seguí el sendero señalizado desde el centro de la localidad',
@@ -83,7 +83,7 @@ const atractivosTuristicos = [
         descripcion: "Histórica capilla de 1957 con un pesebre electrónico único, ubicada en el corazón de Potrero de los Funes.",
         imagen: capillaImg,
         icono: FaChurch,
-        tipo: 'Sitio Histórico',
+        tipo: 'historic_site', // Cambiar a clave de traducción
         duracion: '30 minutos',
         ubicacion: 'Centro Cívico de Potrero de los Funes',
         comoLlegar: 'Ubicada en el centro de la localidad, fácilmente accesible a pie',
@@ -95,7 +95,7 @@ const atractivosTuristicos = [
         descripcion: "Punto panorámico con vistas impresionantes del lago y las sierras circundantes.",
         imagen: miradorImg,
         icono: FaMountain,
-        tipo: 'Mirador',
+        tipo: 'viewpoint', // Cambiar a clave de traducción
         duracion: '1 hora',
         ubicacion: 'Al este del Lago Potrero de los Funes',
         comoLlegar: 'Seguí las señales desde el Circuito Internacional',
@@ -107,7 +107,7 @@ const atractivosTuristicos = [
         descripcion: "Un impresionante valle con formaciones rocosas milenarias que crean un paisaje único. Ideal para trekking, fotografía y actividades al aire libre.",
         imagen: vallePiedra,
         icono: FaMountain,
-        tipo: 'Área Natural',
+        tipo: 'natural_area', // Cambiar a clave de traducción
         duracion: '2-3 horas',
         ubicacion: 'Al sureste de Potrero de los Funes',
         comoLlegar: 'Tomá la Ruta Provincial 9 en dirección al Valle de Piedra desde el centro de la localidad.',
@@ -119,7 +119,7 @@ const atractivosTuristicos = [
         descripcion: "Una laguna rodeada de viñedos y paisajes pintorescos. Perfecta para un día de relajación, caminatas suaves y degustaciones de productos regionales.",
         imagen: lagunaUvas,
         icono: FaWater,
-        tipo: 'Laguna',
+        tipo: 'lagoon', // Cambiar a clave de traducción
         duracion: '2 horas',
         ubicacion: 'A 5 km al norte de Potrero de los Funes',
         comoLlegar: 'Accedé por los senderos ubicados atrás de la Capilla de la localidad.',
@@ -158,7 +158,7 @@ const AtractivoCard = ({ atractivo, onClick, t }) => {
                     <p className="text-gray-700 text-sm">{atractivo.descripcion.substring(0, 100)}...</p>
                 </div>
                 <div className="flex justify-between items-center text-sm text-gray-600">
-                    <span><FaMapMarkerAlt className="inline mr-1" />{atractivo.tipo}</span>
+                    <span><FaMapMarkerAlt className="inline mr-1" />{t(`activities_page.categories.${atractivo.tipo}`)}</span>
                     <span><FaClock className="inline mr-1" />{atractivo.duracion}</span>
                 </div>
             </div>
@@ -249,7 +249,6 @@ const NoResultsMessage = ({ t }) => (
 );
 
 function QueVisitar() {
-    // ⚠️ TODOS LOS HOOKS SIEMPRE SE EJECUTAN - NO HAY CONDICIONALES
     const { t, ready } = useTranslation();
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedAtractivo, setSelectedAtractivo] = useState(null);
@@ -258,7 +257,7 @@ function QueVisitar() {
     const dropdownRef = useRef(null);
 
     const tiposUnicos = ['todos', ...new Set(atractivosTuristicos.map(atractivo => atractivo.tipo))];
-    const categoriasPrincipales = ['todos', 'Área Natural', 'Sierra', 'Lago'];
+    const categoriasPrincipales = ['todos', 'natural_area', 'mountain', 'lake'];
     const categoriasSecundarias = tiposUnicos.filter(tipo => !categoriasPrincipales.includes(tipo));
 
     const filteredAtractivos = atractivosTuristicos.filter(atractivo =>
@@ -269,16 +268,17 @@ function QueVisitar() {
 
     const getIconForType = (tipo) => {
         switch (tipo) {
-            case 'Ruta Escénica': return FaRoute;
-            case 'Área Natural': return FaTree;
-            case 'Lago': return FaWater;
-            case 'Atracción Deportiva': return FaRoute;
-            case 'Parque Natural': return FaTree;
-            case 'Cascada': return FaWater;
-            case 'Sitio Histórico': return FaChurch;
-            case 'Sierra': return FaMountain;
-            case 'Mirador': return FaBinoculars;
-            case 'Centro Educativo': return FaGraduationCap;
+            case 'scenic_route': return FaRoute;
+            case 'natural_area': return FaTree;
+            case 'lake': return FaWater;
+            case 'sports_attraction': return FaRoute;
+            case 'nature_park': return FaTree;
+            case 'waterfall': return FaWater;
+            case 'historic_site': return FaChurch;
+            case 'mountain': return FaMountain;
+            case 'viewpoint': return FaBinoculars;
+            case 'educational_center': return FaGraduationCap;
+            case 'lagoon': return FaWater;
             default: return FaMapMarkerAlt;
         }
     };
@@ -350,7 +350,7 @@ function QueVisitar() {
                                     className={`px-4 py-2 rounded-full ${selectedType === tipo ? 'bg-[#00add5] text-white' : 'bg-white text-[#00add5] border border-[#00add5]'} hover:bg-[#00add5] hover:text-white transition-colors duration-300`}
                                 >
                                     <Icon className="inline-block mr-2" />
-                                    {tipo === 'todos' ? (t('activities_page.all_categories') || 'Todos') : tipo}
+                                    {tipo === 'todos' ? (t('activities_page.all_categories') || 'Todos') : t(`activities_page.categories.${tipo}`) || tipo}
                                 </button>
                             );
                         })}
@@ -384,7 +384,7 @@ function QueVisitar() {
                                                         role="menuitem"
                                                     >
                                                         <Icon className="inline-block mr-2" />
-                                                        {tipo}
+                                                        {t(`activities_page.categories.${tipo}`) || tipo}
                                                     </button>
                                                 );
                                             })}
