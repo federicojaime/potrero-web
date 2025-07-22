@@ -1,6 +1,7 @@
-// src/pages/Home.jsx
+// src/pages/Home.jsx - CON TRADUCCIONES
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; // ← AGREGAR ESTO
 import { FaMountain, FaSwimmingPool, FaRoute, FaBed, FaUtensils, FaCalendarAlt, FaMapMarkedAlt, FaCamera, FaSun, FaSnowflake, FaThermometerHalf } from 'react-icons/fa';
 import OptimizedVideoBanner from './OptimizedVideoBanner';
 import WinterActivitiesSection from '../components/WinterActivitiesSection';
@@ -14,60 +15,7 @@ import imagenCircuitos from '/src/assets/imagenes/circuitos.jpg';
 import imagenAlojamiento from '/src/assets/imagenes/alojamiento.jpg';
 import imagenGastronomia from '/src/assets/imagenes/gastronomia.jpg';
 import imagenEventos from '/src/assets/imagenes/eventos.jpg';
-import backgroundImage from '/src/assets/imagenes/otoño.jpg'; // Imagen de fondo con tema de invierno
-
-// Definimos el array de secciones con todas las propiedades y colores invernales
-const secciones = [
-    {
-        titulo: 'Potrero Activa',
-        icono: FaMountain,
-        imagen: imagenActividades,
-        color: winterColors.forest, // Verde pino
-        textColor: 'text-white',
-        link: '/naturaleza',
-    },
-    {
-        titulo: 'Actividades',
-        icono: FaSwimmingPool,
-        imagen: imagenNaturaleza,
-        color: winterColors.primary, // Azul invernal
-        textColor: 'text-white',
-        link: '/actividades',
-    },
-    {
-        titulo: 'Circuitos',
-        icono: FaRoute,
-        imagen: imagenCircuitos,
-        color: winterColors.ice, // Azul hielo
-        textColor: 'text-black',
-        link: '/circuitos',
-    },
-    {
-        titulo: 'Alojamiento',
-        icono: FaBed,
-        imagen: imagenAlojamiento,
-        color: winterColors.glacier, // Azul glaciar
-        textColor: 'text-white',
-        link: '/alojamiento',
-    },
-    {
-        titulo: 'Gastronomía',
-        icono: FaUtensils,
-        imagen: imagenGastronomia,
-        color: winterColors.secondary, // Gris azulado
-        textColor: 'text-white',
-        link: '/gastronomia',
-    },
-    {
-        titulo: 'Eventos',
-        icono: FaCalendarAlt,
-        imagen: imagenEventos,
-        color: winterColors.accent, // Azul cielo
-        textColor: 'text-white',
-        link: '/eventos',
-        disabled: false,
-    },
-];
+import backgroundImage from '/src/assets/imagenes/otoño.jpg';
 
 const InfoCard = ({ icon: Icon, title, content }) => (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-6 hover-lift">
@@ -87,7 +35,6 @@ const InfoCard = ({ icon: Icon, title, content }) => (
     </div>
 );
 
-// Efecto de copo de nieve flotante para decoración visual
 const FloatingSnowflake = ({ size, color, top, left, right, delay = 0 }) => (
     <motion.div
         className="absolute z-10"
@@ -112,12 +59,79 @@ const FloatingSnowflake = ({ size, color, top, left, right, delay = 0 }) => (
 );
 
 function Home() {
+    // ← USAR EL HOOK DE TRADUCCIONES
+    const { t, ready } = useTranslation();
+
+    // Si las traducciones no están listas, mostrar loading
+    if (!ready) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center">
+                    <FaSnowflake className="animate-spin text-4xl text-blue-500 mx-auto mb-4" />
+                    <p className="text-xl">Cargando...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // ← SECCIONES CON TRADUCCIONES DINÁMICAS
+    const secciones = [
+        {
+            titulo: 'Potrero Activa',
+            icono: FaMountain,
+            imagen: imagenActividades,
+            color: winterColors.forest,
+            textColor: 'text-white',
+            link: '/naturaleza',
+        },
+        {
+            titulo: t('nav.activities'), // ← USAR TRADUCCIÓN
+            icono: FaSwimmingPool,
+            imagen: imagenNaturaleza,
+            color: winterColors.primary,
+            textColor: 'text-white',
+            link: '/actividades',
+        },
+        {
+            titulo: 'Circuitos',
+            icono: FaRoute,
+            imagen: imagenCircuitos,
+            color: winterColors.ice,
+            textColor: 'text-black',
+            link: '/circuitos',
+        },
+        {
+            titulo: t('nav.accommodation'), // ← USAR TRADUCCIÓN
+            icono: FaBed,
+            imagen: imagenAlojamiento,
+            color: winterColors.glacier,
+            textColor: 'text-white',
+            link: '/alojamiento',
+        },
+        {
+            titulo: t('nav.gastronomy'), // ← USAR TRADUCCIÓN
+            icono: FaUtensils,
+            imagen: imagenGastronomia,
+            color: winterColors.secondary,
+            textColor: 'text-white',
+            link: '/gastronomia',
+        },
+        {
+            titulo: 'Eventos',
+            icono: FaCalendarAlt,
+            imagen: imagenEventos,
+            color: winterColors.accent,
+            textColor: 'text-white',
+            link: '/eventos',
+            disabled: false,
+        },
+    ];
+
     return (
         <div className="bg-winter-theme">
             <OptimizedVideoBanner />
 
             <section className="py-20 bg-gray-50 relative overflow-hidden">
-                {/* Decoración de copos de nieve flotantes */}
                 <FloatingSnowflake size={24} color={winterColors.ice1} top="10%" left="5%" delay={1} />
                 <FloatingSnowflake size={18} color={winterColors.ice2} top="30%" right="10%" delay={2} />
                 <FloatingSnowflake size={22} color={winterColors.ice3} top="70%" left="15%" delay={3} />
@@ -125,7 +139,7 @@ function Home() {
                 
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold text-center mb-16 section-title" style={{ color: winterColors.secondary }}>
-                        Visitá Potrero de los Funes
+                        {t('sections.visit_potrero')} {/* ← USAR TRADUCCIÓN */}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                         {secciones.map((seccion, index) => (
@@ -135,7 +149,6 @@ function Home() {
                 </div>
             </section>
             
-            {/* Sección de actividades invernales */}
             <WinterActivitiesSection />
             
             <motion.section
@@ -154,7 +167,6 @@ function Home() {
                     `,
                 }}
             >
-                {/* Decoración invernal en esta sección */}
                 <div className="absolute top-0 left-0 right-0 h-8 overflow-hidden">
                     <div className="w-full h-8" style={{ 
                         background: `linear-gradient(to right, ${winterColors.ice1}, ${winterColors.ice3}, ${winterColors.crystal}, ${winterColors.ice2})`,
@@ -169,7 +181,7 @@ function Home() {
                         whileInView={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.8 }}
                     >
-                        Naturaleza, aventura y serenidad invernal en un solo lugar
+                        {t('sections.nature_adventure')} {/* ← USAR TRADUCCIÓN */}
                     </motion.h2>
                     <motion.p
                         className="text-xl text-center mt-4"
@@ -177,11 +189,10 @@ function Home() {
                         whileInView={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
-                        Descubrí todo lo que Potrero de los Funes tiene para ofrecerte en esta temporada de invierno
+                        {t('sections.discover_winter')} {/* ← USAR TRADUCCIÓN */}
                     </motion.p>
                 </div>
                 
-                {/* Más decoración de copos */}
                 <div className="absolute bottom-0 left-0 right-0 h-8 overflow-hidden">
                     <div className="w-full h-8" style={{ 
                         background: `linear-gradient(to right, ${winterColors.ice2}, ${winterColors.crystal}, ${winterColors.ice1})`,
@@ -191,19 +202,17 @@ function Home() {
             </motion.section>
 
             <div className="bg-gray-100 py-20 relative">
-                {/* Copos decorativos */}
                 <FloatingSnowflake size={20} color={winterColors.ice3} top="10%" right="20%" delay={2.5} />
                 <FloatingSnowflake size={16} color={winterColors.crystal} top="60%" left="10%" delay={3.5} />
                 
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold text-center mb-12 section-title" style={{ color: winterColors.secondary }}>
-                        Información Turística
+                        {t('sections.tourist_info')} {/* ← USAR TRADUCCIÓN */}
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        {/* Tarjeta 1: Cómo llegar */}
                         <InfoCard
                             icon={FaMapMarkedAlt}
-                            title="Cómo llegar"
+                            title={t('info.how_to_arrive')} // ← USAR TRADUCCIÓN
                             content={
                                 <>
                                     <div className="aspect-video mb-4 rounded-lg overflow-hidden">
@@ -218,67 +227,65 @@ function Home() {
                                         ></iframe>
                                     </div>
                                     <p className="text-gray-600">
-                                        A solo 20 km de la ciudad de San Luis. Acceso por Autopista de las Serranías Puntanas.
+                                        {t('info.how_to_arrive_desc')} {/* ← USAR TRADUCCIÓN */}
                                     </p>
                                 </>
                             }
                         />
 
-                        {/* Tarjeta 2: Clima típico de invierno */}
                         <InfoCard
                             icon={FaThermometerHalf}
-                            title="Clima invernal"
+                            title={t('info.winter_weather')} // ← USAR TRADUCCIÓN
                             content={
                                 <div className="space-y-2">
                                     <div className="flex justify-between items-center">
                                         <span className="flex items-center">
                                             <FaThermometerHalf className="text-blue-600 mr-2" />
-                                            Temperatura
+                                            {t('info.temperature')} {/* ← USAR TRADUCCIÓN */}
                                         </span>
                                         <span>5°C - 15°C</span>
                                     </div>
                                     <div className="flex justify-between items-center">
                                         <span className="flex items-center">
                                             <FaSnowflake className="text-blue-500 mr-2" />
-                                            Humedad
+                                            {t('info.humidity')} {/* ← USAR TRADUCCIÓN */}
                                         </span>
                                         <span>60% - 80%</span>
                                     </div>
                                     <div className="flex justify-between items-center">
                                         <span className="flex items-center">
                                             <FaRoute className="text-gray-500 mr-2" />
-                                            Viento
+                                            {t('info.wind')} {/* ← USAR TRADUCCIÓN */}
                                         </span>
                                         <span>10 - 20 km/h</span>
                                     </div>
                                     <p className="text-gray-600 mt-4">
-                                        Clima fresco y seco con mañanas heladas. Ideal para actividades al aire libre y contemplar los paisajes invernales cristalinos.
+                                        {t('info.weather_desc')} {/* ← USAR TRADUCCIÓN */}
                                     </p>
                                 </div>
                             }
                         />
 
-                        {/* Tarjeta 3: Actividades populares de invierno */}
                         <InfoCard
                             icon={FaCamera}
-                            title="Actividades de invierno"
+                            title={t('info.winter_activities_title')} // ← USAR TRADUCCIÓN
                             content={
                                 <ul className="space-y-2 winter-list">
                                     <li className="flex items-center text-gray-700">
                                         <FaSnowflake className="text-blue-600 mr-2" />
-                                        Caminatas matutinas con escarcha
+                                        {t('info.frost_walks')} {/* ← USAR TRADUCCIÓN */}
                                     </li>
                                     <li className="flex items-center text-gray-700">
                                         <FaMountain className="text-blue-700 mr-2" />
-                                        Trekking con paisajes helados
+                                        {t('info.frozen_trekking')} {/* ← USAR TRADUCCIÓN */}
                                     </li>
                                     <li className="flex items-center text-gray-700">
                                         <FaRoute className="text-blue-800 mr-2" />
-                                        Circuito panorámico invernal
+                                        {t('info.winter_circuit')} {/* ← USAR TRADUCCIÓN */}
                                     </li>
                                     <li className="flex items-center text-gray-700">
                                         <FaUtensils className="text-blue-500 mr-2" />
-                                        Gastronomía caliente de temporada
+                                        {t('info.warm_gastronomy')} {/* ← USAR TRADUCCIÓN */}
                                     </li>
                                 </ul>
                             }
@@ -290,23 +297,25 @@ function Home() {
             <section className="py-20 text-white relative overflow-hidden" style={{ 
                 background: `linear-gradient(135deg, ${winterColors.ice}, ${winterColors.glacier}, ${winterColors.primary})` 
             }}>
-                {/* Decoración de copos */}
                 <FloatingSnowflake size={30} color="rgba(255,255,255,0.1)" top="20%" left="5%" delay={1} />
                 <FloatingSnowflake size={24} color="rgba(255,255,255,0.1)" top="60%" right="8%" delay={2} />
                 
                 <div className="container mx-auto px-4 text-center relative z-10">
-                    <h2 className="text-4xl font-bold mb-4">¿Listo para tu aventura invernal?</h2>
-                    <p className="text-xl mb-8">Planificá tu visita a Potrero de los Funes y viví una experiencia inolvidable rodeado de la serenidad del invierno serrano.</p>
+                    <h2 className="text-4xl font-bold mb-4">
+                        {t('sections.ready_adventure')} {/* ← USAR TRADUCCIÓN */}
+                    </h2>
+                    <p className="text-xl mb-8">
+                        {t('sections.plan_visit')} {/* ← USAR TRADUCCIÓN */}
+                    </p>
                     <Link
                         to="/contacto"
                         className="bg-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-100 transition duration-300 shadow-md inline-block btn-winter"
                         style={{ color: winterColors.glacier }}
                     >
-                        Contactanos
+                        {t('common.contact_us')} {/* ← USAR TRADUCCIÓN */}
                     </Link>
                 </div>
                 
-                {/* Decoración de copos en el fondo */}
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute bottom-10 right-10 text-white opacity-10">
                         <FaSnowflake size={80} />

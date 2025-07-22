@@ -1,9 +1,10 @@
-// src/pages/OptimizedVideoBanner.jsx
+// src/pages/OptimizedVideoBanner.jsx - CON TRADUCCIONES
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown, FaSnowflake } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next'; // ← AGREGAR ESTO
 import bannerVideo from "../assets/videos/banner.mp4";
-import placeholderImage from "/src/assets/imagenes/otoño.jpg"; // Cambiado a una imagen de invierno
+import placeholderImage from "/src/assets/imagenes/otoño.jpg";
 import { winterColors } from '../theme/WinterTheme';
 
 // Componente de copo de nieve cayendo
@@ -46,26 +47,38 @@ const FallingSnowflake = ({ size, left, delay, duration, color }) => {
 };
 
 const OptimizedVideoBanner = () => {
+    const { t, ready } = useTranslation(); // ← USAR HOOK DE TRADUCCIONES
     const [videoLoaded, setVideoLoaded] = useState(false);
     const [currentText, setCurrentText] = useState(0);
     
-    // Textos de invierno
-    const texts = [
+    // Si las traducciones no están listas, usar textos por defecto
+    const defaultTexts = [
         "Explorá el paraíso invernal en las sierras de San Luis",
         "Viví la serenidad del invierno en Potrero de los Funes",
         "Sentí la paz de la naturaleza en el frío serrano"
     ];
 
+    // Textos traducidos (solo si ready es true)
+    const translatedTexts = ready ? [
+        t('hero.subtitle'),
+        t('hero.winter_text'),
+        "Sentí la paz de la naturaleza en el frío serrano" // Esta puede ser una nueva clave
+    ] : defaultTexts;
+
+    const texts = translatedTexts;
+
     useEffect(() => {
         const videoElement = document.getElementById('background-video');
-        videoElement.addEventListener('canplay', () => setVideoLoaded(true));
+        if (videoElement) {
+            videoElement.addEventListener('canplay', () => setVideoLoaded(true));
+        }
 
         const textInterval = setInterval(() => {
             setCurrentText((prev) => (prev + 1) % texts.length);
         }, 5000);
 
         return () => clearInterval(textInterval);
-    }, []);
+    }, [texts.length]);
 
     const scrollToContent = () => {
         window.scrollTo({
@@ -144,7 +157,7 @@ const OptimizedVideoBanner = () => {
                         transition={{ duration: 0.5 }}
                         style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.8), 0 0 15px rgba(0,0,0,0.6)' }}
                     >
-                        Potrero de los Funes
+                        {ready ? t('hero.title') : 'Potrero de los Funes'} {/* ← USAR TRADUCCIÓN */}
                     </motion.h1>
                     
                     <AnimatePresence mode="wait">
@@ -164,7 +177,7 @@ const OptimizedVideoBanner = () => {
                                 transition={{ delay: 0.3, duration: 0.5 }}
                             >
                                 <FaSnowflake className="inline-block mr-2" />
-                                Temporada de Invierno 2025
+                                {ready ? t('hero.winter_season') : 'Temporada de Invierno 2025'} {/* ← USAR TRADUCCIÓN */}
                             </motion.span>
                             
                             <p className="text-xl sm:text-2xl md:text-3xl"

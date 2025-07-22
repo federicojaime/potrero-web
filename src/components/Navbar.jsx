@@ -1,15 +1,16 @@
-// src/components/Navbar.jsx - VERSIÓN QUE NO ROMPE NADA
+// src/components/Navbar.jsx - VERSIÓN QUE FUNCIONA 100%
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaSnowflake } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 import logo from "../assets/logos/logo_blanco.png";
-import { winterColors, winterGradients } from "../theme/WinterTheme";
+import { winterColors } from "../theme/WinterTheme";
 import FallingSnow from "./FallingSnow";
 import LanguageSelector from "./LanguageSelector";
 
 function CustomNavbar() {
-  const { t } = useTranslation();
+  // CAMBIO CRÍTICO: Usar ready para asegurar que las traducciones estén cargadas
+  const { t, ready } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -32,7 +33,27 @@ function CustomNavbar() {
     };
   }, []);
 
-  // NAVEGACIÓN CON TRADUCCIONES
+  // ESPERAMOS A QUE LAS TRADUCCIONES ESTÉN LISTAS
+  if (!ready) {
+    return (
+      <nav className="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex justify-between items-center">
+            <Link to="/" className="flex items-center">
+              <img
+                src={logo}
+                className="h-12 mr-3 drop-shadow-md"
+                alt="Potrero de los Funes Logo"
+              />
+            </Link>
+            <div className="text-white">Cargando...</div>
+          </div>
+        </div>
+      </nav>
+    );
+  }
+
+  // NAVEGACIÓN CON TRADUCCIONES (solo cuando ready = true)
   const navItems = [
     { name: t('nav.home'), path: "/" },
     { name: t('nav.activities'), path: "/actividades" },
@@ -89,7 +110,7 @@ function CustomNavbar() {
               ))}
             </ul>
             
-            {/* SELECTOR DE IDIOMA SIMPLE */}
+            {/* SELECTOR DE IDIOMA */}
             <LanguageSelector />
           </div>
         </div>
