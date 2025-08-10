@@ -7,6 +7,7 @@ import OptimizedVideoBanner from './OptimizedVideoBanner';
 import WinterActivitiesSection from '../components/WinterActivitiesSection';
 import SeccionCard from './SeccionCard';
 import { winterColors } from '../theme/WinterTheme';
+import SpeechButton from '../components/SpeechButton';
 
 // Importamos las imágenes para cada sección
 import imagenNaturaleza from '/src/assets/imagenes/naturaleza.jpg';
@@ -29,7 +30,11 @@ const InfoCard = ({ icon: Icon, title, content }) => (
                     style={{ color: winterColors.primary }}
                 />
             </div>
-            <h3 className="text-xl font-semibold">{title}</h3>
+            <h3 className="text-xl font-semibold flex-1">{title}</h3>
+            <SpeechButton 
+                text={`${title}. ${content}`}
+                className="ml-2"
+            />
         </div>
         <div>{content}</div>
     </div>
@@ -123,7 +128,7 @@ function Home() {
             color: winterColors.accent,
             textColor: 'text-white',
             link: '/eventos',
-            disabled: false,
+            disabled: true,
         },
     ];
 

@@ -16,6 +16,8 @@ import MaintenancePage from './components/MaintenancePage';
 import MaintenanceConfig from './MaintenanceConfig';
 import WinterBanner from './components/WinterBanner';
 import FindeXXLEventsPage from './pages/FindeXXLEventsPage';
+import { AccessibilityProvider } from './hooks/useAccessibility';
+import AccessibilityWidget from './components/AccessibilityWidget';
 
 // Importamos los estilos del tema de invierno
 import './styles/WinterTheme.css';
@@ -92,23 +94,28 @@ const MaintenanceWrapper = () => {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="flex flex-col min-h-screen">
-        {MaintenanceConfig.enabled ? (
-          <Routes>
-            {/* Mantener rutas excluidas funcionando */}
-            {MaintenanceConfig.excludedRoutes.map(route => (
-              <Route key={route} path={`${route}/*`} element={<MaintenanceWrapper />} />
-            ))}
-            {/* Ruta predeterminada muestra la página de mantenimiento */}
-            <Route path="*" element={<MaintenancePage />} />
-          </Routes>
-        ) : (
-          <MaintenanceWrapper />
-        )}
-      </div>
-    </Router>
+    <AccessibilityProvider> {/* ← LÍNEA 1: Envolver todo */}
+
+      <Router>
+        <ScrollToTop />
+        <div className="flex flex-col min-h-screen">
+          <AccessibilityWidget /> {/* ← LÍNEA 2: Agregar widget */}
+          {MaintenanceConfig.enabled ? (
+            <Routes>
+              {/* Mantener rutas excluidas funcionando */}
+              {MaintenanceConfig.excludedRoutes.map(route => (
+                <Route key={route} path={`${route}/*`} element={<MaintenanceWrapper />} />
+              ))}
+              {/* Ruta predeterminada muestra la página de mantenimiento */}
+              <Route path="*" element={<MaintenancePage />} />
+            </Routes>
+          ) : (
+            <MaintenanceWrapper />
+          )}
+        </div>
+      </Router>
+    </AccessibilityProvider> 
+
   );
 }
 
