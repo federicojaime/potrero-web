@@ -15,10 +15,10 @@ import ScrollToTop from './components/ScrollToTop';
 import MaintenancePage from './components/MaintenancePage';
 import MaintenanceConfig from './MaintenanceConfig';
 import WinterBanner from './components/WinterBanner';
-import FindeXXLEventsPage from './pages/FindeXXLEventsPage';
+import AgendaAgosto from './pages/AgendaAgosto';
 import { AccessibilityProvider } from './hooks/useAccessibility';
 import AccessibilityWidget from './components/AccessibilityWidget';
-
+import EventsModal from './components/EventsModal';
 // Importamos los estilos del tema de invierno
 import './styles/WinterTheme.css';
 
@@ -72,6 +72,7 @@ const MaintenanceWrapper = () => {
 
   return (
     <>
+      <EventsModal />  {/* ← AÑADIR ESTA LÍNEA */}
       <Navbar />
       {/* Banner de temporada de invierno - REMOVIDO */}
       <main className="flex-grow">
@@ -81,8 +82,8 @@ const MaintenanceWrapper = () => {
           <Route path="/gastronomia" element={<Gastronomia />} />
           <Route path="/circuitos" element={<Circuitos />} />
           <Route path="/alojamiento" element={<Alojamiento />} />
-          <Route path="/eventos" element={<FindeXXLEventsPage />} />
-          <Route path="/eventos/finde-xxl" element={<FindeXXLEventsPage />} />
+          <Route path="/eventos" element={<AgendaAgosto />} />
+          <Route path="/eventos" element={<AgendaAgosto />} />
           <Route path="/naturaleza" element={<Naturaleza />} />
           <Route path="/contacto" element={<Contacto />} />
         </Routes>
@@ -114,7 +115,7 @@ function App() {
           )}
         </div>
       </Router>
-    </AccessibilityProvider> 
+    </AccessibilityProvider>
 
   );
 }

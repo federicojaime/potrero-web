@@ -128,7 +128,7 @@ function Home() {
             color: winterColors.accent,
             textColor: 'text-white',
             link: '/eventos',
-            disabled: true,
+            disabled: false,
         },
     ];
 
